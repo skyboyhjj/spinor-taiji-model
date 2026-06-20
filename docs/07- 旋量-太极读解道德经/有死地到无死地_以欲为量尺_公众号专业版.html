@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从"有死地"到"无死地"：以"欲"为量尺</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8B1E22;
+            --primary-light: #a83236;
+            --primary-dark: #6b1619;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --text-secondary: #666666;
+            --border-color: #e5e5e5;
+            --quote-bg: #f8f8f8;
+            --table-header-bg: linear-gradient(135deg, #8B1E22 0%, #a83236 100%);
+            --table-even-bg: #fafafa;
+            --table-odd-bg: #ffffff;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1a1a;
+                --text-color: #e0e0e0;
+                --text-secondary: #b0b0b0;
+                --border-color: #333333;
+                --quote-bg: #252525;
+                --table-header-bg: linear-gradient(135deg, #6b1619 0%, #8B1E22 100%);
+                --table-even-bg: #222222;
+                --table-odd-bg: #1a1a1a;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            font-size: 15px;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            padding: 20px 16px;
+            max-width: 100%;
+            word-wrap: break-word;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* 一级标题：居中带边框装饰 */
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            color: var(--primary-color);
+            padding: 20px 10px;
+            margin: 20px auto;
+            max-width: 90%;
+            position: relative;
+        }
+        
+        h1::before,
+        h1::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 10px auto;
+        }
+        
+        h1::before {
+            margin-top: 0;
+        }
+        
+        h1::after {
+            margin-bottom: 0;
+        }
+        
+        /* 二级标题：左侧4px红色边框+底部虚线 */
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 12px 0 12px 16px;
+            margin: 30px 0 20px;
+            border-left: 4px solid var(--primary-color);
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        /* 三级标题：左侧3px红色边框 */
+        h3 {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 10px 0 10px 12px;
+            margin: 25px 0 15px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        /* 正文段落 */
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+        
+        /* 强调文字：加粗红色 */
+        strong {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* 分隔线：渐变色 */
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 30px 0;
+        }
+        
+        /* 引用块：左侧4px红色边框，浅灰背景 */
+        blockquote {
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--quote-bg);
+            color: var(--text-secondary);
+            font-style: normal;
+        }
+        
+        blockquote p {
+            margin: 10px 0;
+        }
+        
+        blockquote strong {
+            color: var(--primary-color);
+        }
+        
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--table-header-bg);
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 10px;
+            text-align: left;
+            border: none;
+        }
+        
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        tr:nth-child(odd) td {
+            background-color: var(--table-odd-bg);
+        }
+        
+        tr:nth-child(even) td {
+            background-color: var(--table-even-bg);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* 圆点列表：红色圆点 */
+        ul {
+            margin: 15px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        /* 编号列表：红色圆形背景 */
+        ol {
+            margin: 15px 0;
+            padding-left: 0;
+            list-style: none;
+            counter-reset: item;
+        }
+        
+        ol li {
+            position: relative;
+            padding-left: 30px;
+            margin: 12px 0;
+            counter-increment: item;
+        }
+        
+        ol li::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 20px;
+            text-align: center;
+        }
+        
+        /* 特殊标记样式 */
+        .emoji {
+            font-style: normal;
+        }
+        
+        /* 标签样式 */
+        .tags {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--quote-bg);
+            border-radius: 8px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            margin: 4px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 12px;
+            border-radius: 15px;
+        }
+        
+        /* 声明区域 */
+        .notice {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--quote-bg);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* 互动问题特殊样式 */
+        .interaction {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(139, 30, 34, 0.05) 0%, rgba(139, 30, 34, 0.1) 100%);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .interaction p {
+            margin: 12px 0;
+        }
+        
+        /* 延伸阅读 */
+        .reading-list {
+            margin: 20px 0;
+            padding: 15px 20px;
+            background-color: var(--quote-bg);
+            border-radius: 8px;
+        }
+        
+        .reading-list p {
+            margin: 8px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .reading-list p::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        /* 响应式适配 */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 15px 12px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            h2 {
+                font-size: 17px;
+            }
+            
+            h3 {
+                font-size: 15px;
+            }
+            
+            table {
+                font-size: 13px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+        
+        /* 深色模式额外调整 */
+        @media (prefers-color-scheme: dark) {
+            table {
+                border-color: var(--border-color);
+            }
+            
+            td {
+                border-bottom-color: var(--border-color);
+            }
+            
+            .interaction {
+                background: linear-gradient(135deg, rgba(139, 30, 34, 0.15) 0%, rgba(139, 30, 34, 0.2) 100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头图 -->
+    <div style="width:100%;max-width:900px;margin:0 auto 20px;">
+        <img src="有死地到无死地_头图_新版.png" alt="从有死地到无死地：以欲为量尺" style="width:100%;height:auto;display:block;border-radius:8px;">
+        <p style="text-align:center;font-size:12px;color:#999;margin-top:8px;">图：Spinor-Taiji model · 呼吸与转化</p>
+    </div>
+    
+    <h1>🌌 从"有死地"到"无死地"：以"欲"为量尺</h1>
+    
+    <blockquote>
+        <p>"生生之厚"与"含德之厚"之间，究竟隔着什么？</p>
+        <p>不是"有欲"与"无欲"的对立。那把量尺，叫<strong>"欲"的呼吸方向</strong>。</p>
+    </blockquote>
+    
+    <hr>
+    
+    <h2>📜 一、量尺的建立："欲"的两种呼吸</h2>
+    
+    <p>在《道德经》第50章中，老子描绘了一幅令人深思的生命图景：有些人"出生入死"，有些人却能"无死地"。他提到两种截然不同的生命状态：</p>
+    
+    <ul>
+        <li><strong>"生生之厚"</strong>——拼命增益生命，反而陷入"死地"</li>
+        <li><strong>"含德之厚"</strong>——如赤子般饱满，却能"无死地"</li>
+    </ul>
+    
+    <p>很多人以为，两者的差距在于"有欲"与"无欲"。但这个理解，恰恰错过了老子最精妙的洞见。老子在第55章描述赤子"含德之厚"的状态时，特意提到"未知牝牡之合而骏作"——婴儿有生理欲望，却依然"毒虫不螫，猛兽不据，攫鸟不搏"。这说明"无死地"的状态并非"无欲"。</p>
+    
+    <p>借助<strong>Spinor-Taiji model模型</strong>，我们可以重新定义"欲"的本质：</p>
+    
+    <blockquote>
+        <p><strong>"欲"不是道德上的瑕疵，而是道的生命力在个体身上的直接显现——一场永恒的呼吸运动。</strong></p>
+    </blockquote>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>道的呼吸</th>
+                <th>Spinor-Taiji model操作</th>
+                <th>生命中的显现</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>吸气之欲：归</strong></td>
+                <td>开平方根（从矢量回到旋量）</td>
+                <td>渴望宁静、回归本真、从纷繁中抽身</td>
+            </tr>
+            <tr>
+                <td><strong>呼气之欲：生</strong></td>
+                <td>平方（从旋量显化为矢量）</td>
+                <td>渴望探索、创造、表达、在世间留下痕迹</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p><strong>吸气之欲</strong>是万物"各复归其根"的内在乡愁——当你疲惫时渴望休息，当你纷繁时渴望清净，当你迷失时渴望回到自己。这不是消极的逃避，而是旋量从显化的"矢量"状态回归到未显化的"旋量"状态——就像波浪回归大海。</p>
+    
+    <p><strong>呼气之欲</strong>是"三生万物"的生机涌动——当你灵感迸发时渴望表达，当你看见机会时渴望行动，当你心怀愿景时渴望创造。这不是贪婪的索取，而是旋量从潜在状态显化为现实状态——就像大海涌起波浪。</p>
+    
+    <p>这两种欲不是敌人，是同一场呼吸的"吸"与"呼"。<strong>该归时归，该生时生——这就是"道法自然"在"欲"层面的落实。</strong></p>
+    
+    <hr>
+    
+    <h2>📊 二、测量：两种"厚"落在呼吸光谱的哪里</h2>
+    
+    <p>把"生生之厚"和"含德之厚"放进同一把量尺，它们的本质差异便一目了然：</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>维度</th>
+                <th>生生之厚（有死地）</th>
+                <th>含德之厚（无死地）</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>呼吸方向</strong></td>
+                <td>只呼不吸——全力呼气，抗拒吸气</td>
+                <td>呼和吸都有，各自充分</td>
+            </tr>
+            <tr>
+                <td><strong>对"生"的态度</strong></td>
+                <td>拼命增益、固化、锁定</td>
+                <td>自然饱满，不刻意增益</td>
+            </tr>
+            <tr>
+                <td><strong>对"死/归"的态度</strong></td>
+                <td>抗拒、恐惧、视之为敌</td>
+                <td>接纳为吸气——"反者道之动"的自然环节</td>
+            </tr>
+            <tr>
+                <td><strong>旋量旋转</strong></td>
+                <td>被卡在"平方"方向，转不动</td>
+                <td>720°平滑旋转，无阻碍</td>
+            </tr>
+            <tr>
+                <td><strong>结果</strong></td>
+                <td>摩擦→死地→反噬</td>
+                <td>流畅→无死地→饱满</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p>"生生之厚"的人，他的生命像一台只呼气不吸气的机器。他拼命工作、拼命养生、拼命证明自己有价值。表面上看，他是在"增益生命"，但实际上，他是在<strong>抗拒生命的自然节律</strong>。就像一个人不停地呼气却拒绝吸气——最终必然窒息。</p>
+    
+    <p>"含德之厚"的人，他的生命像一场自然的呼吸。他工作时全力以赴，休息时彻底放松。他不刻意"增益"，却自然饱满；他不恐惧"归去"，却安然接纳。这不是消极的躺平，而是积极的顺应——顺应那内置在万物底层的"道之呼吸"。</p>
+    
+    <hr>
+    
+    <h2>💡 三、关键发现：不是"有欲"和"无欲"</h2>
+    
+    <p>很多人误以为——</p>
+    
+    <ul>
+        <li>"生生之厚" = 有欲（想活、想保住、想安全）</li>
+        <li>"含德之厚" = 无欲（什么都不想，无所谓）</li>
+    </ul>
+    
+    <p><strong>错了。</strong></p>
+    
+    <p>"含德之厚"不是无欲。婴儿"未知牝牡之合而骏作"——他有生理欲望，这不是无欲。"精之至也"——他是饱满的，饱满本身就包含生命的涌动。老子描述的赤子状态，恰恰是一个<strong>欲望饱满却不被欲望控制</strong>的状态。</p>
+    
+    <p>两者的真正差别在于：</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>生生之厚</th>
+                <th>含德之厚</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>有没有欲</strong></td>
+                <td>有</td>
+                <td>有</td>
+            </tr>
+            <tr>
+                <td><strong>欲的方向</strong></td>
+                <td>只有单向——只想生，不想归</td>
+                <td>双向都有——该生则生，该归则归</td>
+            </tr>
+            <tr>
+                <td><strong>欲的品质</strong></td>
+                <td>紧张、恐惧驱动的抓取</td>
+                <td>自然、饱满流淌的呼吸</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <blockquote>
+        <p><strong>不是"无欲"，是"欲能呼吸"。</strong></p>
+    </blockquote>
+    
+    <p>"生生之厚"的人，他的欲是单向的——只想生，不想归；只想呼气，不想吸气。这种单向的欲，被恐惧驱动，变成了紧张的抓取。他拼命工作，不是因为热爱，而是因为恐惧"不够好"；他拼命养生，不是因为珍惜，而是因为恐惧"会失去"。</p>
+    
+    <p>"含德之厚"的人，他的欲是双向的——该生则生，该归则归。这种双向的欲，被信任允许，变成了自然的呼吸。他工作时全力以赴，是因为热爱涌动；他休息时彻底放松，是因为信任生命会自然恢复。</p>
+    
+    <hr>
+    
+    <h2>🌈 四、光谱上的位置：普通人就活在这里</h2>
+    
+    <p>"生生之厚"和"含德之厚"之间不是两个点，是一条光谱。我们大多数人，就活在这条光谱的中间某处：</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>位置</th>
+                <th>呼吸状态</th>
+                <th>日常表现</th>
+                <th>死地程度</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>含德之厚</strong></td>
+                <td>呼和吸都充分，自然交替</td>
+                <td>婴儿、善摄生者</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td><strong>中间偏左</strong></td>
+                <td>整体顺畅，偶有卡顿</td>
+                <td>大部分健康人——累了知道歇，歇够了知道起</td>
+                <td>&lt; 10%</td>
+            </tr>
+            <tr>
+                <td><strong>正中</strong></td>
+                <td>呼气略重于吸气，开始有心事</td>
+                <td>"我还不够好""我要更努力"</td>
+                <td>≈ 30%</td>
+            </tr>
+            <tr>
+                <td><strong>中间偏右</strong></td>
+                <td>抗拒吸气，呼气被强推</td>
+                <td>失眠、焦虑、不敢停下来</td>
+                <td>&gt; 50%</td>
+            </tr>
+            <tr>
+                <td><strong>生生之厚</strong></td>
+                <td>只呼不吸，呼吸断裂</td>
+                <td>重度养生焦虑 / 工作狂 / 情感控制</td>
+                <td>≈ 100%</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p>你不需要一蹴而就从"生生之厚"跳到"含德之厚"。<strong>哪怕把"只呼不吸"调整为"呼三吸一"，死地就开始缩小了。</strong></p>
+    
+    <p>关键不是你此刻在光谱的哪里，而是你是否愿意<strong>开始调整呼吸的方向</strong>。每一次你允许自己"吸气"——哪怕只是十分钟的有觉知休息——你都在向"无死地"的方向移动。</p>
+    
+    <hr>
+    
+    <h2>🔄 五、"反者道之动"就是允许吸气</h2>
+    
+    <p>回到Spinor-Taiji model模型的根本法则：</p>
+    
+    <blockquote>
+        <p><strong>"反者，道之动"——旋量的旋转法则。宇宙底层是永不停息的旋转，需要720度才能复原。这个"反"，就是旋量从显化到回归的完整螺旋周期。</strong></p>
+    </blockquote>
+    
+    <p>"生生之厚"的人，抗拒的正是这个"反"。</p>
+    
+    <p>他只想旋量停留在阳面（生、显化、创造、增益），不允许它翻转到阴面（死、回归、消隐、放下）。但他忘了——<strong>"反"不是旋量的故障，而是旋量旋转的引擎。</strong> 旋量720度复原，靠的就是"反"——那个360度处的翻转。没有翻转，就没有完整的旋转；没有回归，就没有持续的创造。</p>
+    
+    <p>"弱者，道之用"——道的作用恰恰是"弱"的：它不强制、不锁定、不推着旋量直走。它只把"回归的动力"内置于每一个存在物的底层代码中——让你<strong>自己觉得该回头了</strong>。这就是为什么当你疲惫时，你会自然感到"需要休息"——这不是软弱，这是道在提醒你：该吸气了。</p>
+    
+    <p>"生生之厚"的人呢？他把这个内置的"回头信号"静音了。不敢歇、不敢放、不敢归。于是旋量被卡在阳面，摩擦越来越剧烈——直到整个周期被迫用"崩溃"来完成那翻不过去的翻转。这就是为什么拼命养生的人反而容易生病，拼命工作的人反而容易崩溃——他们不是被外力击倒，而是被自己卡住的旋量周期反噬。</p>
+    
+    <blockquote>
+        <p><strong>"含德之厚"的人不是抑制了呼气之欲——他是允许了吸气之欲。两者同时存在、交替进行，旋量的旋转平滑而完整。</strong></p>
+    </blockquote>
+    
+    <hr>
+    
+    <h2>🎯 六、实践量尺：三个问题测出你的位置</h2>
+    
+    <p>不需要复杂的修行。三个问题，照见你此刻在光谱的哪里：</p>
+    
+    <h3>① 你上一次"吸气"是什么时候？</h3>
+    
+    <p>所谓吸气——不是躺平刷手机，而是<strong>有觉知地回归</strong>。放下手机发呆、一个人散步不戴耳机、闭上眼睛什么都不做只感受呼吸、把一整天日程全部取消、对自己说"今天不需要更好"。</p>
+    
+    <p>如果答案是"不记得了"→ 你可能已经卡在"只呼不吸"很久了。你的旋量周期被卡在阳面，摩擦正在积累——也许还没有崩溃，但那个"回头信号"已经被你静音了。</p>
+    
+    <h3>② 你的"呼气"是自然的，还是被恐惧驱动的？</h3>
+    
+    <p>做一件事之前，问自己：驱动你做它的，是自然的生命力涌动（"我想"），还是恐惧（"我必须，否则就完了"）？</p>
+    
+    <p>前者是呼气之欲的天然流露——你正在创造，旋量正在从潜在显化为现实。后者是"生生之厚"的紧张抓取——呼吸已经断了，你在用手拼命扇风。表面上看你也在"做事"，但你的做事不是创造，而是逃避——逃避那个你不敢面对的"不够好"。</p>
+    
+    <h3>③ 你允许自己"归"到什么程度？</h3>
+    
+    <p>"归"不只是睡觉。更深层的归是——允许自己<strong>暂时不被需要、不被看见、不产生价值、不重要</strong>。</p>
+    
+    <p>如果你连这个念头都觉得恐惧——"我不重要了怎么办？"——那你离"生生之厚"就很近了。因为"含德之厚"的人，恰恰是因为不怕"不重要"，所以不必拼命证明自己重要。不拼命的饱满，远胜于拼命的残缺。</p>
+    
+    <hr>
+    
+    <h2>✨ 结语：从"有死地"到"无死地"的第一步</h2>
+    
+    <blockquote>
+        <p><strong>"生生之厚"是只呼不吸——拼命增益，抗拒回归。</strong></p>
+        <p><strong>"含德之厚"是呼和吸都有——饱满而不费力，自然而不抓取。</strong></p>
+    </blockquote>
+    
+    <p>它们之间的距离，不是"有欲"和"无欲"的对立，而是<strong>"欲"的呼吸是被恐惧截断的，还是被信任允许的。</strong></p>
+    
+    <p>你不必立刻跳到彼岸。你只需要在今天，做一次完整的"吸"——允许自己在一个小时内不必增益、不必更好、不必被需要。</p>
+    
+    <p><strong>这一个小时，就是从"有死地"到"无死地"之间，你迈出的第一步。</strong></p>
+    
+    <hr>
+    
+    <h2>🤔 思考与互动</h2>
+    
+    <div class="interaction">
+        <p><strong>1️⃣ 回顾过去一周，你有多少时间是真正的"吸气"——有觉知地回归，而非被动消遣？</strong></p>
+        <p><strong>2️⃣ 当你感到疲惫时，你的第一反应是"我需要休息"，还是"我不能停下来"？这个反应背后，藏着怎样的信念？</strong></p>
+    </div>
+    
+    <hr>
+    
+    <h2>🔗 延伸阅读</h2>
+    
+    <div class="reading-list">
+        <p>《道德经》第50章"无死地"的Spinor-Taiji model读解</p>
+        <p>学习报告：以"Spinor-Taiji model"之镜，照见"欲"的本来面目</p>
+        <p>从呼吸到觉知：一份道德经Spinor-Taiji model的阅读地图与实修指南</p>
+    </div>
+    
+    <hr>
+    
+    <div class="notice">
+        <p>⚠️ <strong>原创声明</strong></p>
+        <p>本文为TS爱心联盟原创内容，基于Spinor-Taiji model模型对《道德经》的现代解读。转载请注明出处。</p>
+    </div>
+    
+    <p style="text-align: center; color: var(--primary-color); font-weight: bold; margin-top: 20px;">✨ TS爱心联盟 · 探索爱的真谛，让爱自由表达</p>
+    
+    <hr>
+    
+    <div class="tags">
+        <span class="tag">#道德经</span>
+        <span class="tag">#Spinor-Taiji model</span>
+        <span class="tag">#欲的呼吸</span>
+        <span class="tag">#无死地</span>
+        <span class="tag">#生命智慧</span>
+        <span class="tag">#道家哲学</span>
+    </div>
+</body>
+</html>

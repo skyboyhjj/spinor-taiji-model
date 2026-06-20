@@ -1,0 +1,30 @@
+sequenceDiagram
+                    participant RD as 规约定义者
+                    participant SA as 系统建筑师
+                    participant User as 用户需求
+                    
+                    User->>RD: 提交需求
+                    RD->>RD: 需求分析
+                    RD->>SA: 需求文档
+                    
+                    SA->>SA: 技术可行性评估
+                    SA-->>RD: 可行性报告
+                    
+                    RD->>RD: 规约制定
+                    RD->>SA: 技术规约
+                    
+                    SA->>SA: 架构设计
+                    SA-->>RD: 设计方案
+                    
+                    RD->>RD: 规约审查
+                    alt 审查通过
+                        RD-->>SA: 批准实施
+                        SA->>SA: 技术实现
+                        SA-->>RD: 交付物
+                        RD->>RD: 验收测试
+                        RD-->>User: 完成交付
+                    else 审查不通过
+                        RD-->>SA: 需调整
+                        SA->>SA: 重新设计
+                        SA-->>RD: 新方案
+                    end

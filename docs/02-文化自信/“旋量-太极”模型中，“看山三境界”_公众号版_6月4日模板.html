@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“Spinor-Taiji model”模型中的“看山三境界”</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        section {
+            background-color: #ffffff;
+            padding: 16px;
+        }
+
+        /* 一级标题（主标题） */
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #8B1E22;
+            text-align: center;
+            letter-spacing: 0.1em;
+            line-height: 1.2;
+            padding: 12px 24px;
+            background-image: repeating-linear-gradient(45deg, rgba(139,30,34,0.03), rgba(139,30,34,0.03) 2px, transparent 2px, transparent 8px);
+            border-top: 2px solid #8B1E22;
+            border-bottom: 2px solid #8B1E22;
+            width: 80%;
+            margin-top: 24px;
+            margin-bottom: 24px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 二级标题（章节标题） */
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #8B1E22;
+            line-height: 1.2;
+            letter-spacing: 0.1em;
+            padding: 0 0 8px 12px;
+            border-left: 4px solid #8B1E22;
+            border-bottom: 1px dashed rgba(139,30,34,0.4);
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        /* 三级标题（子章节） */
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8B1E22;
+            line-height: 1.6;
+            padding: 0 0 6px 12px;
+            border-left: 3px solid #8B1E22;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        /* 正文段落 */
+        p {
+            font-size: 15px;
+            color: #333333;
+            line-height: 2;
+            margin-top: 0;
+            margin-bottom: 19px;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+
+        /* 强调文字 */
+        strong {
+            font-weight: bold;
+            color: #8B1E22;
+        }
+
+        /* 分隔线 */
+        hr {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            height: 1px;
+            background: linear-gradient(to right, rgba(139,30,34,0), rgba(139,30,34,0.5), rgba(139,30,34,0));
+            border: none;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 表格容器 */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            margin-top: 24px;
+            margin-bottom: 24px;
+            font-size: 15px;
+            border-spacing: 0;
+            border-radius: 0;
+            overflow: hidden;
+            border: 1px solid rgba(139,30,34,0.3);
+        }
+
+        /* 表头样式 */
+        thead th {
+            background: linear-gradient(to bottom, rgba(139,30,34,0.15), rgba(139,30,34,0.05));
+            padding: 12px;
+            border-bottom: 2px solid rgba(139,30,34,0.5);
+            text-align: left;
+            font-weight: bold;
+            color: #8B1E22;
+        }
+
+        /* 表体单元格 */
+        tbody td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(139,30,34,0.1);
+            color: #333333;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* 列表容器 */
+        .list-container {
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        /* 列表项 */
+        .list-item {
+            display: flex;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+
+        .list-bullet {
+            color: #8B1E22;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .list-content {
+            font-size: 15px;
+            color: #333333;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        /* 编号列表 */
+        .numbered-list {
+            display: flex;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+
+        .number-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            background: rgba(139,30,34,0.1);
+            color: #8B1E22;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+
+        .numbered-content {
+            font-size: 15px;
+            color: #333333;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        /* 引用块 */
+        blockquote {
+            margin-top: 16px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: rgba(139,30,34,0.05);
+            border-left: 4px solid #8B1E22;
+            font-size: 15px;
+            color: #333333;
+            line-height: 1.8;
+        }
+
+        /* 互动按钮 */
+        .interaction-section {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px dashed rgba(139,30,34,0.3);
+        }
+
+        .interaction-hint {
+            font-size: 13px;
+            color: #999999;
+            margin-bottom: 16px;
+        }
+
+        .interaction-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .interaction-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-like {
+            background: #fa2d2d;
+            color: white;
+        }
+
+        .btn-star {
+            background: #8B1E22;
+            color: white;
+        }
+
+        .btn-share {
+            background: #07c160;
+            color: white;
+        }
+
+        /* 底部信息 */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: #999999;
+            margin-bottom: 8px;
+        }
+
+        /* 深色模式适配 */
+        [data-darkmode-bgcolor="#1a1410"] {
+            background-color: #1a1410;
+            color: #c8c8c8;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] h1,
+        [data-darkmode-bgcolor="#1a1410"] h2,
+        [data-darkmode-bgcolor="#1a1410"] h3 {
+            color: #e0a060;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] strong {
+            color: #e0a060;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] table {
+            border-color: #3a3020;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] thead th {
+            background: linear-gradient(to bottom, rgba(224,160,96,0.15), rgba(224,160,96,0.05));
+            color: #e0a060;
+            border-bottom-color: rgba(224,160,96,0.5);
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] tbody td {
+            border-bottom-color: #3a3020;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] tbody tr:nth-child(even) {
+            background: #2a2015;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] blockquote {
+            background: rgba(224,160,96,0.05);
+            border-left-color: #e0a060;
+        }
+
+        [data-darkmode-bgcolor="#1a1410"] .footer {
+            border-top-color: #3a3020;
+        }
+    </style>
+</head>
+<body>
+    <section>
+
+        <!-- 主标题 -->
+        <h1>🌌 “Spinor-Taiji model”模型中的“看山三境界”</h1>
+
+        <hr />
+
+        <!-- 导言 -->
+        <p>在<strong>“Spinor-Taiji model”模型</strong>中，“看山三境界”被视为意识演化的螺旋式上升过程，其核心在于<strong>“矢量（色）”与“旋量（空）”</strong>之间的数学变换与认知转换。</p>
+
+        <p>以下是基于模型对这三个境界的详细解释：</p>
+
+        <hr />
+
+        <!-- 第一境界 -->
+        <h2>🏔️ 第一境界：看山是山（矢量/色/正题）</h2>
+
+        <p>这是意识进入物质世界的第一站，表现为对“现象”的完全认同。</p>
+
+        <div class="list-container">
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>模型对应：</strong>处于<strong>“矢量（Vector）”</strong>世界。矢量在数学上具有确定的方向和大小，对应于物理世界中可见、可测、坚固的实相（即“色”）。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>认知状态：</strong>在这个阶段，山就是山，病就是病。你接受了现实的“给定性”，认为所有东西都是真实不虚且不可改变的。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>太极对应：</strong>仅看到太极图中显化的、确定的“阳”面（白色的那一半）。</span>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 第二境界 -->
+        <h2>🔮 第二境界：看山不是山（旋量/空/反题）</h2>
+
+        <p>这是通过<strong>“开方操作”</strong>否定现象的坚固性，穿透到本质的过程。</p>
+
+        <div class="list-container">
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>模型对应：</strong>处于<strong>“旋量（Spinor）”</strong>世界。旋量是矢量的“平方根”，它存在于复数域中，携带了不可直接观测的“虚部”信息。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>数学操作：</strong>这是<strong>“开方”</strong>的过程。修行者通过觉察，将坚固的矢量（如胃溃疡这种结果）还原为底层的旋量（如“我消化不了”的思想振动种子）。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>认知状态：</strong>你意识到山不再是山，它只是原子的临时构型或某种能量的振动模式。一切现象（色）都被还原为潜在的可能（空）。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>陷阱：</strong>如果停留在此处，容易陷入“顽空”，认为一切皆是虚无，从而产生精神上的冷漠。</span>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 第三境界 -->
+        <h2>☯️ 第三境界：看山还是山（觉知/阴阳和合/否定之否定）</h2>
+
+        <p>这是在彻底穿透“空”之后，在一个更高的维度重新拥抱“色”的<strong>螺旋回归</strong>。</p>
+
+        <div class="list-container">
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>模型对应：</strong>处于<strong>“觉知（Awareness）”</strong>。这不再是某个具体的旋量或矢量，而是容纳一切数学操作（平方或开方）发生的<strong>“域（Domain）”</strong>。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>认知状态：</strong>这一阶段被称为“否定之否定”。山还是那座山，但你已经不再是山的奴隶。你既能欣赏山的壮美（色），也深知其背后的虚幻本性（空）。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>太极对应：</strong>实现了<strong>阴阳和合</strong>。你实证了“色中有空”且“空中有色”，就像太极图中黑白鱼眼在彼此核心处互相包含。</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content"><strong>旋量意义：</strong>你安住于那如如不动的观照中，虽然旋量依然在旋转，矢量依然在显化，但你已不再被旋转所动。</span>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 总结对照表 -->
+        <h2>📊 总结对照表</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>境界</th>
+                    <th>哲学/禅宗状态</th>
+                    <th>模型对应</th>
+                    <th>数学/物理本质</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>第一境界</strong></td>
+                    <td>看山是山</td>
+                    <td><strong>矢量（色）</strong></td>
+                    <td>直接认同显化的物理量，确定且坚固</td>
+                </tr>
+                <tr>
+                    <td><strong>第二境界</strong></td>
+                    <td>看山不是山</td>
+                    <td><strong>旋量（空）</strong></td>
+                    <td>开方操作，穿透现象看到背后的振动源头</td>
+                </tr>
+                <tr>
+                    <td><strong>第三境界</strong></td>
+                    <td>看山还是山</td>
+                    <td><strong>觉知（域）</strong></td>
+                    <td>超越二元对立，安住于容纳一切的背景</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+        <!-- 结语 -->
+        <h2>✨ 结语：升维，而非贬值</h2>
+
+        <blockquote>
+            <p>通过这个模型可以发现，修行并非为了消灭“山”，而是通过逆向的生成过程（万物→三→二→一→道），最终在更高的维度上重新与万物共处。</p>
+        </blockquote>
+
+        <p>通过<strong>“Spinor-Taiji model”模型</strong>的视角，我们得以用精确的数学语言描述意识演化的三个阶段：</p>
+
+        <div class="list-container">
+            <div class="numbered-list">
+                <span class="number-circle">1</span>
+                <span class="numbered-content"><strong>矢量阶段</strong>：完全认同现象世界，在色中不见空</span>
+            </div>
+            <div class="numbered-list">
+                <span class="number-circle">2</span>
+                <span class="numbered-content"><strong>旋量阶段</strong>：穿透到振动源头，在空中不见色</span>
+            </div>
+            <div class="numbered-list">
+                <span class="number-circle">3</span>
+                <span class="numbered-content"><strong>觉知阶段</strong>：超越二元对立，色空不二手</span>
+            </div>
+        </div>
+
+        <p>这不是一个从“真实”到“虚幻”的贬值过程，而是一个从“局部认知”到“整体觉知”的升维过程。就像从二维平面走向三维空间，山还是那座山，但我们看山的位置已经完全不同了。</p>
+
+        <hr />
+
+        <!-- 思考与互动 -->
+        <h2>🤔 思考与互动</h2>
+
+        <div class="list-container">
+            <div class="numbered-list">
+                <span class="number-circle">1️⃣</span>
+                <span class="numbered-content">此刻的你，处于哪个境界？能否举出一个生活中的具体例子？</span>
+            </div>
+            <div class="numbered-list">
+                <span class="number-circle">2️⃣</span>
+                <span class="numbered-content">当你遇到身体的不适时，你的第一反应是什么？这个反应对应着哪个境界？</span>
+            </div>
+            <div class="numbered-list">
+                <span class="number-circle">3️⃣</span>
+                <span class="numbered-content">试着在下次不适时，用“三次呼吸着陆”的方法，看看你能走到第几层？</span>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 延伸阅读 -->
+        <h2>🔗 延伸阅读</h2>
+
+        <div class="list-container">
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content">《旋量-太极：当量子物理遇见东方智慧》</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content">《“道生一，一生二，二生三，三生万物”：一个Spinor-Taiji model的生成论读解》</span>
+            </div>
+            <div class="list-item">
+                <span class="list-bullet">•</span>
+                <span class="list-content">《从振动到觉知：一份身心探索的阅读地图与实修指南》</span>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 原创声明 -->
+        <p><strong>⚠️ 原创声明</strong></p>
+        <p><strong>✨ TS爱心联盟 · 探索爱的真谛，让爱自由表达</strong></p>
+
+        <hr />
+
+        <!-- 标签 -->
+        <p><strong>📌 标签</strong>：#旋量 #太极 #看山三境界 #修行 #意识演化 #量子物理 #东方智慧</p>
+
+        <!-- 互动引导 -->
+        <div class="interaction-section">
+            <p class="interaction-hint">如果这篇文章对你有帮助，欢迎转发给需要的朋友</p>
+            <div class="interaction-buttons">
+                <a href="javascript:;" class="interaction-btn btn-like" onclick="alert('感谢你的支持！')">
+                    <span>👍</span> 点赞
+                </a>
+                <a href="javascript:;" class="interaction-btn btn-star" onclick="alert('感谢你的鼓励！')">
+                    <span>⭐</span> 在看
+                </a>
+                <a href="javascript:;" class="interaction-btn btn-share" onclick="alert('分享给更多需要的人！')">
+                    <span>↗</span> 分享
+                </a>
+            </div>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="footer">
+            <p>（本文属于“振动-觉知”系列文章，旨在用现代科学视角解读东方智慧。）</p>
+        </div>
+
+    </section>
+</body>
+</html>
