@@ -1,0 +1,6 @@
+﻿name = "spinor-taiji-model"
+type = "static"
+
+[build]
+command = "python scripts/build.py"
+publish = "dist"

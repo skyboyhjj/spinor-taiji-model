@@ -1,0 +1,12 @@
+﻿{
+  "name": "spinor-taiji-model",
+  "version": "1.0.0",
+  "description": "旋量太极知识库",
+  "scripts": {
+    "build": "python scripts/build.py",
+    "deploy": "wrangler pages deploy dist --project-name spinor-taiji-model",
+    "preview": "cd dist && python -m http.server 8000"
+  },
+  "devDependencies": {},
+  "private": true
+}
