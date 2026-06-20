@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { margin: 0; padding: 0; background: linear-gradient(135deg, #0a1628 0%, #1a237e 50%, #0d47a1 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .container { width: 1080px; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        
+        /* 太极图案 */
+        .taiji { width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #ffffff 50%, #1a237e 50%); position: relative; margin-bottom: 30px; box-shadow: 0 0 60px rgba(255,215,0,0.3); }
+        .taiji::before { content: ""; width: 100px; height: 100px; border-radius: 50%; background: #1a237e; position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
+        .taiji::after { content: ""; width: 100px; height: 100px; border-radius: 50%; background: #ffffff; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+        .yin-dot { width: 30px; height: 30px; border-radius: 50%; background: #ffffff; position: absolute; top: 35px; left: 50%; transform: translateX(-50%); }
+        .yang-dot { width: 30px; height: 30px; border-radius: 50%; background: #1a237e; position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%); }
+        
+        /* 数据流效果 */
+        .data-flow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+        .data-line { position: absolute; width: 2px; height: 80px; background: linear-gradient(to bottom, transparent, #ffd700, transparent); animation: flow 2s ease-in-out infinite; }
+        .data-line:nth-child(1) { transform: rotate(0deg) translateY(-120px); }
+        .data-line:nth-child(2) { transform: rotate(45deg) translateY(-120px); animation-delay: 0.2s; }
+        .data-line:nth-child(3) { transform: rotate(90deg) translateY(-120px); animation-delay: 0.4s; }
+        .data-line:nth-child(4) { transform: rotate(135deg) translateY(-120px); animation-delay: 0.6s; }
+        .data-line:nth-child(5) { transform: rotate(180deg) translateY(-120px); animation-delay: 0.8s; }
+        .data-line:nth-child(6) { transform: rotate(225deg) translateY(-120px); animation-delay: 1s; }
+        .data-line:nth-child(7) { transform: rotate(270deg) translateY(-120px); animation-delay: 1.2s; }
+        .data-line:nth-child(8) { transform: rotate(315deg) translateY(-120px); animation-delay: 1.4s; }
+        
+        @keyframes flow { 0%, 100% { opacity: 0; height: 0; } 50% { opacity: 1; height: 80px; } }
+        
+        /* 标题 */
+        h1 { font-family: "STKaiti", "KaiTi", serif; font-size: 36px; color: #ffffff; text-align: center; margin: 0; text-shadow: 2px 2px 10px rgba(255,215,0,0.5); }
+        h2 { font-family: "STKaiti", "KaiTi", serif; font-size: 20px; color: rgba(255,255,255,0.8); text-align: center; margin: 15px 0 0; }
+        
+        /* 装饰元素 */
+        .decoration { position: absolute; }
+        .circle { border: 1px solid rgba(255,215,0,0.2); border-radius: 50%; }
+        .circle-1 { width: 300px; height: 300px; top: 10%; left: 10%; }
+        .circle-2 { width: 200px; height: 200px; bottom: 15%; right: 10%; }
+        .circle-3 { width: 100px; height: 100px; top: 60%; left: 20%; }
+        
+        /* 量子点 */
+        .quantum { width: 4px; height: 4px; background: #ffd700; border-radius: 50%; position: absolute; animation: pulse 2s ease-in-out infinite; }
+        .q1 { top: 20%; left: 30%; }
+        .q2 { top: 30%; right: 25%; }
+        .q3 { bottom: 25%; left: 25%; }
+        .q4 { bottom: 30%; right: 35%; }
+        
+        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decoration circle circle-1"></div>
+        <div class="decoration circle circle-2"></div>
+        <div class="decoration circle circle-3"></div>
+        
+        <div class="quantum q1"></div>
+        <div class="quantum q2"></div>
+        <div class="quantum q3"></div>
+        <div class="quantum q4"></div>
+        
+        <div class="taiji">
+            <div class="yin-dot"></div>
+            <div class="yang-dot"></div>
+        </div>
+        
+        <div class="data-flow">
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+            <div class="data-line"></div>
+        </div>
+        
+        <h1>AI伦理的新范式</h1>
+        <h2>——伦理即道体</h2>
+    </div>
+</body>
+</html>
