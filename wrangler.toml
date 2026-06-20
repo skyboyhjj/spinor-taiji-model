@@ -1,5 +1,2 @@
 name = "spinor-taiji-model"
 pages_build_output_dir = "dist"
-
-[build]
-command = "python scripts/build.py"
