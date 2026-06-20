@@ -22,6 +22,32 @@ def main():
     shutil.copytree(docs_src, dist_docs)
     print("复制 docs 目录")
 
+    # 中文主文件 -> 英文别名映射
+    alias_map = {
+        '伦理即道体理念落地指南_公众号版.html': 'lunli-ji-daoti.html',
+        '伦理即道体系列_阅读地图与实修指南_修复版_公众号版.html': 'lunli-reading-map.html',
+        '道德经无死地_旋量太极读解_公众号版_with_new_images.html': 'daodejing-wusidi.html',
+        '道德经第一章_旋量-太极读解_微信公众号专业版_公众号版.html': 'daodejing-chapter-1.html',
+        '道德经里的思维智慧_为什么为道日损_排版版_公众号版.html': 'daodejing-dao-sun.html',
+        '旋量-太极模型中_看山三境界_公众号版_6月4日模板.html': 'spinor-taiji-three-realms.html',
+        '看山三境界_核心数据表格_公众号版.html': 'three-realms-data.html',
+        '心经的振动科学与觉知智慧_一句一句的现代读解_公众号版.html': 'heart-sutra-vibration.html',
+        '色即是空_空即是色_认知与实践的升级_公众号版.html': 'form-is-emptiness.html',
+        '从认识道到成为道_一场认知与实践的升级_大众版_公众号版.html': 'from-knowing-to-being.html',
+        '旋量太极模型写高考作文_两篇对比版_公众号版_修复后.html': 'gaokao-essay-spinor.html',
+        '胃病切片_学术排版版_公众号版.html': 'stomach-disease-slice.html',
+        '长期胃病_公众号版_ima.html': 'chronic-gastritis.html',
+        '微信公众号响应式表格演示_公众号版.html': 'responsive-table-demo.html',
+    }
+
+    # 将中文主文件内容复制到英文别名文件
+    for chinese_file, alias_file in alias_map.items():
+        chinese_path = os.path.join(dist_articles, chinese_file)
+        alias_path = os.path.join(dist_articles, alias_file)
+        if os.path.exists(chinese_path):
+            shutil.copy2(chinese_path, alias_path)
+            print(f"复制内容: {chinese_file} -> {alias_file}")
+
     index_html = "<!DOCTYPE html><html lang='zh-CN'><head><meta charset='UTF-8'><title>旋量太极知识库</title></head><body><h1>旋量太极知识库</h1><a href='docs/'>文档</a></body></html>"
     with open(os.path.join(dist_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_html)
