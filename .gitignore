@@ -1,3 +1,23 @@
+# ============================================
+# Spinor-Taiji Model - 文件管理规范
+# ============================================
+# 
+# 发布内容范围：
+#   ✅ docs/          - 核心文档库（必须上传）
+#   ✅ articles/      - 公众号文章（必须上传）
+#   ✅ README.md      - 项目说明（必须上传）
+#   ✅ LICENSE        - 许可证（必须上传）
+#   ✅ CONTRIBUTING.md - 贡献指南（必须上传）
+#   
+# 本地工作文件（不上传）：
+#   ❌ scripts/       - 工具脚本
+#   ❌ media/         - 媒体资源
+#   ❌ data/          - 数据文件
+#   ❌ skill/         - 技能文档
+#   ❌ templates/     - 模板文件
+#   ❌ .github/       - GitHub配置
+# ============================================
+
 # Python
 __pycache__/
 *.py[cod]
@@ -37,12 +57,20 @@ env/
 .DS_Store
 Thumbs.db
 
-# Project specific
+# Project specific - 本地工作文件
 *.log
 .env
 .env.local
 secrets/
 credentials/
+
+# Local working directories (NOT for publishing)
+scripts/
+media/
+data/
+skill/
+templates/
+.github/
 
 # Temporary files
 *.tmp
