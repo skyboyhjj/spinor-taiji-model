@@ -65,7 +65,7 @@ secrets/
 credentials/
 
 # Local working directories (NOT for publishing)
-scripts/
+# scripts/ - 已移除排除，允许上传构建脚本
 media/
 data/
 skill/
