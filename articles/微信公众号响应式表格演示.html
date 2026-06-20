@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信公众号响应式表格演示</title>
+    <style>
+        body { margin: 0; padding: 16px; background-color: #f5f5f5; }
+        .container { max-width: 677px; margin: 0 auto; background-color: #ffffff; padding: 24px; border-radius: 8px; }
+        h2 { font-size: 18px; color: #8B1E22; margin: 24px 0 16px; padding-left: 8px; border-left: 4px solid #8B1E22; }
+        p { font-size: 15px; color: #3f3f3f; line-height: 1.8; margin: 12px 0; }
+        .tip { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 16px 0; font-size: 14px; color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-size:22px;font-weight:bold;color:#8B1E22;text-align:center;margin:0 0 24px;padding-bottom:16px;border-bottom:2px solid #8B1E22;">微信公众号响应式表格设计指南</h1>
+        
+        <p>本文档介绍如何在微信公众号文章中创建响应式表格，确保在手机、平板和桌面端均能完整显示。</p>
+        
+        <h2>一、标准三列表格</h2>
+        <p>适用于列数较少（≤3列）的表格，直接使用传统表格布局：</p>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+<div style="font-size:14px;color:#666666;margin-bottom:12px;text-align:center;font-weight:bold;">三境界对照表</div>
+<table style="width:100%;max-width:677px;border-collapse:collapse;margin:16px auto;font-size:14px;background-color:#ffffff;table-layout:fixed;">
+<thead>
+<tr style="background:linear-gradient(to bottom,rgba(139,30,34,0.1),rgba(139,30,34,0.05));font-weight:bold;">
+<th style="padding:10px 8px;text-align:left;border-bottom:1px solid #ddd;color:#333333;word-break:break-all;white-space:normal;">境界</th>
+<th style="padding:10px 8px;text-align:left;border-bottom:1px solid #ddd;color:#333333;word-break:break-all;white-space:normal;">禅宗</th>
+<th style="padding:10px 8px;text-align:left;border-bottom:1px solid #ddd;color:#333333;word-break:break-all;white-space:normal;">认知状态</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background-color:rgba(0,0,0,0.03);">
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">第一层</td>
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">看山是山</td>
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">完全认同现象</td>
+</tr>
+<tr style="background-color:transparent;">
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">第二层</td>
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">看山不是山</td>
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">穿透本质</td>
+</tr>
+<tr style="background-color:rgba(0,0,0,0.03);">
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">第三层</td>
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">看山还是山</td>
+<td style="padding:10px 8px;border-bottom:1px solid #eee;color:#555555;word-break:break-all;white-space:normal;">超越二元</td>
+</tr>
+</tbody>
+</table>
+</div>
+        
+        <h2>二、多列对比表格（自动转换为卡片布局）</h2>
+        <p>当表格列数超过3列时，自动转换为垂直卡片布局，避免横向滚动：</p>
+        <div style="font-size:14px;color:#666666;margin-bottom:16px;text-align:center;font-weight:bold;">2026年高考作文题对比</div>
+<div style="border:1px solid #eee;border-radius:8px;margin-bottom:12px;overflow:hidden;">
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">试卷：</span>
+<span style="color:#555555;word-break:break-all;">全国I卷</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">题目：</span>
+<span style="color:#555555;word-break:break-all;">词语的变化</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">核心主题：</span>
+<span style="color:#555555;word-break:break-all;">成长中的认知转变</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">难度：</span>
+<span style="color:#555555;word-break:break-all;">中等</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">推荐指数：</span>
+<span style="color:#555555;word-break:break-all;">★★★★</span>
+</div>
+</div>
+<div style="border:1px solid #eee;border-radius:8px;margin-bottom:12px;overflow:hidden;">
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">试卷：</span>
+<span style="color:#555555;word-break:break-all;">全国II卷</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">题目：</span>
+<span style="color:#555555;word-break:break-all;">蔽而复明</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">核心主题：</span>
+<span style="color:#555555;word-break:break-all;">困顿中本体不失</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">难度：</span>
+<span style="color:#555555;word-break:break-all;">较难</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">推荐指数：</span>
+<span style="color:#555555;word-break:break-all;">★★★</span>
+</div>
+</div>
+<div style="border:1px solid #eee;border-radius:8px;margin-bottom:12px;overflow:hidden;">
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">试卷：</span>
+<span style="color:#555555;word-break:break-all;">北京卷</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">题目：</span>
+<span style="color:#555555;word-break:break-all;">做规划与下功夫</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">核心主题：</span>
+<span style="color:#555555;word-break:break-all;">规划与行动</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">难度：</span>
+<span style="color:#555555;word-break:break-all;">中等</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">推荐指数：</span>
+<span style="color:#555555;word-break:break-all;">★★★★★</span>
+</div>
+</div>
+<div style="border:1px solid #eee;border-radius:8px;margin-bottom:12px;overflow:hidden;">
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">试卷：</span>
+<span style="color:#555555;word-break:break-all;">天津卷</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">题目：</span>
+<span style="color:#555555;word-break:break-all;">"调"一字双音</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">核心主题：</span>
+<span style="color:#555555;word-break:break-all;">调适与创造</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">难度：</span>
+<span style="color:#555555;word-break:break-all;">较难</span>
+</div>
+<div style="display:flex;padding:10px 12px;background-color:#fafafa;">
+<span style="font-weight:bold;color:#333333;width:35%;flex-shrink:0;">推荐指数：</span>
+<span style="color:#555555;word-break:break-all;">★★★★</span>
+</div>
+</div>
+        
+        <h2>三、键值对汇总表</h2>
+        <p>适用于简单的参数说明、统计数据等：</p>
+        <div style="font-size:14px;color:#666666;margin-bottom:16px;text-align:center;font-weight:bold;">文章基本信息</div>
+<div style="max-width:400px;margin:0 auto;">
+<div style="display:flex;padding:10px 16px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:40%;">文章字数</span>
+<span style="color:#555555;">约900字</span>
+</div>
+<div style="display:flex;padding:10px 16px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:40%;">阅读时间</span>
+<span style="color:#555555;">3-5分钟</span>
+</div>
+<div style="display:flex;padding:10px 16px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:40%;">难度级别</span>
+<span style="color:#555555;">中等</span>
+</div>
+<div style="display:flex;padding:10px 16px;background-color:#ffffff;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:40%;">适合人群</span>
+<span style="color:#555555;">高中生、大学生</span>
+</div>
+<div style="display:flex;padding:10px 16px;background-color:#fafafa;border-bottom:1px solid #eee;">
+<span style="font-weight:bold;color:#333333;width:40%;">关键词</span>
+<span style="color:#555555;">旋量、太极、认知</span>
+</div>
+</div>
+        
+        <h2>四、表格设计规范</h2>
+        
+        <div class="tip">
+            <strong>📐 尺寸规范：</strong><br>
+            - 最大宽度：677px（微信公众号编辑器容器宽度）<br>
+            - 字体大小：14px（表格内容），12px（紧凑表格）<br>
+            - 单元格内边距：10px 8px<br>
+            - 行高：自然换行，使用 word-break: break-all
+        </div>
+        
+        <div class="tip">
+            <strong>🎨 样式规范：</strong><br>
+            - 表头：深红色渐变背景（rgba(139,30,34,0.1) → rgba(139,30,34,0.05)）<br>
+            - 表体：隔行变色（浅灰色 rgba(0,0,0,0.03)）<br>
+            - 边框：底部细线分隔（1px solid #eee）<br>
+            - 文字颜色：表头#333，表体#555
+        </div>
+        
+        <div class="tip">
+            <strong>✅ 测试验证步骤：</strong><br>
+            1. 在微信公众号编辑器中粘贴表格HTML<br>
+            2. 预览手机端效果，检查是否需要横向滚动<br>
+            3. 在平板（iPad）上预览，检查布局是否正常<br>
+            4. 在桌面浏览器中预览，检查居中对齐<br>
+            5. 检查长文本是否自动换行，无内容被截断
+        </div>
+        
+        <h2>五、实现代码示例</h2>
+        <p>以下是生成上述表格的Python代码示例：</p>
+        <div style="background:#f5f5f5;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;overflow-x:auto;">
+from WeChatTableGenerator import WeChatTableGenerator<br>
+<br>
+generator = WeChatTableGenerator()<br>
+<br>
+# 标准表格<br>headers = ['境界', '禅宗', '认知状态']<br>rows = [['第一层', '看山是山', '完全认同现象'], ...]<br>table_html = generator.generate_table(headers, rows, caption='表格标题')<br>
+<br>
+# 多列表格（自动转换为卡片布局）<br>table_html = generator.generate_card_layout(headers, rows)<br>
+<br>
+# 键值对汇总表<br>summary_data = {'键1': '值1', '键2': '值2'}<br>table_html = generator.generate_summary_table(summary_data, title='汇总标题')
+        </div>
+    </div>
+</body>
+</html>
