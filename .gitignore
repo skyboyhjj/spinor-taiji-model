@@ -48,3 +48,6 @@ credentials/
 *.tmp
 *.bak
 *.backup
+
+# Nested directory (accidental creation)
+spinor-taiji-model/
