@@ -1,5 +1,12 @@
 ﻿import os
 import shutil
+import json
+
+def load_config(config_path):
+    """从配置文件加载别名映射"""
+    with open(config_path, "r", encoding="utf-8") as f:
+        config = json.load(f)
+    return config
 
 def main():
     project_root = os.getcwd()
@@ -8,6 +15,7 @@ def main():
     dist_dir = os.path.join(project_root, "dist")
     dist_articles = os.path.join(dist_dir, "articles")
     dist_docs = os.path.join(dist_dir, "docs")
+    config_path = os.path.join(project_root, "config", "article_aliases.json")
 
     if not os.path.exists(dist_dir):
         os.makedirs(dist_dir)
@@ -22,23 +30,11 @@ def main():
     shutil.copytree(docs_src, dist_docs)
     print("复制 docs 目录")
 
-    # 中文主文件 -> 英文别名映射（使用实际文件名，包含中文引号）
-    alias_map = {
-        '\u201c伦理即道体\u201d理念落地指南_公众号版.html': 'lunli-ji-daoti.html',
-        '伦理即道体系列_阅读地图与实修指南_修复版_公众号版.html': 'lunli-reading-map.html',
-        '道德经无死地_旋量太极读解_公众号版_with_new_images.html': 'daodejing-wusidi.html',
-        '道德经第一章_旋量-太极读解_微信公众号专业版_公众号版.html': 'daodejing-chapter-1.html',
-        '道德经里的思维智慧_为什么\u201c为道日损\u201d_排版版_公众号版.html': 'daodejing-dao-sun.html',
-        '\u201c旋量-太极\u201d模型中_\u201c看山三境界\u201d_公众号版_6月4日模板.html': 'spinor-taiji-three-realms.html',
-        '看山三境界_核心数据表格_公众号版.html': 'three-realms-data.html',
-        '心经的振动科学与觉知智慧_一句一句的现代读解_公众号版.html': 'heart-sutra-vibration.html',
-        '色即是空_空即是色_认知与实践的升级_公众号版.html': 'form-is-emptiness.html',
-        '从\u201c认识道\u201d到\u201c成为道\u201d_一场认知与实践的升级_大众版_公众号版.html': 'from-knowing-to-being.html',
-        '旋量太极模型写高考作文_两篇对比版_公众号版_修复后.html': 'gaokao-essay-spinor.html',
-        '胃病切片_学术排版版_公众号版.html': 'stomach-disease-slice.html',
-        '长期胃病_公众号版_ima.html': 'chronic-gastritis.html',
-        '微信公众号响应式表格演示_公众号版.html': 'responsive-table-demo.html',
-    }
+    # 从配置文件加载别名映射
+    config = load_config(config_path)
+    alias_map = config["aliases"]
+    print(f"加载配置文件: {config_path}")
+    print(f"配置版本: {config.get('version', '1.0')}")
 
     # 将中文主文件内容复制到英文别名文件
     for chinese_file, alias_file in alias_map.items():
@@ -53,48 +49,37 @@ def main():
         f.write(index_html)
     print("创建首页")
 
-    # 生成 _redirects 文件
-    redirects_content = """# Cloudflare Pages 重定向规则
-# 中文主文件 -> 英文别名（用于SEO优化）
-
-# 伦理即道体系列
-/articles/伦理即道体理念落地指南_公众号版.html /articles/lunli-ji-daoti.html 301
-/articles/伦理即道体系列_阅读地图与实修指南_修复版_公众号版.html /articles/lunli-reading-map.html 301
-
-# 道德经系列
-/articles/道德经无死地_旋量太极读解_公众号版_with_new_images.html /articles/daodejing-wusidi.html 301
-/articles/道德经第一章_旋量-太极读解_微信公众号专业版_公众号版.html /articles/daodejing-chapter-1.html 301
-/articles/道德经里的思维智慧_为什么为道日损_排版版_公众号版.html /articles/daodejing-dao-sun.html 301
-
-# 旋量太极系列
-/articles/旋量-太极模型中_看山三境界_公众号版_6月4日模板.html /articles/spinor-taiji-three-realms.html 301
-/articles/看山三境界_核心数据表格_公众号版.html /articles/three-realms-data.html 301
-
-# 心经
-/articles/心经的振动科学与觉知智慧_一句一句的现代读解_公众号版.html /articles/heart-sutra-vibration.html 301
-
-# 色即是空
-/articles/色即是空_空即是色_认知与实践的升级_公众号版.html /articles/form-is-emptiness.html 301
-
-# 认知升级
-/articles/从认识道到成为道_一场认知与实践的升级_大众版_公众号版.html /articles/from-knowing-to-being.html 301
-
-# 高考作文
-/articles/旋量太极模型写高考作文_两篇对比版_公众号版_修复后.html /articles/gaokao-essay-spinor.html 301
-
-# 胃病调理
-/articles/胃病切片_学术排版版_公众号版.html /articles/stomach-disease-slice.html 301
-/articles/长期胃病_公众号版_ima.html /articles/chronic-gastritis.html 301
-
-# 技术演示
-/articles/微信公众号响应式表格演示_公众号版.html /articles/responsive-table-demo.html 301
-
-# 首页重定向
-/docs/ / 301
-"""
+    # 从配置文件生成 _redirects 文件
+    redirect_rules = config.get("redirect_rules", {}).get("rules", [])
+    redirects_lines = ["# Cloudflare Pages 重定向规则", "# 中文主文件 -> 英文别名（用于SEO优化）", ""]
+    for rule in redirect_rules:
+        redirects_lines.append(f"{rule['from']} {rule['to']} {rule['status']}")
+    redirects_lines.append("")
+    redirects_lines.append("# 首页重定向")
+    redirects_lines.append("/docs/ / 301")
+    redirects_content = "\n".join(redirects_lines)
+    
     with open(os.path.join(dist_dir, "_redirects"), "w", encoding="utf-8") as f:
         f.write(redirects_content)
-    print("创建 _redirects 文件")
+    print(f"创建 _redirects 文件 (共 {len(redirect_rules)} 条规则)")
+
+    # 生成 _headers 文件
+    headers_config_path = os.path.join(project_root, "config", "headers_config.json")
+    if os.path.exists(headers_config_path):
+        headers_config = load_config(headers_config_path)
+        headers_lines = []
+        for header_rule in headers_config["headers"]:
+            headers_lines.append(f"{header_rule['path']}")
+            for name, value in header_rule["headers"].items():
+                headers_lines.append(f"  {name}: {value}")
+            headers_lines.append("")
+        headers_content = "\n".join(headers_lines)
+        
+        with open(os.path.join(dist_dir, "_headers"), "w", encoding="utf-8") as f:
+            f.write(headers_content)
+        print(f"创建 _headers 文件 (共 {len(headers_config['headers'])} 条规则)")
+    else:
+        print(f"警告：未找到 headers 配置文件: {headers_config_path}")
 
     article_count = len([f for f in os.listdir(dist_articles) if f.endswith(".html")])
     print(f"构建完成！articles文件数: {article_count}")
