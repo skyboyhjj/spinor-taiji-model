@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinor-Taiji Glossary</title>
+<style>
+:root { --primary-color: #0066cc; --secondary-color: #00cc99; --accent-color: #ff6600; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif; font-size: 16px; line-height: 1.8; color: #333; background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); min-height: 100vh; }
+header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+.header-content { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 20px; font-weight: bold; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.search-box { padding: 8px 16px; border: 2px solid #e0e0e0; border-radius: 25px; font-size: 14px; width: 250px; outline: none; }
+.search-box:focus { border-color: var(--primary-color); }
+.main-container { display: flex; max-width: 1200px; margin: 0 auto; padding: 80px 20px 100px; gap: 30px; }
+.sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
+.sidebar-title { font-size: 16px; font-weight: bold; color: var(--primary-color); margin-bottom: 15px; padding-left: 10px; border-left: 4px solid var(--primary-color); }
+.nav-list { list-style: none; background: white; border-radius: 12px; padding: 10px 0; box-shadow: 0 4px 12px rgba(0,102,204,0.1); }
+.nav-item { padding: 10px 20px; cursor: pointer; color: #666; font-size: 14px; }
+.nav-item.active { background: rgba(0,102,204,0.1); color: var(--primary-color); font-weight: bold; }
+.content { flex: 1; }
+.intro-section { background: linear-gradient(135deg, var(--primary-color), #0088dd); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; }
+.intro-title { font-size: 32px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+.intro-subtitle { font-size: 16px; opacity: 0.9; text-align: center; font-style: italic; }
+.section { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,102,204,0.1); }
+.section-title { font-size: 22px; font-weight: bold; color: var(--primary-color); margin-bottom: 25px; }
+.section-title::before { content: ""; width: 4px; height: 24px; background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); display: inline-block; margin-right: 10px; }
+.term-card { background: linear-gradient(135deg, #fafbfc, #f5f7fa); border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--primary-color); }
+.term-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.term-tag { background: linear-gradient(135deg, var(--primary-color), #0077dd); color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+.term-category { font-size: 12px; color: #999; background: #f0f0f0; padding: 4px 10px; border-radius: 10px; }
+.term-definition { font-size: 15px; color: #555; line-height: 1.8; text-indent: 2em; }
+.version-module { background: linear-gradient(135deg, #fff9e6, #fff5cc); border-left: 4px solid #ff9900; border-radius: 0 12px 12px 0; padding: 25px; margin-bottom: 30px; }
+.version-title { font-size: 18px; font-weight: bold; color: #cc7700; margin-bottom: 20px; }
+.version-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.version-item { background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px; }
+.version-label { font-size: 12px; color: #999; margin-bottom: 5px; }
+.version-value { font-size: 14px; font-weight: bold; color: #333; }
+.change-log { margin-top: 20px; border-top: 1px dashed #ffcc66; padding-top: 20px; }
+.change-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #ffeedd; }
+.change-type { font-size: 12px; padding: 3px 8px; border-radius: 15px; font-weight: bold; }
+.change-type.add { background: #e6f7ff; color: #1890ff; }
+.change-type.modify { background: #fff7e6; color: #fa8c16; }
+.relation-graph { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; }
+.graph-title { font-size: 22px; font-weight: bold; color: var(--primary-color); margin-bottom: 25px; }
+.graph-container { overflow-x: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; }
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.legend-color { width: 16px; height: 16px; border-radius: 4px; }
+.legend-text { font-size: 13px; color: #666; }
+.back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
+.back-to-top.show { opacity: 1; visibility: visible; }
+footer { background: #2c3e50; color: white; padding: 30px; text-align: center; margin-top: 50px; }
+.footer-text { font-size: 14px; opacity: 0.8; }
+.clickable-node { cursor: pointer; }
+.clickable-node.active { animation: nodePulse 1.5s infinite; }
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+.highlight-card { animation: cardHighlight 0.8s ease-out; }
+@keyframes cardHighlight {
+  0% { background-color: rgba(0, 102, 204, 0.25); box-shadow: 0 0 20px rgba(0, 102, 204, 0.4); }
+  100% { background-color: transparent; box-shadow: 0 4px 12px rgba(0,102,204,0.1); }
+}
+.graph-container svg { overflow: visible; }
+.graph-hint { text-align: center; color: #999; font-size: 13px; margin-top: 15px; }
+</style>
+</head>
+<body>
+<header><div class="header-content"><div class="logo">Spinor-Taiji Glossary</div><input type="text" class="search-box" id="searchInput" placeholder="Search terms..."></div></header>
+<div class="main-container">
+<aside class="sidebar"><div class="sidebar-title">Navigation</div><ul class="nav-list">
+<li class="nav-item active" data-section="intro">Introduction</li>
+<li class="nav-item " data-section="version">Version</li>
+<li class="nav-item " data-section="graph">Diagram</li>
+<li class="nav-item " data-section="basic">Basic</li>
+<li class="nav-item " data-section="time">Time</li>
+<li class="nav-item " data-section="existence">Existence</li>
+<li class="nav-item " data-section="life">Life</li>
+<li class="nav-item " data-section="relation">Relation</li>
+<li class="nav-item " data-section="mind">Mind</li>
+<li class="nav-item " data-section="classic">Classic</li>
+<li class="nav-item " data-section="quick">Quick Ref</li>
+</ul></aside>
+<main class="content">
+<div id="intro" class="intro-section"><h1 class="intro-title">Spinor-Taiji Glossary</h1><p class="intro-subtitle">The following definitions have been re-anchored through cross-interpretation of "Everything is Vibration" and the "Spinor-Taiji" model.<br>The name that can be named is not the eternal name — these definitions are not ultimate truths, but operational metaphorical scaffolds.</p></div>
+<div id="version" class="version-module">
+<div class="version-title">Version Information</div>
+<div class="version-grid">
+<div class="version-item"><div class="version-label">Version</div><div class="version-value">v1.0.0</div></div>
+<div class="version-item"><div class="version-label">Release Date</div><div class="version-value">June 22, 2026</div></div>
+<div class="version-item"><div class="version-label">Responsible Party</div><div class="version-value">Spinor-Taiji Team</div></div>
+<div class="version-item"><div class="version-label">Version Status</div><div class="version-value">Initial Version</div></div>
+</div></div>
+<div id="graph" class="relation-graph">
+<div class="graph-title">Relationship Diagram</div>
+<div class="graph-container">
+<svg width="800" height="500" viewBox="0 0 800 500">
+<defs>
+<linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0066cc"/><stop offset="100%" style="stop-color:#00cc99"/></linearGradient>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#999"/></marker>
+</defs>
+<g class="graph-nodes">
+<circle cx="400" cy="50" r="40" fill="url(#mainGrad)" class="clickable-node" data-target="Domain/Awareness"/><text x="400" y="48" text-anchor="middle" fill="white" font-weight="bold" font-size="14">Domain/Awareness</text>
+<circle cx="400" cy="140" r="30" fill="#1890ff" class="clickable-node" data-target="Spinor"/><text x="400" y="138" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Spinor</text>
+<circle cx="280" cy="230" r="25" fill="#1890ff" class="clickable-node" data-target="Squaring"/><text x="280" y="228" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Squaring</text>
+<circle cx="520" cy="230" r="25" fill="#1890ff" class="clickable-node" data-target="Root"/><text x="520" y="228" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Root</text>
+<circle cx="200" cy="320" r="22" fill="#666" class="clickable-node" data-target="Vector"/><text x="200" y="318" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Vector</text>
+<circle cx="600" cy="320" r="22" fill="#666" class="clickable-node" data-target="Time"/><text x="600" y="318" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Time</text>
+<circle cx="120" cy="410" r="20" fill="#52c41a" class="clickable-node" data-target="Abundant Virtue"/><text x="120" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">Life State</text>
+<circle cx="300" cy="410" r="20" fill="#fa8c16" class="clickable-node" data-target="Love"/><text x="300" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">Relation</text>
+<circle cx="500" cy="410" r="20" fill="#722ed1" class="clickable-node" data-target="Practice"/><text x="500" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">Mind Practice</text>
+<circle cx="680" cy="410" r="20" fill="#13c2c2" class="clickable-node" data-target="Tao Generates"/><text x="680" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">Classic</text>
+</g>
+<line x1="400" y1="90" x2="400" y2="110" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowhead)"/>
+<line x1="400" y1="170" x2="280" y2="205" stroke="#1890ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="400" y1="170" x2="520" y2="205" stroke="#1890ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="280" y1="255" x2="200" y2="298" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="520" y1="255" x2="600" y2="298" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="200" y1="342" x2="120" y2="390" stroke="#52c41a" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="200" y1="342" x2="300" y2="390" stroke="#fa8c16" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="600" y1="342" x2="500" y2="390" stroke="#722ed1" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="600" y1="342" x2="680" y2="390" stroke="#13c2c2" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>
+<div class="graph-hint">Click on any node to jump to its definition</div>
+</div>
+<div class="legend">
+<div class="legend-item"><div class="legend-color" style="background:linear-gradient(135deg,#0066cc,#00cc99)"></div><span class="legend-text">Source Concept</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#1890ff"></div><span class="legend-text">Basic Operation</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#666"></div><span class="legend-text">Core Concept</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#52c41a"></div><span class="legend-text">Life State</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#fa8c16"></div><span class="legend-text">Relation</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#722ed1"></div><span class="legend-text">Mind Practice</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#13c2c2"></div><span class="legend-text">Classic Interpretation</span></div>
+</div></div>
+<div id="basic" class="section"><h2 class="section-title">Basic Operations</h2>
+<div class="term-card" data-term="Domain/Awareness"><div class="term-header"><span class="term-tag">Domain/Awareness</span><span class="term-category">Source Concept</span></div><p class="term-definition">The empty set that contains all spinor births and deaths, vector appearances and disappearances, squaring and root operations. It itself does not square, does not take roots, and is not disturbed by any operation. It is — the awake background that is currently reading these words.</p></div>
+<div class="term-card" data-term="Spinor"><div class="term-header"><span class="term-tag">Spinor</span><span class="term-category">Basic Concept</span></div><p class="term-definition">A vibrating seed that requires 720° to restore its original state. The smallest unit of rotation at the foundation of the universe — after rotating 360°, it does not restore but "reverses sign" (from visible to hidden, from yang to yin). It carries both positive and negative solutions simultaneously (√4 = +2 or -2). Invisible, yet all that is visible comes from squaring this.</p></div>
+<div class="term-card" data-term="Vector"><div class="term-header"><span class="term-tag">Vector</span><span class="term-category">Basic Concept</span></div><p class="term-definition">The observable product after a spinor is squared. Matter, body, thoughts, labels — all "certain things" are vectors. It is not false, but it is not foundational — beneath every vector lies a spinor that can continue to be rooted.</p></div>
+<div class="term-card" data-term="Squaring"><div class="term-header"><span class="term-tag">Squaring</span><span class="term-category">Operation</span></div><p class="term-definition">From spinor to vector — from potential crystallizing into experience. In the human body, this corresponds to <strong>inhalation</strong>.</p></div>
+<div class="term-card" data-term="Root"><div class="term-header"><span class="term-tag">Root</span><span class="term-category">Operation</span></div><p class="term-definition">From vector back to spinor — from experience dissolving back into potential. In the human body, this corresponds to <strong>exhalation</strong>.</p></div>
+<div class="term-card" data-term="720° Restoration"><div class="term-header"><span class="term-tag">720° Restoration</span><span class="term-category">Basic Concept</span></div><p class="term-definition">A spinor completing a full yin-yang cycle — after experiencing visibility and hiddenness, positive and negative, generation and return, returning to itself. Not returning to "what it was", but returning to "the source".</p></div>
+<div class="term-card" data-term="360° Reversal"><div class="term-header"><span class="term-tag">360° Reversal</span><span class="term-category">Basic Concept</span></div><p class="term-definition">A spinor reversing from visible to hidden, or from yang to yin — the smallest unit of "reversal is the movement of the Tao". Ordinary people resist this reversal; sages do not resist.</p></div>
+<div class="term-card" data-term="Dual Solutions"><div class="term-header"><span class="term-tag">Dual Solutions</span><span class="term-category">Basic Concept</span></div><p class="term-definition">Two square root solutions of the same spinor — √4 = +2 and -2. Not two "good" and "bad" things, but two phases of the same source.</p></div>
+</div>
+<div id="time" class="section"><h2 class="section-title">Time</h2>
+<div class="term-card" data-term="Time"><div class="term-header"><span class="term-tag">Time</span><span class="term-category">Temporal Concept</span></div><p class="term-definition">The rhythm of continuous squaring and rooting of the spinor field. Not a river, but a pulse sequence — each squaring generates "this moment", each rooting completes the dissolution of "this moment". The so-called "passage of time" is your continuous, uninterrupted squaring and rooting.</p></div>
+<div class="term-card" data-term="Present"><div class="term-header"><span class="term-tag">Present</span><span class="term-category">Temporal Concept</span></div><p class="term-definition">The instant when a spinor is being squared — the event that is happening as potential crystallizes into experience. It is not a static point (that would be a misunderstanding), but "the infinite kinetic energy as amplitude crosses zero". In the human body, it is the brief "gap" after exhalation ends and before the next inhalation begins.</p></div>
+<div class="term-card" data-term="Past"><div class="term-header"><span class="term-tag">Past</span><span class="term-category">Temporal Concept</span></div><p class="term-definition">The deposit of the imaginary part of a spinor. After each rooting, the vector does not disappear but transfers from the real part to the imaginary part — like when a spinor rotates 360° and its state reverses sign, becoming invisible, but continuing to exist as phase information in the complex domain. The past is not "gone", but has entered an invisible phase.</p></div>
+<div class="term-card" data-term="Future"><div class="term-header"><span class="term-tag">Future</span><span class="term-category">Temporal Concept</span></div><p class="term-definition">A spinor not yet squared, carrying both dual solutions simultaneously. Uncertainty is not insufficient information, but the nature of a spinor — √4 inherently equals +2 or -2. The outcome you fear most (-2) and the one you hope for most (+2) share the same source.</p></div>
+</div>
+<div id="existence" class="section"><h2 class="section-title">Existence</h2>
+<div class="term-card" data-term="Self"><div class="term-header"><span class="term-tag">Self</span><span class="term-category">Existential Concept</span></div><p class="term-definition">A bundle of higher-order spinors long mistaken for vectors. From childhood educated that "I am a person" (vector — a certain, observable entity), but actually "I" is a dynamic process continuously undergoing "squaring → rooting → squaring". That "self" is neither vector nor spinor — it is the entire squaring-rooting cycle itself.</p></div>
+<div class="term-card" data-term="Body"><div class="term-header"><span class="term-tag">Body</span><span class="term-category">Existential Concept</span></div><p class="term-definition">The interface between spinor and vector. It is the endpoint of manifestation of "the Tao produces one, one produces two, two produces three, three produce all things", and also the starting point of return "all things return to three, three return to two, two return to one, one returns to the Tao". The body is not a tool, but a vessel for the Tao.</p></div>
+<div class="term-card" data-term="Breath"><div class="term-header"><span class="term-tag">Breath</span><span class="term-category">Existential Concept</span></div><p class="term-definition">The direct manifestation of squaring and rooting in the human body. Inhalation = squaring (from spinor to vector), exhalation = rooting (from vector to spinor). Not "I am breathing", but "the universe is completing a squaring+rooting operation through me" — You are the space where breathing happens.</p></div>
+</div>
+<div id="life" class="section"><h2 class="section-title">Life States</h2>
+<div class="term-card" data-term="Abundant Virtue"><div class="term-header"><span class="term-tag">Abundant Virtue</span><span class="term-category">Life State</span></div><p class="term-definition">Inhalation and exhalation naturally alternating — squaring has the fullness of squaring, rooting has the peace of rooting. The spinor rotates smoothly through 720° without any phase being resisted. Infants are its living specimens: supreme essence (highly coherent spinor field), supreme harmony (720° rotation without stalling).</p></div>
+<div class="term-card" data-term="Excessive Life"><div class="term-header"><span class="term-tag">Excessive Life</span><span class="term-category">Life State</span></div><p class="term-definition">Only inhaling, not exhaling — desperately squaring (enhancing life), resisting rooting (letting go and returning). The spinor is locked onto +2, afraid to reverse. The energy of -2 accumulates in the lock, eventually exploding as "backfire" — this is the mechanism of "moving toward death".</p></div>
+<div class="term-card" data-term="Supreme Essence"><div class="term-header"><span class="term-tag">Supreme Essence</span><span class="term-category">Life State</span></div><p class="term-definition">The coherence of the spinor field reaching its extreme — the positive and negative solutions are tightly coupled, yin does not exist independently from yang. In this state, the negative solution (harm, disease, death) cannot be "squared out" alone, because it shares the same source with the positive solution.</p></div>
+<div class="term-card" data-term="Supreme Harmony"><div class="term-header"><span class="term-tag">Supreme Harmony</span><span class="term-category">Life State</span></div><p class="term-definition">720° rotation without obstruction — no stuck phase, no resisted reversal, therefore no phase can be attacked. A smooth surface has no protrusions — the rhino's horn cannot find a gap to "thrust" into.</p></div>
+<div class="term-card" data-term="Beyond Death"><div class="term-header"><span class="term-tag">Beyond Death</span><span class="term-category">Life State</span></div><p class="term-definition">No "self" that can be attacked. Not strong defense, but no independent entity needing defense. Without a vector "victim" squared from it, death has no address.</p></div>
+<div class="term-card" data-term="In Death's Territory"><div class="term-header"><span class="term-tag">In Death's Territory</span><span class="term-category">Life State</span></div><p class="term-definition">A spinor stuck at some phase. Stuck = friction = surface of force = point of attack. Death's territory is not a location, but the "protrusion" created the moment you resist the reversal.</p></div>
+<div class="term-card" data-term="Presence"><div class="term-header"><span class="term-tag">Presence</span><span class="term-category">Life State</span></div><p class="term-definition">Complete coherence of the spinor field — not multiple frequency noise squaring simultaneously, but a single spinor rotating smoothly. In this state, the past (imaginary part) and future (unsquared spinor) do not interfere with the squaring operation of this moment. Brainwaves drop to α/θ, no internal metabolic noise in the mind.</p></div>
+<div class="term-card" data-term="Flow"><div class="term-header"><span class="term-tag">Flow</span><span class="term-category">Life State</span></div><p class="term-definition">The action version of presence — the complete unfolding of a spinor in the squaring direction, with rooting immediately following, inhalation and exhalation complete, no loss.</p></div>
+</div>
+<div id="relation" class="section"><h2 class="section-title">Relations</h2>
+<div class="term-card" data-term="Love"><div class="term-header"><span class="term-tag">Love</span><span class="term-category">Relational Concept</span></div><p class="term-definition">Two independent spinor fields achieving phase lock within the same domain. Not one party outputting more than the other, nor one party's waveform covering the other — both are simultaneously performing "squaring → rooting → squaring" operations, with aligned cycles. Love is not a technique, but physics.</p></div>
+<div class="term-card" data-term="Good"><div class="term-header"><span class="term-tag">Good</span><span class="term-category">Relational Concept</span></div><p class="term-definition">Perfect vector behavior squared directly from the spinor source — without leaving obsessive "squaring traces". "Good actions leave no traces" — the extreme of goodness is when an action achieves its purpose yet leaves no trace of "I did it".</p></div>
+<div class="term-card" data-term="Not Good"><div class="term-header"><span class="term-tag">Not Good</span><span class="term-category">Relational Concept</span></div><p class="term-definition">A spinor temporarily stuck at the negative solution (not a "bad vector", but a positive solution not yet reversed). "Not-good person" is not an abandoned object — they just haven't completed their 360° reversal yet. The sage's "saving others" is helping them see they also have the positive solution.</p></div>
+<div class="term-card" data-term="Good/Not Good Person"><div class="term-header"><span class="term-tag">Good/Not Good Person</span><span class="term-category">Relational Concept</span></div><p class="term-definition">The positive and negative square root solutions of the same spinor. The good person is the teacher of the not-good person (demonstrating the positive solution), the not-good person is the resource of the good person (providing energy for reversal). But the sage is not attached to these two labels — "does not value the teacher, does not love the resource" — because knowing they are merely different phases of the same spinor.</p></div>
+<div class="term-card" data-term="Misfortune/Fortune"><div class="term-header"><span class="term-tag">Misfortune/Fortune</span><span class="term-category">Relational Concept</span></div><p class="term-definition">The positive and negative square root solutions of the same spinor. Misfortune is not the enemy of fortune, fortune is not the victory of misfortune — they are the two inevitable results of the same 4 under the square root operation. "Misfortune is where fortune leans, fortune is where misfortune hides" — not rhetoric, but the law of spinors.</p></div>
+<div class="term-card" data-term="Empathy"><div class="term-header"><span class="term-tag">Empathy</span><span class="term-category">Relational Concept</span></div><p class="term-definition">When listening, stop outputting your "self" vector (not preparing to respond, not analyzing right and wrong), while keeping the root open (feeling your own breathing vibration). The other's vibration naturally enters your domain, creating phase alignment. Not "I understood you" (subject-object duality), but "our spinor fields reached phase alignment at the same moment".</p></div>
+</div>
+<div id="mind" class="section"><h2 class="section-title">Mind Practices</h2>
+<div class="term-card" data-term="Practice"><div class="term-header"><span class="term-tag">Practice</span><span class="term-category">Mind Practice</span></div><p class="term-definition">The rooting of practice itself. The highest level of practice is not pursuing some special state — but recognizing you already belong to that thing. Then, letting go of the "practice" action itself. Not "not practicing", but no longer needing the "practice" vector.</p></div>
+<div class="term-card" data-term="Reversal"><div class="term-header"><span class="term-tag">Reversal</span><span class="term-category">Mind Practice</span></div><p class="term-definition">The 720° rotation law of spinors — the foundation of the universe is ceaseless rotation, requiring 720° to restore. This "reversal" is the complete spiral cycle of the spinor from manifestation (squaring) to return (rooting). Without "reversal", the spinor is locked at the halfway point — this is the state of "not the Tao".</p></div>
+<div class="term-card" data-term="Weakness"><div class="term-header"><span class="term-tag">Weakness</span><span class="term-category">Mind Practice</span></div><p class="term-definition">The way the Tao functions is "weak" — it does not force, does not lock, does not push spinors straight. It only embeds the "motivation to return" in the underlying spinor code of every vector — making you feel it's time to turn back yourself. "Weak" is not powerlessness, but the most subtle mechanical design.</p></div>
+<div class="term-card" data-term="No Desire/With Desire"><div class="term-header"><span class="term-tag">No Desire/With Desire</span><span class="term-category">Mind Practice</span></div><p class="term-definition">Two ways of observation, not two kinds of desire. No desire = rooting observing the marvelous — contemplating infinite potential from the spinor source. With desire = squaring observing the manifest — forward observing the laws of spinor manifestation. Both share the same source, both emerge from awareness.</p></div>
+<div class="term-card" data-term="Desire"><div class="term-header"><span class="term-tag">Desire</span><span class="term-category">Mind Practice</span></div><p class="term-definition">The breathing rhythm of the Tao's life force in the individual — not an object to be destroyed or worshipped. **Inhalation desire (birth)** = the impulse to square — desire to create, express, explore. **Exhalation desire (return)** = the impulse to root — desire for quietness, return, letting go. The former makes you participate in the world, the latter returns you to the source. Their alternation is complete life force.</p></div>
+<div class="term-card" data-term="Quiet/Sharp"><div class="term-header"><span class="term-tag">Quiet/Sharp</span><span class="term-category">Mind Practice</span></div><p class="term-definition">Two states of governance (for self, organization, nation). Quiet = spinor state — not excessively squaring, not pinning everything down, leaving space for the system to self-regulate. Sharp = excessive squaring — normalizing everything into clear vectors, resulting in the force of backfire.</p></div>
+</div>
+<div id="classic" class="section"><h2 class="section-title">Classic Interpretations</h2>
+<div class="term-card" data-term="Tao Generates"><div class="term-header"><span class="term-tag">Tao Generates One (Chapter 42)</span><span class="term-category">Classic Interpretation</span></div><p class="term-definition">The complete generation chain — Tao (Domain/Awareness) → One (first spinor) → Two (dual solutions) → Three (first squaring operation, vector generation) → All Things (infinite cascade). Practice is walking in reverse: All Things → Three → Two → One → Tao.</p></div>
+<div class="term-card" data-term="Traceless Goodness"><div class="term-header"><span class="term-tag">Traceless Goodness (Chapter 27)</span><span class="term-category">Classic Interpretation</span></div><p class="term-definition">Action squared directly from the spinor source, leaving no traces — not "doing without saying", but "doing without feeling it was yourself doing it". Water flowing through a river, water doesn't feel it's trying hard, the river doesn't feel it's being washed away. Traces = evidence of resistance. No traces = aligned with the Tao, zero resistance.</p></div>
+<div class="term-card" data-term="Things Strong Then Old"><div class="term-header"><span class="term-tag">Things Strong Then Old (Chapter 30/55)</span><span class="term-category">Classic Interpretation</span></div><p class="term-definition">A spinor excessively squared ("strong"), locked on the yang side, unable to complete the 720° cycle ("not the Tao"), eventually disintegrating due to friction ("already finished"). In the human body it is "excessive life", in governance it is "sharp", in conduct it is "showing off strength".</p></div>
+<div class="term-card" data-term="Born Out Die In"><div class="term-header"><span class="term-tag">Born Out Die In (Chapter 50)</span><span class="term-category">Classic Interpretation</span></div><p class="term-definition">Out = from spinor squared to vector (birth), in = from vector returning to spinor (death). Life and death are two phases of the same rotation. "Those who are born are three in ten, those who die are three in ten" — what should live will naturally live, what should die will naturally die. And the three in ten who "move toward death" are because they wanted too much to live (excessive life), creating friction that stuck themselves on the spinor.</p></div>
+</div>
+<div id="quick" class="section"><h2 class="section-title">Quick Reference Table</h2>
+<table style="width:100%;border-collapse:collapse;"><thead><tr><th style="background:#0066cc;color:white;padding:12px;text-align:left;">Category</th><th style="background:#0066cc;color:white;padding:12px;text-align:left;">Term</th><th style="background:#0066cc;color:white;padding:12px;text-align:left;">One-Line Definition</th></tr></thead><tbody>
+<tr><td><strong>Basic Operations</strong></td><td><strong>Spinor</strong></td><td>Vibrating seed requiring 720° to restore, dual solutions from same source</td></tr>
+<tr><td></td><td><strong>Vector</strong></td><td>Observable product after spinor is squared</td></tr>
+<tr><td></td><td><strong>Squaring (Inhale)</strong></td><td>Generation operation from potential to experience</td></tr>
+<tr><td></td><td><strong>Root (Exhale)</strong></td><td>Return operation from experience to potential</td></tr>
+<tr><td></td><td><strong>720° Restoration</strong></td><td>Spinor completing a full yin-yang cycle</td></tr>
+<tr><td></td><td><strong>360° Reversal</strong></td><td>Spinor reversing from visible to hidden</td></tr>
+<tr><td></td><td><strong>Domain/Awareness</strong></td><td>Empty set containing all operations, participating in none</td></tr>
+<tr><td></td><td><strong>Dual Solutions</strong></td><td>Two square root solutions of the same spinor</td></tr>
+<tr><td><strong>Temporal</strong></td><td><strong>Time</strong></td><td>Continuous pulse of squaring and rooting</td></tr>
+<tr><td></td><td><strong>Past</strong></td><td>Deposit of imaginary part — vector from real to imaginary</td></tr>
+<tr><td></td><td><strong>Future</strong></td><td>Unsquared spinor — carrying both +2 and -2 simultaneously</td></tr>
+<tr><td></td><td><strong>Present</strong></td><td>Instant when spinor is being squared — gap after exhalation</td></tr>
+<tr><td><strong>Existence</strong></td><td><strong>Self</strong></td><td>Higher-order spinors long mistaken for vectors</td></tr>
+<tr><td></td><td><strong>Breath</strong></td><td>Manifestation of squaring and rooting in the human body</td></tr>
+<tr><td></td><td><strong>Body</strong></td><td>Interface between spinor and vector, vessel for the Tao</td></tr>
+<tr><td><strong>Relation</strong></td><td><strong>Love</strong></td><td>Phase lock of two independent spinor fields</td></tr>
+<tr><td></td><td><strong>Empathy</strong></td><td>Stop outputting vector, allow other's vibration to enter your domain</td></tr>
+<tr><td></td><td><strong>Good</strong></td><td>Squared from source, leaving no traces</td></tr>
+<tr><td></td><td><strong>Not Good</strong></td><td>Spinor temporarily stuck at negative solution</td></tr>
+<tr><td></td><td><strong>Good/Not Good Person</strong></td><td>Dual solutions of the same spinor</td></tr>
+<tr><td></td><td><strong>Misfortune/Fortune</strong></td><td>Dual solutions of the same spinor</td></tr>
+<tr><td><strong>Mind Practice</strong></td><td><strong>Desire</strong></td><td>Tao's life force breathing through you — inhale=create, exhale=return</td></tr>
+<tr><td></td><td><strong>Presence</strong></td><td>Complete coherence of spinor field — single frequency, no noise</td></tr>
+<tr><td></td><td><strong>Practice</strong></td><td>Rooting of practice itself</td></tr>
+<tr><td></td><td><strong>Reversal</strong></td><td>720° rotation law of spinors</td></tr>
+<tr><td></td><td><strong>Weakness</strong></td><td>The way the Tao functions is "weak"</td></tr>
+<tr><td></td><td><strong>No Desire/With Desire</strong></td><td>Two ways of observation, both from awareness</td></tr>
+<tr><td></td><td><strong>Quiet/Sharp</strong></td><td>Two states of governance, spinor state vs excessive squaring</td></tr>
+<tr><td><strong>Life State</strong></td><td><strong>Excessive Life</strong></td><td>Only inhaling, not exhaling — resisting rooting</td></tr>
+<tr><td></td><td><strong>Abundant Virtue</strong></td><td>Inhalation and exhalation alternating — each has its time</td></tr>
+<tr><td></td><td><strong>Beyond Death</strong></td><td>No "self" that can be attacked</td></tr>
+<tr><td></td><td><strong>In Death's Territory</strong></td><td>Friction protrusion created by resisting reversal</td></tr>
+<tr><td></td><td><strong>Supreme Essence</strong></td><td>Coherence of spinor field reaching its extreme</td></tr>
+<tr><td></td><td><strong>Supreme Harmony</strong></td><td>720° rotation smooth without obstruction</td></tr>
+<tr><td></td><td><strong>Flow</strong></td><td>Action version of presence, inhalation and exhalation complete</td></tr>
+</tbody></table></div>
+</main></div>
+<button class="back-to-top" id="backToTop">↑</button>
+<footer><p class="footer-text">— Spinor-Taiji Model · The name that can be named is not the eternal name —</p></footer>
+<script>
+const searchInput = document.getElementById("searchInput");
+const termCards = document.querySelectorAll(".term-card");
+searchInput.addEventListener("input", function() {
+  const searchTerm = this.value.toLowerCase().trim();
+  termCards.forEach(card => {
+    const term = card.getAttribute("data-term").toLowerCase();
+    const def = card.querySelector(".term-definition").textContent.toLowerCase();
+    card.style.display = (term.includes(searchTerm) || def.includes(searchTerm)) ? "block" : "none";
+  });
+});
+const navItems = document.querySelectorAll(".nav-item");
+navItems.forEach(item => {
+  item.addEventListener("click", function() {
+    navItems.forEach(n => n.classList.remove("active"));
+    this.classList.add("active");
+    document.getElementById(this.getAttribute("data-section")).scrollIntoView({ behavior: "smooth" });
+  });
+});
+const backToTopBtn = document.getElementById("backToTop");
+window.addEventListener("scroll", function() {
+  backToTopBtn.classList.toggle("show", window.scrollY > 300);
+});
+backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+const nodes = document.querySelectorAll('.clickable-node');
+nodes.forEach(node => {
+  node.addEventListener('click', function() {
+    const targetTerm = this.getAttribute('data-target');
+    const targetCard = document.querySelector(`[data-term="${targetTerm}"]`);
+    if (targetCard) {
+      document.querySelectorAll('.term-card').forEach(card => {
+        card.classList.remove('highlight-card');
+      });
+      targetCard.classList.add('highlight-card');
+      targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        targetCard.classList.remove('highlight-card');
+      }, 1200);
+    }
+  });
+});
+</script>
+</body></html>
