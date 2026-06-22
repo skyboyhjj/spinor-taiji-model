@@ -1,6 +1,6 @@
 {
-    "description": "中文文章文件名到英文别名的映射配置",
-    "version": "1.0",
+    "description": "Chinese article filename to English alias mapping",
+    "version": "1.1",
     "aliases": {
         "伦理即道体理念落地指南_公众号版.html": "lunli-ji-daoti.html",
         "伦理即道体系列_阅读地图与实修指南_修复版_公众号版.html": "lunli-reading-map.html",
@@ -15,10 +15,12 @@
         "旋量太极模型写高考作文_两篇对比版_公众号版_修复后.html": "gaokao-essay-spinor.html",
         "胃病切片_学术排版版_公众号版.html": "stomach-disease-slice.html",
         "长期胃病_公众号版_ima.html": "chronic-gastritis.html",
-        "微信公众号响应式表格演示_公众号版.html": "responsive-table-demo.html"
+        "微信公众号响应式表格演示_公众号版.html": "responsive-table-demo.html",
+        "旋量-太极模型声明_微信公众号版.html": "spinor-taiji-model-statement.html",
+        "旋量太极词汇表_增强版.html": "spinor-taiji-glossary.html"
     },
     "redirect_rules": {
-        "description": "Cloudflare Pages 重定向规则",
+        "description": "Cloudflare Pages redirect rules",
         "rules": [
             {
                 "from": "/articles/伦理即道体理念落地指南_公众号版.html",
@@ -88,6 +90,16 @@
             {
                 "from": "/articles/微信公众号响应式表格演示_公众号版.html",
                 "to": "/articles/responsive-table-demo.html",
+                "status": 301
+            },
+            {
+                "from": "/articles/旋量-太极模型声明_微信公众号版.html",
+                "to": "/articles/spinor-taiji-model-statement.html",
+                "status": 301
+            },
+            {
+                "from": "/articles/旋量太极词汇表_增强版.html",
+                "to": "/articles/spinor-taiji-glossary.html",
                 "status": 301
             }
         ]
