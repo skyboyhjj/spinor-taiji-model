@@ -23,7 +23,7 @@ def main():
     if os.path.exists(dist_articles):
         shutil.rmtree(dist_articles)
     shutil.copytree(articles_src, dist_articles)
-    print("复制 articles 目录")
+    print("复制 articles 目录 (包含 en/zh 子目录)")
 
     if os.path.exists(dist_docs):
         shutil.rmtree(dist_docs)
@@ -36,13 +36,14 @@ def main():
     print(f"加载配置文件: {config_path}")
     print(f"配置版本: {config.get('version', '1.0')}")
 
-    # 将中文主文件内容复制到英文别名文件
+    # 将中文主文件内容复制到英文别名文件（在zh目录内）
+    dist_zh = os.path.join(dist_articles, "zh")
     for chinese_file, alias_file in alias_map.items():
-        chinese_path = os.path.join(dist_articles, chinese_file)
-        alias_path = os.path.join(dist_articles, alias_file)
+        chinese_path = os.path.join(dist_zh, chinese_file)
+        alias_path = os.path.join(dist_zh, alias_file)
         if os.path.exists(chinese_path):
             shutil.copy2(chinese_path, alias_path)
-            print(f"复制内容: {chinese_file} -> {alias_file}")
+            print(f"复制中文别名: {chinese_file} -> zh/{alias_file}")
 
     index_html = "<!DOCTYPE html><html lang='zh-CN'><head><meta charset='UTF-8'><title>旋量太极知识库</title></head><body><h1>旋量太极知识库</h1><a href='docs/'>文档</a></body></html>"
     with open(os.path.join(dist_dir, "index.html"), "w", encoding="utf-8") as f:
@@ -81,7 +82,11 @@ def main():
     else:
         print(f"警告：未找到 headers 配置文件: {headers_config_path}")
 
-    article_count = len([f for f in os.listdir(dist_articles) if f.endswith(".html")])
+    article_count = 0
+    for root, dirs, files in os.walk(dist_articles):
+        for f in files:
+            if f.endswith(".html"):
+                article_count += 1
     print(f"构建完成！articles文件数: {article_count}")
 
 if __name__ == "__main__":
