@@ -107,6 +107,16 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
         font-size: 14px;
     }
 }
+
+.related-terms { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #ddd; }
+.related-terms strong { color: #7f8c8d; font-size: 0.9em; }
+.related-link { color: #3498DB; text-decoration: none; margin-right: 10px; transition: color 0.2s; }
+.related-link:hover { color: #2980B9; text-decoration: underline; }
+
+.related-terms { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #ddd; }
+.related-terms strong { color: #7f8c8d; font-size: 0.9em; }
+.related-link { color: #3498DB; text-decoration: none; margin-right: 10px; transition: color 0.2s; }
+.related-link:hover { color: #2980B9; text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -116,13 +126,16 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
 <li class="nav-item active" data-section="intro">引言</li>
 <li class="nav-item " data-section="version">版本</li>
 <li class="nav-item " data-section="graph">图形</li>
-<li class="nav-item " data-section="basic">基础</li>
+<li class="nav-item " data-section="spectrum">频谱一元论</li>
+<li class="nav-item " data-section="freq">频谱频段</li>
+<li class="nav-item " data-section="basic">底层操作</li>
+<li class="nav-item " data-section="awareness">觉知与信息</li>
 <li class="nav-item " data-section="time">时间</li>
-<li class="nav-item " data-section="existence">存在</li>
-<li class="nav-item " data-section="life">生命</li>
+<li class="nav-item " data-section="existence">存在主体</li>
+<li class="nav-item " data-section="life">生命状态</li>
 <li class="nav-item " data-section="relation">关系</li>
-<li class="nav-item " data-section="mind">心灵</li>
-<li class="nav-item " data-section="classic">经典</li>
+<li class="nav-item " data-section="mind">心灵操作</li>
+<li class="nav-item " data-section="classic">经典读解</li>
 <li class="nav-item " data-section="quick">快速</li>
 </ul></aside>
 <main class="content">
@@ -130,143 +143,470 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
 <div id="version" class="version-module">
 <div class="version-title">📋 版本管理信息</div>
 <div class="version-grid">
-<div class="version-item"><div class="version-label">版本号</div><div class="version-value">v1.0.0</div></div>
-<div class="version-item"><div class="version-label">发布日期</div><div class="version-value">2026年6月22日</div></div>
+<div class="version-item"><div class="version-label">版本号</div><div class="version-value">v1.1.0</div></div>
+<div class="version-item"><div class="version-label">发布日期</div><div class="version-value">2026年6月23日</div></div>
 <div class="version-item"><div class="version-label">变更责任人</div><div class="version-value">旋量太极团队</div></div>
-<div class="version-item"><div class="version-label">版本状态</div><div class="version-value">初始版本</div></div>
+<div class="version-item"><div class="version-label">版本状态</div><div class="version-value">三层标签升级版</div></div>
 </div></div>
 <div id="graph" class="relation-graph">
 <div class="graph-title">🔗 词汇关系图</div>
 <div class="graph-container">
-<svg width="800" height="500" viewBox="0 0 800 500">
+<svg width="900" height="550" viewBox="0 0 900 550">
 <defs>
 <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0066cc"/><stop offset="100%" style="stop-color:#00cc99"/></linearGradient>
+<linearGradient id="spectrumGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e74c3c"/><stop offset="100%" style="stop-color:#f39c12"/></linearGradient>
 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#999"/></marker>
 </defs>
 <g class="graph-nodes">
-<circle cx="400" cy="50" r="40" fill="url(#mainGrad)" class="clickable-node" data-target="域/觉知"/><text x="400" y="48" text-anchor="middle" fill="white" font-weight="bold" font-size="14">域/觉知</text>
-<circle cx="400" cy="140" r="30" fill="#1890ff" class="clickable-node" data-target="旋量"/><text x="400" y="138" text-anchor="middle" fill="white" font-size="12" font-weight="bold">旋量</text>
-<circle cx="280" cy="230" r="25" fill="#1890ff" class="clickable-node" data-target="平方"/><text x="280" y="228" text-anchor="middle" fill="white" font-size="11" font-weight="bold">平方</text>
-<circle cx="520" cy="230" r="25" fill="#1890ff" class="clickable-node" data-target="开方"/><text x="520" y="228" text-anchor="middle" fill="white" font-size="11" font-weight="bold">开方</text>
-<circle cx="200" cy="320" r="22" fill="#666" class="clickable-node" data-target="矢量"/><text x="200" y="318" text-anchor="middle" fill="white" font-size="10" font-weight="bold">矢量</text>
-<circle cx="600" cy="320" r="22" fill="#666" class="clickable-node" data-target="时间"/><text x="600" y="318" text-anchor="middle" fill="white" font-size="10" font-weight="bold">时间</text>
-<circle cx="120" cy="410" r="20" fill="#52c41a" class="clickable-node" data-target="含德之厚"/><text x="120" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">生命状态</text>
-<circle cx="300" cy="410" r="20" fill="#fa8c16" class="clickable-node" data-target="爱"/><text x="300" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">关系</text>
-<circle cx="500" cy="410" r="20" fill="#722ed1" class="clickable-node" data-target="修行"/><text x="500" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">心灵操作</text>
-<circle cx="680" cy="410" r="20" fill="#13c2c2" class="clickable-node" data-target="道生一"/><text x="680" y="408" text-anchor="middle" fill="white" font-size="9" font-weight="bold">经典读解</text>
+<!-- 顶层：本源 -->
+<circle cx="450" cy="50" r="40" fill="url(#mainGrad)" class="clickable-node" data-target="域/觉知"/><text x="450" y="48" text-anchor="middle" fill="white" font-weight="bold" font-size="14">域/觉知</text>
+<!-- V1.1.0 新增：频谱一元论 -->
+<circle cx="120" cy="140" r="28" fill="url(#spectrumGrad)" class="clickable-node" data-target="频谱一元论"/><text x="120" y="138" text-anchor="middle" fill="white" font-size="10" font-weight="bold">频谱一元论</text>
+<!-- 第二层：旋量 -->
+<circle cx="450" cy="140" r="30" fill="#1890ff" class="clickable-node" data-target="旋量"/><text x="450" y="138" text-anchor="middle" fill="white" font-size="12" font-weight="bold">旋量</text>
+<!-- V1.1.0 新增：意识 -->
+<circle cx="780" cy="140" r="25" fill="#e91e63" class="clickable-node" data-target="意识"/><text x="780" y="138" text-anchor="middle" fill="white" font-size="10" font-weight="bold">意识</text>
+<!-- V1.1.0 新增：神（高频端） -->
+<circle cx="80" cy="250" r="20" fill="#f39c12" class="clickable-node" data-target="神"/><text x="80" y="248" text-anchor="middle" fill="white" font-size="9" font-weight="bold">神</text>
+<!-- 第三层：操作 -->
+<circle cx="330" cy="240" r="24" fill="#1890ff" class="clickable-node" data-target="平方"/><text x="330" y="238" text-anchor="middle" fill="white" font-size="10" font-weight="bold">平方</text>
+<circle cx="570" cy="240" r="24" fill="#1890ff" class="clickable-node" data-target="开方"/><text x="570" y="238" text-anchor="middle" fill="white" font-size="10" font-weight="bold">开方</text>
+<!-- V1.1.0 新增：思想 -->
+<circle cx="160" cy="340" r="18" fill="#f39c12" class="clickable-node" data-target="思想"/><text x="160" y="338" text-anchor="middle" fill="white" font-size="8" font-weight="bold">思想</text>
+<!-- 第四层：核心概念 -->
+<circle cx="250" cy="340" r="22" fill="#666" class="clickable-node" data-target="矢量"/><text x="250" y="338" text-anchor="middle" fill="white" font-size="10" font-weight="bold">矢量</text>
+<circle cx="650" cy="340" r="22" fill="#666" class="clickable-node" data-target="时间"/><text x="650" y="338" text-anchor="middle" fill="white" font-size="10" font-weight="bold">时间</text>
+<!-- V1.1.0 新增：信息 -->
+<circle cx="820" cy="250" r="18" fill="#e91e63" class="clickable-node" data-target="信息"/><text x="820" y="248" text-anchor="middle" fill="white" font-size="8" font-weight="bold">信息</text>
+<!-- 第五层：应用 -->
+<circle cx="120" cy="460" r="20" fill="#52c41a" class="clickable-node" data-target="含德之厚"/><text x="120" y="458" text-anchor="middle" fill="white" font-size="9" font-weight="bold">生命状态</text>
+<circle cx="320" cy="460" r="20" fill="#fa8c16" class="clickable-node" data-target="爱"/><text x="320" y="458" text-anchor="middle" fill="white" font-size="9" font-weight="bold">关系</text>
+<circle cx="520" cy="460" r="20" fill="#722ed1" class="clickable-node" data-target="修行"/><text x="520" y="458" text-anchor="middle" fill="white" font-size="9" font-weight="bold">心灵操作</text>
+<circle cx="720" cy="460" r="20" fill="#13c2c2" class="clickable-node" data-target="道生一"/><text x="720" y="458" text-anchor="middle" fill="white" font-size="9" font-weight="bold">经典读解</text>
 </g>
-<line x1="400" y1="90" x2="400" y2="110" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowhead)"/>
-<line x1="400" y1="170" x2="280" y2="205" stroke="#1890ff" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="400" y1="170" x2="520" y2="205" stroke="#1890ff" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="280" y1="255" x2="200" y2="298" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="520" y1="255" x2="600" y2="298" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="200" y1="342" x2="120" y2="390" stroke="#52c41a" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="200" y1="342" x2="300" y2="390" stroke="#fa8c16" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="600" y1="342" x2="500" y2="390" stroke="#722ed1" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="600" y1="342" x2="680" y2="390" stroke="#13c2c2" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：域/觉知 → 旋量 -->
+<line x1="450" y1="90" x2="450" y2="110" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowhead)"/>
+<!-- 连线：域/觉知 → 频谱一元论 -->
+<line x1="410" y1="70" x2="148" y2="120" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：域/觉知 → 意识 -->
+<line x1="490" y1="70" x2="752" y2="120" stroke="#e91e63" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：旋量 → 平方 -->
+<line x1="450" y1="170" x2="330" y2="216" stroke="#1890ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：旋量 → 开方 -->
+<line x1="450" y1="170" x2="570" y2="216" stroke="#1890ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：频谱一元论 → 神 -->
+<line x1="120" y1="168" x2="80" y2="230" stroke="#f39c12" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：频谱一元论 → 旋量 -->
+<line x1="148" y1="140" x2="420" y2="140" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：神 → 思想 -->
+<line x1="80" y1="270" x2="140" y2="322" stroke="#f39c12" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：平方 → 矢量 -->
+<line x1="330" y1="264" x2="250" y2="318" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：开方 → 时间 -->
+<line x1="570" y1="264" x2="628" y2="322" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：矢量 → 生命状态 -->
+<line x1="200" y1="362" x2="140" y2="440" stroke="#52c41a" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：矢量 → 关系 -->
+<line x1="250" y1="362" x2="300" y2="440" stroke="#fa8c16" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：时间 → 心灵操作 -->
+<line x1="600" y1="362" x2="540" y2="440" stroke="#722ed1" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：时间 → 经典读解 -->
+<line x1="700" y1="362" x2="710" y2="440" stroke="#13c2c2" stroke-width="2" marker-end="url(#arrowhead)"/>
+<!-- 连线：意识 → 信息 -->
+<line x1="780" y1="165" x2="810" y2="230" stroke="#e91e63" stroke-width="2" marker-end="url(#arrowhead)"/>
 </svg>
 <div class="graph-hint">💡 点击节点可跳转到对应词汇定义</div>
 </div>
 <div class="legend">
 <div class="legend-item"><div class="legend-color" style="background:linear-gradient(135deg,#0066cc,#00cc99)"></div><span class="legend-text">本源概念</span></div>
 <div class="legend-item"><div class="legend-color" style="background:#1890ff"></div><span class="legend-text">基础操作</span></div>
+<div class="legend-item"><div class="legend-color" style="background:linear-gradient(135deg,#e74c3c,#f39c12)"></div><span class="legend-text">频谱框架</span></div>
+<div class="legend-item"><div class="legend-color" style="background:#e91e63"></div><span class="legend-text">觉知维度</span></div>
 <div class="legend-item"><div class="legend-color" style="background:#666"></div><span class="legend-text">核心概念</span></div>
 <div class="legend-item"><div class="legend-color" style="background:#52c41a"></div><span class="legend-text">生命状态</span></div>
 <div class="legend-item"><div class="legend-color" style="background:#fa8c16"></div><span class="legend-text">关系</span></div>
 <div class="legend-item"><div class="legend-color" style="background:#722ed1"></div><span class="legend-text">心灵操作</span></div>
 <div class="legend-item"><div class="legend-color" style="background:#13c2c2"></div><span class="legend-text">经典读解</span></div>
 </div></div>
-<div id="basic" class="section"><h2 class="section-title">⚛️ 基础操作</h2>
-<div class="term-card" data-term="域/觉知"><div class="term-header"><span class="term-tag">域/觉知</span><span class="term-category">本源概念</span></div><p class="term-definition">容纳所有旋量生灭、矢量显隐、平方和开方操作的空集。它自己不平方、不开方、不被任何操作扰动。它是——此刻正在阅读这些文字的、那个清醒的背景。</p></div>
-<div class="term-card" data-term="旋量"><div class="term-header"><span class="term-tag">旋量</span><span class="term-category">基础概念</span></div><p class="term-definition">需要720°才复原的振动种子。宇宙底层最小单位的旋转——旋转360°后不复原，反而"反号"（从显翻为隐，从阳翻为阴）。它同时携带正负两个解（√4 = +2 或 -2）。看不见，但一切可见皆由此平方而来。</p></div>
-<div class="term-card" data-term="矢量"><div class="term-header"><span class="term-tag">矢量</span><span class="term-category">基础概念</span></div><p class="term-definition">旋量被平方后的可观测产物。物质、身体、念头、标签——所有"确定的东西"都是矢量。它不是假的，但它不是底层的——每一个矢量下面都有可以继续开方的旋量。</p></div>
-<div class="term-card" data-term="平方"><div class="term-header"><span class="term-tag">平方</span><span class="term-category">操作</span></div><p class="term-definition">从旋量到矢量——从潜能凝结为体验。在人体上对应<strong>吸气</strong>。</p></div>
-<div class="term-card" data-term="开方"><div class="term-header"><span class="term-tag">开方</span><span class="term-category">操作</span></div><p class="term-definition">从矢量回到旋量——从体验消解回潜能。在人体上对应<strong>呼气</strong>。</p></div>
-<div class="term-card" data-term="720°复原"><div class="term-header"><span class="term-tag">720°复原</span><span class="term-category">基础概念</span></div><p class="term-definition">旋量完成一个完整的阴阳周期——经历显和隐、正和负、生和归之后，回到自己。不是回到"原样"，是回到"本源"。</p></div>
-<div class="term-card" data-term="360°翻转"><div class="term-header"><span class="term-tag">360°翻转</span><span class="term-category">基础概念</span></div><p class="term-definition">旋量从显翻入隐，或从阳翻入阴——"反者道之动"的最小单元。普通人抗拒这个翻转，圣人不抗拒。</p></div>
-<div class="term-card" data-term="正负双解"><div class="term-header"><span class="term-tag">正负双解</span><span class="term-category">基础概念</span></div><p class="term-definition">同一个旋量的两个平方根解——√4 = +2 和 -2。不是"好"和"坏"两个东西，是同一个源头的两个相位。</p></div>
+<div id="spectrum" class="section">
+<h2 class="section-title">一、频谱一元论：全景框架</h2>
+<div class="term-card" data-term="频谱一元论">
+<div class="term-header"><span class="term-tag">频谱一元论</span><span class="term-category">全景框架</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：思想、情绪、能量、物质并非四种不同的"东西"，而是同一振动频谱上从极高频到极低频的显化频段。此处的"一元"不是指宇宙由一种"实体"构成，而是指它们是同一种振动在不同频率上的显化——如同冰、水、汽是同一物质的三态。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#思想" class="related-link">思想</a> · <a href="#情绪" class="related-link">情绪</a> · <a href="#能量" class="related-link">能量</a> · <a href="#物质" class="related-link">物质</a> · <a href="#旋量" class="related-link">旋量</a> · <a href="#信息" class="related-link">信息</a> · <a href="#精气神" class="related-link">精气神</a></div>
 </div>
-<div id="time" class="section"><h2 class="section-title">⏳ 时间</h2>
-<div class="term-card" data-term="时间"><div class="term-header"><span class="term-tag">时间</span><span class="term-category">时间概念</span></div><p class="term-definition">旋量场连续平方和开方的节律。不是一条河，是一个脉冲序列——每一次平方生成"此刻"，每一次开方完成"此刻"的消解。所谓"时间流逝"，是你在连续地、不绝地平方又开方。</p></div>
-<div class="term-card" data-term="当下"><div class="term-header"><span class="term-tag">当下</span><span class="term-category">时间概念</span></div><p class="term-definition">旋量正在平方的那一瞬间——从潜能凝结为体验的、正在发生的事件。它不是一个静止的点（那会误解），它是"振幅穿越零点的无限动能"。在人体上，它就是呼气结束后、下一个吸气开始前的那个短暂的"空档"。</p></div>
-<div class="term-card" data-term="过去"><div class="term-header"><span class="term-tag">过去</span><span class="term-category">时间概念</span></div><p class="term-definition">旋量的虚部沉积。每一次开方之后，矢量不消失，而是从实部转入了虚部——像旋量旋转360°后状态反号，不再可见，但作为相位信息持续存在于复数域中。过去不是"没了"，是进入了看不见的相位。</p></div>
-<div class="term-card" data-term="未来"><div class="term-header"><span class="term-tag">未来</span><span class="term-category">时间概念</span></div><p class="term-definition">尚未平方的旋量，同时携带正负双解。不确定性不是信息不够，是旋量的本性——√4 本来就等于 +2 或 -2。你最怕的那个结局（-2）和你最盼的那个结局（+2），共享同一个源头。</p></div>
+<div class="term-card" data-term="旋量旋转">
+<div class="term-header"><span class="term-tag">旋量旋转</span><span class="term-category">全景框架</span></div>
+<p class="term-definition"><strong>🔵 物理事实</strong>：旋量是量子场论中描述费米子的数学对象，其自旋是内禀属性。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：宇宙底层唯一永动的根本动力。它驱动整个频谱从极高频（思想）到极低频（物质）的升降、凝结与消解。是"反者道之动"的动力学核心。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#反者道之动" class="related-link">反者道之动</a></div>
 </div>
-<div id="existence" class="section"><h2 class="section-title">👤 存在主体</h2>
-<div class="term-card" data-term="我"><div class="term-header"><span class="term-tag">我</span><span class="term-category">主体概念</span></div><p class="term-definition">一束长期被误认为矢量的高阶旋量。从小被教育"我是一个人"（矢量——确定的、可观测的实体），但实际上"我"是一个正在持续"平方→开方→平方"的动态过程。那个"我"不是矢量，不是旋量——它是整个平方-开方循环本身。</p></div>
-<div class="term-card" data-term="身体"><div class="term-header"><span class="term-tag">身体</span><span class="term-category">主体概念</span></div><p class="term-definition">旋-矢量之间的界面。它是"道生一、一生二、二生三、三生万物"的显化终点，也是"万物归三、三归二、二归一、一归道"的回归起点。身体不是工具，是载道器。</p></div>
-<div class="term-card" data-term="呼吸"><div class="term-header"><span class="term-tag">呼吸</span><span class="term-category">主体概念</span></div><p class="term-definition">平方与开方在人体上的直接体现。吸气 = 平方（从旋量到矢量），呼气 = 开方（从矢量到旋量）。不是"我在呼吸"，是"宇宙通过我在完成一次平方+开方的操作"——**你是被呼吸所发生的空间**。</p></div>
 </div>
-<div id="life" class="section"><h2 class="section-title">💫 生命状态</h2>
-<div class="term-card" data-term="含德之厚"><div class="term-header"><span class="term-tag">含德之厚</span><span class="term-category">生命状态</span></div><p class="term-definition">吸呼自然交替——平方有平方的饱满，开方有开方的安心。旋量720°平滑旋转，没有一个相位被抗拒。婴儿是它的活标本：精之至也（旋量场高度相干），和之至也（720°旋转无卡顿）。</p></div>
-<div class="term-card" data-term="生生之厚"><div class="term-header"><span class="term-tag">生生之厚</span><span class="term-category">生命状态</span></div><p class="term-definition">只吸不呼——拼命平方（增益生命），抗拒开方（放下回归）。旋量被锁在+2上，不敢翻转。-2的能量在锁定中积聚，最终以"反噬"的方式爆发：这就是"动之死地"的机制。</p></div>
-<div class="term-card" data-term="精之至"><div class="term-header"><span class="term-tag">精之至</span><span class="term-category">生命状态</span></div><p class="term-definition">旋量场的相干度达到极致——正负两个解紧密耦合，阴不脱离阳而独立存在。在这个状态下，负解（伤害、疾病、死亡）不能单独被"平方"出来，因为它与正解共享同一个源头。</p></div>
-<div class="term-card" data-term="和之至"><div class="term-header"><span class="term-tag">和之至</span><span class="term-category">生命状态</span></div><p class="term-definition">720°旋转平滑无阻——没有卡住的相位，没有抗拒的翻转，因此没有一个相位可以被攻击。平滑的曲面没有突起——兕虎的角找不到可以"投"进去的缝隙。</p></div>
-<div class="term-card" data-term="无死地"><div class="term-header"><span class="term-tag">无死地</span><span class="term-category">生命状态</span></div><p class="term-definition">没有一个可以被攻击的"我"。不是防御力强，是根本没有一个需要防御的独立个体。没有被平方成"受害者"的矢量，死亡就没有地址。</p></div>
-<div class="term-card" data-term="有死地"><div class="term-header"><span class="term-tag">有死地</span><span class="term-category">生命状态</span></div><p class="term-definition">旋量被卡在某个相位上。卡住 = 摩擦 = 受力面 = 被攻击的着力点。死地不是一个位置，是你对抗翻转的那一刻制造的"突起"。</p></div>
-<div class="term-card" data-term="临在"><div class="term-header"><span class="term-tag">临在</span><span class="term-category">生命状态</span></div><p class="term-definition">旋量场的完全相干状态——不是多频杂波同时平方，而是单一旋量平滑旋转。在这个状态中，过去（虚部）和未来（未平方的旋量）不干扰此刻的平方操作。脑波降到α/θ，内心没有内耗性杂波。</p></div>
-<div class="term-card" data-term="心流"><div class="term-header"><span class="term-tag">心流</span><span class="term-category">生命状态</span></div><p class="term-definition">临在的行动版本——旋量在平方方向上的完全展开，且开方紧随其后，吸呼完整，没有损耗。</p></div>
+<div id="freq" class="section">
+<h2 class="section-title">二、频谱频段：从高到低的显化</h2>
+<div class="term-card" data-term="神">
+<div class="term-header"><span class="term-tag">神</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：道家"精气神"三宝之一，指生命最高层次的主宰与觉照。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：振动频谱的高频端——旋量本身最精微的波动，平方的前奏。那清澈的、无念的觉知之光。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#精气神" class="related-link">精气神</a> · <a href="#意识" class="related-link">意识</a> · <a href="#思想" class="related-link">思想</a> · <a href="#临在" class="related-link">临在</a></div>
 </div>
-<div id="relation" class="section"><h2 class="section-title">❤️ 关系</h2>
-<div class="term-card" data-term="爱"><div class="term-header"><span class="term-tag">爱</span><span class="term-category">关系概念</span></div><p class="term-definition">两个独立的旋量场在同一个域中达到相位锁定。不是一方输出多于另一方，也不是一方的波形覆盖另一方——是双方都在同时进行"平方→开方→平方"的操作，且周期对齐了。爱不是技巧，是物理。</p></div>
-<div class="term-card" data-term="善"><div class="term-header"><span class="term-tag">善</span><span class="term-category">关系概念</span></div><p class="term-definition">从旋量源头直接平方出来的完美矢量行为——不留下执着的"平方痕迹"。"善行无辙迹"——善的极致是行动达成了目的，却不留下"我做了"的痕迹。</p></div>
-<div class="term-card" data-term="不善"><div class="term-header"><span class="term-tag">不善</span><span class="term-category">关系概念</span></div><p class="term-definition">一个暂时卡在负解处的旋量（不是"坏的矢量"，是尚未翻转的正解）。"不善人"不是被放弃的对象——他只是还没完成他的360°翻转。圣人的"救人"，就是帮助他看到自己也有正解。</p></div>
-<div class="term-card" data-term="善人/不善人"><div class="term-header"><span class="term-tag">善人/不善人</span><span class="term-category">关系概念</span></div><p class="term-definition">同一个旋量的正负两个平方根解。善人是不善人之师（展示正解），不善人是善人之资（提供翻转的能量）。但圣人不执着于这两个标签——"不贵其师，不爱其资"——因为知道它们只是同一旋量的不同相位。</p></div>
-<div class="term-card" data-term="祸/福"><div class="term-header"><span class="term-tag">祸/福</span><span class="term-category">关系概念</span></div><p class="term-definition">同一个旋量的正负两个平方根解。祸不是福的敌人，福不是祸的胜利——它们是同一个4在平方根操作下的两个必然结果。"祸兮福之所倚，福兮祸之所伏"——不是修辞，是旋量的法。</p></div>
-<div class="term-card" data-term="共情"><div class="term-header"><span class="term-tag">共情</span><span class="term-category">关系概念</span></div><p class="term-definition">倾听时，停止输出"我"的矢量（不准备回应、不分析对错），同时开着方（感受自己的呼吸振动）。对方的振动自然进入你的域，产生相位一致。不是"我理解了你"（主客二元），而是"我们的旋量场在同一时刻达到了相位一致"。</p></div>
+<div class="term-card" data-term="思想">
+<div class="term-header"><span class="term-tag">思想</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：振动频谱的极高频段——接近旋量本身的旋转。念头生灭，无形无相，尚未凝结为感受和行动。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#神" class="related-link">神</a> · <a href="#情绪" class="related-link">情绪</a> · <a href="#信息" class="related-link">信息</a></div>
 </div>
-<div id="mind" class="section"><h2 class="section-title">🧠 心灵操作</h2>
-<div class="term-card" data-term="修行"><div class="term-header"><span class="term-tag">修行</span><span class="term-category">心灵操作</span></div><p class="term-definition">对修行本身的开方。最高一层的修行，不是追求某个特殊状态——是认出你本来就属于那个东西。然后，把"修行"这个动作也放下了。不是"不修"，是不再需要"修"这个矢量。</p></div>
-<div class="term-card" data-term="反者道之动"><div class="term-header"><span class="term-tag">反者道之动</span><span class="term-category">心灵操作</span></div><p class="term-definition">旋量的720°旋转法则——宇宙底层是永不停息的旋转，需要720度才能复原。这个"反"，就是旋量从显化（平方）到回归（开方）的完整螺旋周期。没有"反"，旋量就被锁死在半程——这就是"不道"的状态。</p></div>
-<div class="term-card" data-term="弱者道之用"><div class="term-header"><span class="term-tag">弱者道之用</span><span class="term-category">心灵操作</span></div><p class="term-definition">道的作用方式是"弱"的——它不强制、不锁定、不推着旋量直走。它只把"回归的动力"内置于每一个矢量的底层旋量代码中——让你自己觉得该回头了。"弱"不是无力，是最精微的力学设计。</p></div>
-<div class="term-card" data-term="无欲/有欲"><div class="term-header"><span class="term-tag">无欲/有欲</span><span class="term-category">心灵操作</span></div><p class="term-definition">两种观察方式，不是两种欲。无欲 = 开方观妙——从旋量源头观照无限潜能。有欲 = 平方观徼——顺向观察旋量显化的规律。两者同源，同出于觉知。</p></div>
-<div class="term-card" data-term="欲"><div class="term-header"><span class="term-tag">欲</span><span class="term-category">心灵操作</span></div><p class="term-definition">道的生命力在个体身上的呼吸节律——不是需要被消灭或崇拜的对象。**吸气之欲（生）** = 平方的冲动——渴望创造、表达、探索。**呼气之欲（归）** = 开方的冲动——渴望安静、回归、放下。前者让你参与世界，后者让你回到本源。两者交替，才是完整的生命力。</p></div>
-<div class="term-card" data-term="闷闷/察察"><div class="term-header"><span class="term-tag">闷闷/察察</span><span class="term-category">心灵操作</span></div><p class="term-definition">两种治理状态（对自身、对组织、对国家）。闷闷 = 旋量态——不过度平方，不把一切钉死，给系统留出自我调节的空间。察察 = 过度平方——把一切规范为清楚的矢量，结果制造了反噬的力。</p></div>
+<div class="term-card" data-term="情绪">
+<div class="term-header"><span class="term-tag">情绪</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：振动频谱的中高频段——旋量平方的第一次凝结，矢量初具轮廓，但尚未固化为行动。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#思想" class="related-link">思想</a> · <a href="#能量" class="related-link">能量</a> · <a href="#气" class="related-link">气</a></div>
 </div>
-<div id="classic" class="section"><h2 class="section-title">📜 经典读解</h2>
-<div class="term-card" data-term="道生一"><div class="term-header"><span class="term-tag">道生一（第42章）</span><span class="term-category">经典解读</span></div><p class="term-definition">完整的生成论链——道（域/觉知）→ 一（第一个旋量）→ 二（正负双解）→ 三（第一次平方操作，矢量生成）→ 万物（无限级联）。修行就是逆着走：万物 → 三 → 二 → 一 → 道。</p></div>
-<div class="term-card" data-term="善行无辙迹"><div class="term-header"><span class="term-tag">善行无辙迹（第27章）</span><span class="term-category">经典解读</span></div><p class="term-definition">从旋量源头直接平方的行动，不留痕迹——不是"做了不说"，是"做了没觉得是自己做的"。水流过河道，水不觉得在努力流动，河道也不觉得被冲刷。辙迹 = 阻力的证据。无辙迹 = 与道同向，阻力为零。</p></div>
-<div class="term-card" data-term="物壮则老"><div class="term-header"><span class="term-tag">物壮则老（第30/55章）</span><span class="term-category">经典解读</span></div><p class="term-definition">旋量被过度平方（"壮"），锁定在阳面，无法完成720°周期（"不道"），最终因摩擦而崩解（"早已"）。在人体是"生生之厚"，在治国是"察察"，在处世是"逞强"。</p></div>
-<div class="term-card" data-term="出生入死"><div class="term-header"><span class="term-tag">出生入死（第50章）</span><span class="term-category">经典解读</span></div><p class="term-definition">出 = 从旋量平方为矢量（生），入 = 从矢量回归旋量（死）。生与死是同一旋转的两个相位。"生之徒十有三，死之徒十有三"——该生的自然会生，该死的自然会死。而那"动之死地"的十分之三，是因为太想活了（生生之厚），反而在旋量上制造了卡死自己的摩擦。</p></div>
+<div class="term-card" data-term="气">
+<div class="term-header"><span class="term-tag">气</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：道家"精气神"三宝之一，指生命内在的能量动力。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：振动频谱的中频段——正在流动、尚未固化的矢量。生命内在的动力与活力。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#精气神" class="related-link">精气神</a> · <a href="#能量" class="related-link">能量</a> · <a href="#情绪" class="related-link">情绪</a> · <a href="#经络" class="related-link">经络</a></div>
 </div>
-<div id="quick" class="section"><h2 class="section-title">📊 快速检索表</h2>
-<table style="width:100%;border-collapse:collapse;"><thead><tr><th style="background:#0066cc;color:white;padding:12px;text-align:left;">分类</th><th style="background:#0066cc;color:white;padding:12px;text-align:left;">词汇</th><th style="background:#0066cc;color:white;padding:12px;text-align:left;">一句定义</th></tr></thead><tbody>
-<tr><td><strong>基础操作</strong></td><td><strong>旋量</strong></td><td>需720°复原的振动种子，正负双解共源</td></tr>
-<tr><td></td><td><strong>矢量</strong></td><td>旋量被平方后的可观测产物</td></tr>
-<tr><td></td><td><strong>平方（吸）</strong></td><td>从潜能到体验的生成操作</td></tr>
-<tr><td></td><td><strong>开方（呼）</strong></td><td>从体验到潜能的回归操作</td></tr>
-<tr><td></td><td><strong>720°复原</strong></td><td>旋量完成一个完整的阴阳周期</td></tr>
-<tr><td></td><td><strong>360°翻转</strong></td><td>旋量从显翻入隐或从阳翻入阴</td></tr>
-<tr><td></td><td><strong>域/觉知</strong></td><td>容纳一切操作、不参与任何操作的空集</td></tr>
-<tr><td></td><td><strong>正负双解</strong></td><td>同一个旋量的两个平方根解</td></tr>
-<tr><td><strong>时间概念</strong></td><td><strong>时间</strong></td><td>平方与开方的连续脉冲</td></tr>
-<tr><td></td><td><strong>过去</strong></td><td>虚部沉积——矢量从实转入虚</td></tr>
-<tr><td></td><td><strong>未来</strong></td><td>未平方的旋量——同时携带+2和-2</td></tr>
-<tr><td></td><td><strong>当下</strong></td><td>旋量正在平方的那一瞬间——呼气后的空档</td></tr>
-<tr><td><strong>存在主体</strong></td><td><strong>我</strong></td><td>被误认为矢量的高阶旋量</td></tr>
-<tr><td></td><td><strong>呼吸</strong></td><td>平方与开方在人体上的显化</td></tr>
-<tr><td></td><td><strong>身体</strong></td><td>旋-矢量之间的界面，载道器</td></tr>
-<tr><td><strong>关系概念</strong></td><td><strong>爱</strong></td><td>两旋量场的相位锁定</td></tr>
-<tr><td></td><td><strong>共情</strong></td><td>停止输出矢量，允许对方振动进入你的域</td></tr>
-<tr><td></td><td><strong>善</strong></td><td>从源头平方，不留痕迹</td></tr>
-<tr><td></td><td><strong>不善</strong></td><td>暂时卡在负解处的旋量</td></tr>
-<tr><td></td><td><strong>善人/不善人</strong></td><td>同一个旋量的正负两个平方根解</td></tr>
-<tr><td></td><td><strong>祸/福</strong></td><td>同一个旋量的正负两个平方根解</td></tr>
-<tr><td><strong>心灵操作</strong></td><td><strong>欲</strong></td><td>道的生命力在你身上的呼吸——吸气=创造，呼气=回归</td></tr>
-<tr><td></td><td><strong>临在</strong></td><td>旋量场的完全相干——单一频率，无杂波</td></tr>
-<tr><td></td><td><strong>修行</strong></td><td>对修行本身的开方</td></tr>
-<tr><td></td><td><strong>反者道之动</strong></td><td>旋量的720°旋转法则</td></tr>
-<tr><td></td><td><strong>弱者道之用</strong></td><td>道的作用方式是"弱"的</td></tr>
-<tr><td></td><td><strong>无欲/有欲</strong></td><td>两种观察方式，同源同出于觉知</td></tr>
-<tr><td></td><td><strong>闷闷/察察</strong></td><td>两种治理状态，旋量态与过度平方</td></tr>
-<tr><td><strong>生命状态</strong></td><td><strong>生生之厚</strong></td><td>只吸不呼——拼命平方，抗拒开方</td></tr>
-<tr><td></td><td><strong>含德之厚</strong></td><td>吸呼交替——平方与开方各有其时</td></tr>
-<tr><td></td><td><strong>无死地</strong></td><td>没有一个可以被攻击的"我"</td></tr>
-<tr><td></td><td><strong>有死地</strong></td><td>卡在翻转处制造的摩擦突起</td></tr>
-<tr><td></td><td><strong>精之至</strong></td><td>旋量场的相干度达到极致</td></tr>
-<tr><td></td><td><strong>和之至</strong></td><td>720°旋转平滑无阻</td></tr>
-<tr><td></td><td><strong>心流</strong></td><td>临在的行动版本，吸呼完整</td></tr>
-</tbody></table></div>
+<div class="term-card" data-term="能量">
+<div class="term-header"><span class="term-tag">能量</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：振动频谱的中低频段——矢量已成，开始在身体层面产生可感知的驱动力。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#气" class="related-link">气</a> · <a href="#情绪" class="related-link">情绪</a> · <a href="#物质" class="related-link">物质</a></div>
+</div>
+<div class="term-card" data-term="精">
+<div class="term-header"><span class="term-tag">精</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：道家"精气神"三宝之一，指生命最精微的物质基础。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：振动频谱的低频端——矢量完全固化，生命最粗重的底料。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#精气神" class="related-link">精气神</a> · <a href="#物质" class="related-link">物质</a> · <a href="#能量" class="related-link">能量</a> · <a href="#身体" class="related-link">身体</a></div>
+</div>
+<div class="term-card" data-term="物质">
+<div class="term-header"><span class="term-tag">物质</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：振动频谱的极低频段——旋量被平方到底，完全显化为可触、可见、可测量的实体。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#精" class="related-link">精</a> · <a href="#能量" class="related-link">能量</a> · <a href="#矢量" class="related-link">矢量</a></div>
+</div>
+<div class="term-card" data-term="精气神">
+<div class="term-header"><span class="term-tag">精气神</span><span class="term-category">频谱频段</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：道家修炼学说的核心概念，指生命能量的三种精微程度与升华层次。精为物质底料，气为能量动力，神为意识光明。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：同一个旋量旋转，在人体这个特定舞台上，从低频（精）到中频（气）到高频（神）的三个显化层次。精满则气足，气足则神旺；神散则气衰，气衰则精亏。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#精" class="related-link">精</a> · <a href="#气" class="related-link">气</a> · <a href="#神" class="related-link">神</a> · <a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#身体" class="related-link">身体</a></div>
+</div>
+</div>
+<div id="basic" class="section">
+<h2 class="section-title">三、底层操作：旋量与矢量</h2>
+<div class="term-card" data-term="旋量">
+<div class="term-header"><span class="term-tag">旋量</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🔵 物理事实</strong>：量子场论中描述费米子的数学对象，需720°旋转方能复原。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：宇宙底层最小单位的旋转——旋转360°后状态反号，从显翻为隐，从阳翻为阴。它同时携带正负两个解。看不见，但一切可见皆由此平方而来。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#矢量" class="related-link">矢量</a> · <a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#旋量旋转" class="related-link">旋量旋转</a> · <a href="#720°复原" class="related-link">720°复原</a></div>
+</div>
+<div class="term-card" data-term="矢量">
+<div class="term-header"><span class="term-tag">矢量</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量被平方后的可观测产物。物质、身体、念头、标签——所有"确定的东西"都是矢量。它不是假的，但每一个矢量下面都有可以继续开方的旋量。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#物质" class="related-link">物质</a></div>
+</div>
+<div class="term-card" data-term="平方">
+<div class="term-header"><span class="term-tag">平方</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：从旋量到矢量的操作——从潜能（空）凝结为体验（色）。在人体上对应吸气。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#矢量" class="related-link">矢量</a> · <a href="#开方" class="related-link">开方</a> · <a href="#呼吸" class="related-link">呼吸</a> · <a href="#道生一" class="related-link">道生一</a></div>
+</div>
+<div class="term-card" data-term="开方">
+<div class="term-header"><span class="term-tag">开方</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：从矢量回到旋量的操作——从体验（色）消解回潜能（空）。在人体上对应呼气。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#矢量" class="related-link">矢量</a> · <a href="#平方" class="related-link">平方</a> · <a href="#呼吸" class="related-link">呼吸</a> · <a href="#修行" class="related-link">修行</a></div>
+</div>
+<div class="term-card" data-term="720°复原">
+<div class="term-header"><span class="term-tag">720°复原</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🔵 物理事实</strong>：旋量的标志性数学性质。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：旋量完成一个完整的阴阳周期——经历显和隐、正和负、生和归之后，回到本源。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#反者道之动" class="related-link">反者道之动</a> · <a href="#含德之厚" class="related-link">含德之厚</a></div>
+</div>
+<div class="term-card" data-term="360°翻转">
+<div class="term-header"><span class="term-tag">360°翻转</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🔵 物理事实</strong>：旋量旋转360°后状态反号的数学性质。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>："反者道之动"的最小单元——从显翻入隐，或从阳翻入阴。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#反者道之动" class="related-link">反者道之动</a> · <a href="#不善" class="related-link">不善</a> · <a href="#祸/福" class="related-link">祸/福</a></div>
+</div>
+<div class="term-card" data-term="正负双解">
+<div class="term-header"><span class="term-tag">正负双解</span><span class="term-category">底层操作</span></div>
+<p class="term-definition"><strong>🔵 物理事实</strong>：旋量表示是矢量表示的"平方根"，同一个矢量可对应正负两个旋量。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：同一个源头的两个相位——不是"好"和"坏"两个东西，是同一个旋量的一体两面。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#平方" class="related-link">平方</a> · <a href="#祸/福" class="related-link">祸/福</a> · <a href="#善人/不善人" class="related-link">善人/不善人</a></div>
+</div>
+</div>
+<div id="awareness" class="section">
+<h2 class="section-title">四、觉知与信息：不在频谱上的维度</h2>
+<div class="term-card" data-term="意识">
+<div class="term-header"><span class="term-tag">意识</span><span class="term-category">觉知与信息</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：东方传统中指那个能知能觉的、不限于大脑的觉知本身。有别于西方神经还原论的"意识是大脑的产物"。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：不是振动频谱上的任何频段，而是这整条频谱得以被"知"的那个"知"本身。它是容纳一切旋量生灭与矢量显隐、却不参与旋转的觉知背景。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#域/觉知" class="related-link">域/觉知</a> · <a href="#神" class="related-link">神</a> · <a href="#频谱一元论" class="related-link">频谱一元论</a></div>
+</div>
+<div class="term-card" data-term="域/觉知">
+<div class="term-header"><span class="term-tag">域/觉知</span><span class="term-category">觉知与信息</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：容纳所有旋量生灭、矢量显隐、平方和开方操作的空集。它自己不平方、不开方、不被任何操作扰动。它不是任何可以被体验的"对象"，而是使一切体验得以可能的"背景"。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#意识" class="related-link">意识</a> · <a href="#旋量" class="related-link">旋量</a> · <a href="#修行" class="related-link">修行</a> · <a href="#临在" class="related-link">临在</a></div>
+</div>
+<div class="term-card" data-term="信息">
+<div class="term-header"><span class="term-tag">信息</span><span class="term-category">觉知与信息</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：不是振动频谱上的某个频段，而是振动与振动之间的关系模式——是旋量平方为矢量时的"编码规则"。它决定了这个旋量会平方成什么样的矢量，而不是另一个。经络是它在身体层面的重要体现。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#频谱一元论" class="related-link">频谱一元论</a> · <a href="#平方" class="related-link">平方</a> · <a href="#经络" class="related-link">经络</a> · <a href="#思想" class="related-link">思想</a></div>
+</div>
+<div class="term-card" data-term="经络">
+<div class="term-header"><span class="term-tag">经络</span><span class="term-category">觉知与信息</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：中华传统医学与修炼学说的核心概念，指生命能量（气）在身体中循行的无形通道。</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：不是解剖学意义上的实体管道，而是能量-物质交界面上的<strong>组织原则</strong>——是能量在身体中循行的最优化信息通道，是平方操作在身体层面的编码路径。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#信息" class="related-link">信息</a> · <a href="#气" class="related-link">气</a> · <a href="#能量" class="related-link">能量</a> · <a href="#身体" class="related-link">身体</a></div>
+</div>
+</div>
+<div id="time" class="section">
+<h2 class="section-title">五、时间：平方与开方的节律</h2>
+<div class="term-card" data-term="时间">
+<div class="term-header"><span class="term-tag">时间</span><span class="term-category">时间概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量场连续平方和开方的节律——每一次平方生成"此刻"，每一次开方完成"此刻"的消解。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#当下" class="related-link">当下</a></div>
+</div>
+<div class="term-card" data-term="过去">
+<div class="term-header"><span class="term-tag">过去</span><span class="term-category">时间概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量的虚部沉积。矢量不消失，而是从实部转入虚部——不再可见，但作为相位信息持续存在。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#矢量" class="related-link">矢量</a> · <a href="#当下" class="related-link">当下</a> · <a href="#未来" class="related-link">未来</a></div>
+</div>
+<div class="term-card" data-term="未来">
+<div class="term-header"><span class="term-tag">未来</span><span class="term-category">时间概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：尚未平方的旋量，同时携带正负双解。不确定性不是信息不够，是旋量的本性。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#平方" class="related-link">平方</a> · <a href="#当下" class="related-link">当下</a> · <a href="#过去" class="related-link">过去</a></div>
+</div>
+<div class="term-card" data-term="当下">
+<div class="term-header"><span class="term-tag">当下</span><span class="term-category">时间概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量正在平方的那一瞬间——从潜能凝结为体验的、正在发生的事件。在人体上，是呼气结束后、下一个吸气开始前那个短暂的"空档"。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#呼吸" class="related-link">呼吸</a> · <a href="#临在" class="related-link">临在</a></div>
+</div>
+</div>
+<div id="existence" class="section">
+<h2 class="section-title">六、存在主体：谁在振动？</h2>
+<div class="term-card" data-term="我">
+<div class="term-header"><span class="term-tag">我</span><span class="term-category">主体概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：一束长期被误认为矢量的高阶旋量。"我"不是矢量，不是旋量——它是整个"平方→开方→平方"循环本身。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#矢量" class="related-link">矢量</a> · <a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a></div>
+</div>
+<div class="term-card" data-term="呼吸">
+<div class="term-header"><span class="term-tag">呼吸</span><span class="term-category">主体概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：平方与开方在人体上的直接体现。吸气=平方，呼气=开方。不是"我在呼吸"，是"宇宙通过我在完成一次平方+开方的操作"。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#身体" class="related-link">身体</a> · <a href="#当下" class="related-link">当下</a></div>
+</div>
+<div class="term-card" data-term="身体">
+<div class="term-header"><span class="term-tag">身体</span><span class="term-category">主体概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量-矢量之间的界面。是"道生一"的显化终点，也是"万物归根"的回归起点。载道器。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#矢量" class="related-link">矢量</a> · <a href="#呼吸" class="related-link">呼吸</a> · <a href="#精" class="related-link">精</a> · <a href="#物质" class="related-link">物质</a></div>
+</div>
+</div>
+<div id="life" class="section">
+<h2 class="section-title">七、生命状态：频谱的相干与卡顿</h2>
+<div class="term-card" data-term="生生之厚">
+<div class="term-header"><span class="term-tag">生生之厚</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十章："人之生，动之于死地，亦十有三。夫何故？以其生生之厚。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：只吸不呼——拼命平方（增益生命），抗拒开方（放下回归）。旋量被锁在+2上，不敢翻转。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#出生入死" class="related-link">出生入死</a> · <a href="#物壮则老" class="related-link">物壮则老</a></div>
+</div>
+<div class="term-card" data-term="含德之厚">
+<div class="term-header"><span class="term-tag">含德之厚</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十五章："含德之厚，比于赤子。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：吸呼自然交替——平方有平方的饱满，开方有开方的安心。旋量720°平滑旋转。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#720°复原" class="related-link">720°复原</a> · <a href="#精之至" class="related-link">精之至</a> · <a href="#和之至" class="related-link">和之至</a></div>
+</div>
+<div class="term-card" data-term="精之至">
+<div class="term-header"><span class="term-tag">精之至</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十五章："未知牝牡之合而朘作，精之至也。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：旋量场的相干度达到极致——正负两个解紧密耦合，阴不脱离阳而独立存在。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#含德之厚" class="related-link">含德之厚</a> · <a href="#和之至" class="related-link">和之至</a> · <a href="#无死地" class="related-link">无死地</a></div>
+</div>
+<div class="term-card" data-term="和之至">
+<div class="term-header"><span class="term-tag">和之至</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十五章："终日号而不嗄，和之至也。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：720°旋转平滑无阻——没有卡住的相位，没有抗拒的翻转，因此没有一个相位可以被攻击。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#含德之厚" class="related-link">含德之厚</a> · <a href="#精之至" class="related-link">精之至</a> · <a href="#无死地" class="related-link">无死地</a></div>
+</div>
+<div class="term-card" data-term="有死地">
+<div class="term-header"><span class="term-tag">有死地</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量被卡在某个相位上。卡住=摩擦=受力面=被攻击的着力点。死地不是一个位置，是你对抗翻转的那一刻制造的"突起"。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#无死地" class="related-link">无死地</a> · <a href="#生生之厚" class="related-link">生生之厚</a> · <a href="#出生入死" class="related-link">出生入死</a></div>
+</div>
+<div class="term-card" data-term="无死地">
+<div class="term-header"><span class="term-tag">无死地</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十章："盖闻善摄生者，陆行不遇兕虎，入军不被甲兵……夫何故？以其无死地。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：没有一个可以被攻击的"我"。不是防御力强，是根本没有一个需要防御的独立个体。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#有死地" class="related-link">有死地</a> · <a href="#精之至" class="related-link">精之至</a> · <a href="#和之至" class="related-link">和之至</a> · <a href="#含德之厚" class="related-link">含德之厚</a></div>
+</div>
+<div class="term-card" data-term="临在">
+<div class="term-header"><span class="term-tag">临在</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：旋量场的完全相干状态——单一旋量平滑旋转，过去和未来不干扰此刻的平方操作。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#域/觉知" class="related-link">域/觉知</a> · <a href="#当下" class="related-link">当下</a> · <a href="#心流" class="related-link">心流</a></div>
+</div>
+<div class="term-card" data-term="心流">
+<div class="term-header"><span class="term-tag">心流</span><span class="term-category">生命状态</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：临在的行动版本——旋量在平方方向上的完全展开，且开方紧随其后，吸呼完整，没有损耗。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#临在" class="related-link">临在</a> · <a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#呼吸" class="related-link">呼吸</a></div>
+</div>
+</div>
+<div id="relation" class="section">
+<h2 class="section-title">八、关系：振动之间的相位</h2>
+<div class="term-card" data-term="爱">
+<div class="term-header"><span class="term-tag">爱</span><span class="term-category">关系概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：两个独立的旋量场在同一个域中达到相位锁定。不是一方输出多于另一方，是双方周期对齐。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#域/觉知" class="related-link">域/觉知</a> · <a href="#共情" class="related-link">共情</a> · <a href="#善" class="related-link">善</a></div>
+</div>
+<div class="term-card" data-term="共情">
+<div class="term-header"><span class="term-tag">共情</span><span class="term-category">关系概念</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：倾听时停止输出"我"的矢量，同时开着方——对方的振动自然进入你的域，产生相位一致。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#爱" class="related-link">爱</a> · <a href="#域/觉知" class="related-link">域/觉知</a> · <a href="#开方" class="related-link">开方</a></div>
+</div>
+<div class="term-card" data-term="善">
+<div class="term-header"><span class="term-tag">善</span><span class="term-category">关系概念</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第二十七章："善行无辙迹。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：从旋量源头直接平方出来的完美矢量行为——行动达成了目的，却不留下"我做了"的痕迹。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#善行无辙迹" class="related-link">善行无辙迹</a> · <a href="#不善" class="related-link">不善</a></div>
+</div>
+<div class="term-card" data-term="不善">
+<div class="term-header"><span class="term-tag">不善</span><span class="term-category">关系概念</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第二十七章："不善人者，善人之资。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：一个暂时卡在负解处的旋量——不是"坏的矢量"，是尚未翻转的正解。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#善" class="related-link">善</a> · <a href="#善人/不善人" class="related-link">善人/不善人</a> · <a href="#360°翻转" class="related-link">360°翻转</a></div>
+</div>
+<div class="term-card" data-term="善人/不善人">
+<div class="term-header"><span class="term-tag">善人/不善人</span><span class="term-category">关系概念</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第二十七章："善人者，不善人之师；不善人者，善人之资。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：同一个旋量的正负两个平方根解。圣人不执着于这两个标签——"不贵其师，不爱其资"。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#善" class="related-link">善</a> · <a href="#不善" class="related-link">不善</a> · <a href="#正负双解" class="related-link">正负双解</a> · <a href="#祸/福" class="related-link">祸/福</a></div>
+</div>
+<div class="term-card" data-term="祸/福">
+<div class="term-header"><span class="term-tag">祸/福</span><span class="term-category">关系概念</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十八章："祸兮福之所倚，福兮祸之所伏。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：同一个旋量的正负两个平方根解。祸不是福的敌人，福不是祸的胜利——它们是同一个4在平方根操作下的两个必然结果。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#正负双解" class="related-link">正负双解</a> · <a href="#善人/不善人" class="related-link">善人/不善人</a></div>
+</div>
+</div>
+<div id="mind" class="section">
+<h2 class="section-title">九、心灵操作：自主的平方与开方</h2>
+<div class="term-card" data-term="修行">
+<div class="term-header"><span class="term-tag">修行</span><span class="term-category">心灵操作</span></div>
+<p class="term-definition"><strong>🟠 创见延伸</strong>：对修行本身的开方。最高一层的修行，不是追求某个特殊状态——是认出你本来就属于那个东西。然后，把"修行"这个动作也放下。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#开方" class="related-link">开方</a> · <a href="#域/觉知" class="related-link">域/觉知</a> · <a href="#无欲" class="related-link">无欲</a></div>
+</div>
+<div class="term-card" data-term="无欲/有欲">
+<div class="term-header"><span class="term-tag">无欲/有欲</span><span class="term-category">心灵操作</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第一章："故常无欲，以观其妙；常有欲，以观其徼。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：两种观察方式，不是两种欲。无欲=开方观妙（从源头观照潜能）；有欲=平方观徼（顺向观察显化规律）。两者同源，同出于觉知。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#域/觉知" class="related-link">域/觉知</a></div>
+</div>
+<div class="term-card" data-term="欲">
+<div class="term-header"><span class="term-tag">欲</span><span class="term-category">心灵操作</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第一章："常无欲""常有欲"；第三十七章："不欲以静，天下将自正。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：道的生命力在个体身上的呼吸节律——不是需要被消灭或崇拜的对象。吸气之欲（生）=平方的冲动；呼气之欲（归）=开方的冲动。两者交替，才是完整的生命力。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#呼吸" class="related-link">呼吸</a> · <a href="#反者道之动" class="related-link">反者道之动</a></div>
+</div>
+<div class="term-card" data-term="闷闷/察察">
+<div class="term-header"><span class="term-tag">闷闷/察察</span><span class="term-category">心灵操作</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十八章："其政闷闷，其民淳淳；其政察察，其民缺缺。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：两种治理状态。闷闷=旋量态——不过度平方，给系统留出自我调节空间；察察=过度平方——把一切规范为清楚的矢量，结果制造了反噬的力。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#弱者道之用" class="related-link">弱者道之用</a></div>
+</div>
+<div class="term-card" data-term="反者道之动">
+<div class="term-header"><span class="term-tag">反者道之动</span><span class="term-category">心灵操作</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第四十章："反也者，道之动也。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：旋量的720°旋转法则——宇宙底层是永不停息的旋转，从显化（平方）到回归（开方）的完整螺旋周期。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#旋量" class="related-link">旋量</a> · <a href="#旋量旋转" class="related-link">旋量旋转</a> · <a href="#720°复原" class="related-link">720°复原</a> · <a href="#360°翻转" class="related-link">360°翻转</a> · <a href="#弱者道之用" class="related-link">弱者道之用</a></div>
+</div>
+<div class="term-card" data-term="弱者道之用">
+<div class="term-header"><span class="term-tag">弱者道之用</span><span class="term-category">心灵操作</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第四十章："弱也者，道之用也。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：道的作用方式是"弱"的——它不强制、不锁定，只把"回归的动力"内置于每一个矢量的底层旋量代码中。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#反者道之动" class="related-link">反者道之动</a> · <a href="#闷闷/察察" class="related-link">闷闷/察察</a></div>
+</div>
+</div>
+<div id="classic" class="section">
+<h2 class="section-title">十、经典读解：圣人的旋量操作</h2>
+<div class="term-card" data-term="善行无辙迹">
+<div class="term-header"><span class="term-tag">善行无辙迹</span><span class="term-category">经典解读</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第二十七章："善行无辙迹。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：从旋量源头直接平方的行动，不留痕迹——不是"做了不说"，是"做了没觉得是自己做的"。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#善" class="related-link">善</a> · <a href="#平方" class="related-link">平方</a></div>
+</div>
+<div class="term-card" data-term="道生一">
+<div class="term-header"><span class="term-tag">道生一</span><span class="term-category">经典解读</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第四十二章："道生一，一生二，二生三，三生万物。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：完整的生成论链——道（域/觉知）→一（第一个旋量）→二（正负双解）→三（第一次平方操作）→万物（无限级联）。修行就是逆着走。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#域/觉知" class="related-link">域/觉知</a> · <a href="#旋量" class="related-link">旋量</a> · <a href="#正负双解" class="related-link">正负双解</a> · <a href="#平方" class="related-link">平方</a></div>
+</div>
+<div class="term-card" data-term="物壮则老">
+<div class="term-header"><span class="term-tag">物壮则老</span><span class="term-category">经典解读</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第三十章："物壮则老，是谓不道，不道早已。"第五十五章："益生曰祥，心使气曰强。物壮则老，谓之不道，不道早已。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：旋量被过度平方（"壮"），锁定在阳面，无法完成720°周期（"不道"），最终因摩擦而崩解（"早已"）。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#生生之厚" class="related-link">生生之厚</a> · <a href="#720°复原" class="related-link">720°复原</a> · <a href="#出生入死" class="related-link">出生入死</a></div>
+</div>
+<div class="term-card" data-term="出生入死">
+<div class="term-header"><span class="term-tag">出生入死</span><span class="term-category">经典解读</span></div>
+<p class="term-definition"><strong>🔵 文化事实</strong>：《道德经》第五十章："出生入死。生之徒十有三，死之徒十有三，人之生动之死地亦十有三。夫何故？以其生生之厚。"</p>
+<p class="term-definition"><strong>🟢 哲学类比</strong>：出=从旋量平方为矢量（生），入=从矢量回归旋量（死）。生与死是同一旋转的两个相位。"动之死地"是因为太想活了，反而在旋量上制造了卡死自己的摩擦。</p>
+<div class="related-terms"><strong>相关词条：</strong><a href="#平方" class="related-link">平方</a> · <a href="#开方" class="related-link">开方</a> · <a href="#生生之厚" class="related-link">生生之厚</a> · <a href="#有死地" class="related-link">有死地</a></div>
+</div>
+</div>
+<div id="quick" class="section">
+<h2 class="section-title">📊 快速检索表</h2>
+<table style="width:100%;border-collapse:collapse;">
+                    <thead><tr><th style="background:#0066cc;color:white;padding:12px;text-align:left;">分类</th><th style="background:#0066cc;color:white;padding:12px;text-align:left;">词汇</th><th style="background:#0066cc;color:white;padding:12px;text-align:left;">一句定义</th></tr></thead>
+                    <tbody>
+                        <tr><td >全景框架</td><td><strong>频谱一元论</strong></td><td>思想、情绪、能量、物质是同一振动频谱上的不同频段</td></tr>
+                        <tr><td></td><td><strong>旋量旋转</strong></td><td>驱动整个频谱升降的永动之源</td></tr>
+                        <tr><td >频谱频段</td><td><strong>神</strong></td><td>高频端——旋量最精微的波动，觉知之光</td></tr>
+                        <tr><td></td><td><strong>思想</strong></td><td>极高频——接近旋量本身的旋转，念头生灭</td></tr>
+                        <tr><td></td><td><strong>情绪</strong></td><td>中高频——旋量平方的第一次凝结</td></tr>
+                        <tr><td></td><td><strong>气</strong></td><td>中频段——正在流动的矢量，生命动力</td></tr>
+                        <tr><td></td><td><strong>能量</strong></td><td>中低频——矢量已成，驱动身体的力</td></tr>
+                        <tr><td></td><td><strong>精</strong></td><td>低频端——矢量完全固化，生命底料</td></tr>
+                        <tr><td></td><td><strong>物质</strong></td><td>极低频——平方到底，完全显化的实体</td></tr>
+                        <tr><td></td><td><strong>精气神</strong></td><td>同一旋量在人体上从低到高的三个显化层次</td></tr>
+                        <tr><td >底层操作</td><td><strong>旋量</strong></td><td>需720°复原的振动种子，正负双解共源</td></tr>
+                        <tr><td></td><td><strong>矢量</strong></td><td>旋量被平方后的可观测产物</td></tr>
+                        <tr><td></td><td><strong>平方（吸）</strong></td><td>从潜能到体验的生成操作</td></tr>
+                        <tr><td></td><td><strong>开方（呼）</strong></td><td>从体验到潜能的回归操作</td></tr>
+                        <tr><td></td><td><strong>720°复原</strong></td><td>旋量完成一个完整的阴阳周期</td></tr>
+                        <tr><td></td><td><strong>360°翻转</strong></td><td>旋量从显翻入隐或从阳翻入阴</td></tr>
+                        <tr><td></td><td><strong>正负双解</strong></td><td>同一个旋量的两个平方根解</td></tr>
+                        <tr><td >觉知与信息</td><td><strong>意识</strong></td><td>不是频段——使一切频段得以被"知"的觉知背景</td></tr>
+                        <tr><td></td><td><strong>域/觉知</strong></td><td>容纳一切操作、不参与任何操作的空集</td></tr>
+                        <tr><td></td><td><strong>信息</strong></td><td>不是频段——平方操作的编码规则，振动间的关系模式</td></tr>
+                        <tr><td></td><td><strong>经络</strong></td><td>能量-物质交界面上的最优化信息通道</td></tr>
+                        <tr><td >时间</td><td><strong>时间</strong></td><td>平方与开方的连续脉冲</td></tr>
+                        <tr><td></td><td><strong>过去</strong></td><td>虚部沉积——矢量从实转入虚</td></tr>
+                        <tr><td></td><td><strong>未来</strong></td><td>未平方的旋量——同时携带+2和-2</td></tr>
+                        <tr><td></td><td><strong>当下</strong></td><td>旋量正在平方的那一瞬间——呼气后的空档</td></tr>
+                        <tr><td >存在主体</td><td><strong>我</strong></td><td>被误认为矢量的高阶旋量</td></tr>
+                        <tr><td></td><td><strong>呼吸</strong></td><td>平方与开方在人体上的显化</td></tr>
+                        <tr><td></td><td><strong>身体</strong></td><td>旋量-矢量之间的界面，载道器</td></tr>
+                        <tr><td >生命状态</td><td><strong>生生之厚</strong></td><td>只吸不呼——拼命平方，抗拒开方</td></tr>
+                        <tr><td></td><td><strong>含德之厚</strong></td><td>吸呼交替——平方与开方各有其时</td></tr>
+                        <tr><td></td><td><strong>精之至</strong></td><td>旋量场的相干度达到极致</td></tr>
+                        <tr><td></td><td><strong>和之至</strong></td><td>720°旋转平滑无阻</td></tr>
+                        <tr><td></td><td><strong>有死地</strong></td><td>卡在翻转处制造的摩擦突起</td></tr>
+                        <tr><td></td><td><strong>无死地</strong></td><td>没有一个可以被攻击的"我"</td></tr>
+                        <tr><td></td><td><strong>临在</strong></td><td>旋量场的完全相干——单一频率，无杂波</td></tr>
+                        <tr><td></td><td><strong>心流</strong></td><td>临在的行动版本，吸呼完整</td></tr>
+                        <tr><td >关系</td><td><strong>爱</strong></td><td>两旋量场的相位锁定</td></tr>
+                        <tr><td></td><td><strong>共情</strong></td><td>停止输出矢量，允许对方振动进入你的域</td></tr>
+                        <tr><td></td><td><strong>善</strong></td><td>从源头平方，不留痕迹</td></tr>
+                        <tr><td></td><td><strong>不善</strong></td><td>暂时卡在负解处的旋量</td></tr>
+                        <tr><td></td><td><strong>善人/不善人</strong></td><td>同一个旋量的正负两个平方根解</td></tr>
+                        <tr><td></td><td><strong>祸/福</strong></td><td>同一个旋量的正负两个平方根解</td></tr>
+                        <tr><td >心灵操作</td><td><strong>欲</strong></td><td>道的生命力在你身上的呼吸——吸气=创造，呼气=回归</td></tr>
+                        <tr><td></td><td><strong>修行</strong></td><td>对修行本身的开方</td></tr>
+                        <tr><td></td><td><strong>反者道之动</strong></td><td>旋量的720°旋转法则</td></tr>
+                        <tr><td></td><td><strong>弱者道之用</strong></td><td>道的作用方式是"弱"的</td></tr>
+                        <tr><td></td><td><strong>无欲/有欲</strong></td><td>两种观察方式，同源同出于觉知</td></tr>
+                        <tr><td></td><td><strong>闷闷/察察</strong></td><td>两种治理状态，旋量态与过度平方</td></tr>
+                        <tr><td >经典读解</td><td><strong>善行无辙迹</strong></td><td>从源头平方，不留痕迹</td></tr>
+                        <tr><td></td><td><strong>道生一</strong></td><td>完整的生成论链——道→旋量→正负双解→平方→万物</td></tr>
+                        <tr><td></td><td><strong>物壮则老</strong></td><td>旋量被过度平方，无法完成720°周期而崩解</td></tr>
+                        <tr><td></td><td><strong>出生入死</strong></td><td>生与死是同一旋转的两个相位</td></tr>
+                    </tbody>
+                </table>
+</div>
 </main></div>
 <div class="nav-buttons">
     <button class="back-to-home" id="backToHome" title="返回首页">🏠</button>
@@ -315,6 +655,84 @@ nodes.forEach(node => {
       setTimeout(() => {
         targetCard.classList.remove('highlight-card');
       }, 1200);
+    }
+  });
+});
+
+// === V1.1.0 相关词条跳转逻辑 ===
+document.querySelectorAll('.related-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    
+    const targetId = href.replace('#', '');
+    
+    // 方法1: 通过 data-term 属性匹配
+    const targetCard = document.querySelector(`[data-term="${targetId}"]`);
+    if (targetCard) {
+      document.querySelectorAll('.term-card').forEach(card => card.classList.remove('highlight-card'));
+      targetCard.classList.add('highlight-card');
+      targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => targetCard.classList.remove('highlight-card'), 1200);
+      return;
+    }
+    
+    // 方法2: 通过 term-tag 文本匹配
+    const allCards = document.querySelectorAll('.term-card');
+    for (let card of allCards) {
+      const tag = card.querySelector('.term-tag');
+      if (tag && tag.textContent.trim() === targetId) {
+        card.classList.add('highlight-card');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => card.classList.remove('highlight-card'), 1200);
+        return;
+      }
+    }
+    
+    // 方法3: 直接通过 id 跳转
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+});
+
+// === V1.1.0 相关词条跳转逻辑 ===
+document.querySelectorAll('.related-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    
+    const targetId = href.replace('#', '');
+    
+    // 方法1: 通过 data-term 属性匹配
+    const targetCard = document.querySelector(`[data-term="${targetId}"]`);
+    if (targetCard) {
+      document.querySelectorAll('.term-card').forEach(card => card.classList.remove('highlight-card'));
+      targetCard.classList.add('highlight-card');
+      targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => targetCard.classList.remove('highlight-card'), 1200);
+      return;
+    }
+    
+    // 方法2: 通过 term-tag 文本匹配
+    const allCards = document.querySelectorAll('.term-card');
+    for (let card of allCards) {
+      const tag = card.querySelector('.term-tag');
+      if (tag && tag.textContent.trim() === targetId) {
+        card.classList.add('highlight-card');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => card.classList.remove('highlight-card'), 1200);
+        return;
+      }
+    }
+    
+    // 方法3: 直接通过 id 跳转
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
 });
