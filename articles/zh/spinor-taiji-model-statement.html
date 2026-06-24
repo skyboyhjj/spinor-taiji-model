@@ -75,7 +75,7 @@
             position: fixed; bottom: 30px; right: 90px; width: 50px; height: 50px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;
             border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1000; font-size: 16px;
+            transition: all 0.3s; z-index: 1100; font-size: 16px;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
         .back-to-home.show { opacity: 1; visibility: visible; }
@@ -84,7 +84,7 @@
             position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
             background: linear-gradient(135deg, #0066cc, #00cc99); color: white;
             border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1000; font-size: 16px;
+            transition: all 0.3s; z-index: 1100; font-size: 16px;
             box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
         }
         .back-to-top.show { opacity: 1; visibility: visible; }
@@ -94,7 +94,7 @@
             background: linear-gradient(135deg, #f39c12, #e67e22);
             color: white; border: none; border-radius: 24px;
             cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1000; font-size: 15px;
+            transition: all 0.3s; z-index: 1100; font-size: 15px;
             padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
             display: flex; align-items: center; gap: 6px;
         }
@@ -157,13 +157,14 @@
         }
         .feedback-overlay {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-            z-index: 2000; align-items: center; justify-content: center;
+            z-index: 3000; align-items: center; justify-content: center;
         }
         .feedback-overlay.active { display: flex; }
         .feedback-modal {
             background: #fff; border-radius: 16px; padding: 32px; max-width: 440px;
             width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.2);
             position: relative; max-height: 90vh; overflow-y: auto;
+            z-index: 3001;
         }
         .feedback-modal-close {
             position: absolute; top: 14px; right: 18px; background: none;
