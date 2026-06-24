@@ -88,6 +88,27 @@ a { color: #0066cc; text-decoration: none; }
         font-size: 14px;
     }
 }
+.feedback-section { margin: 30px 0 10px; padding: 0; }
+.feedback-inner {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+    border: 1px solid #c5d5f0; border-radius: 12px;
+    padding: 28px 32px; text-align: center;
+}
+.feedback-title { font-size: 1.1em; font-weight: 600; color: #2c3e50; margin: 0 0 8px; }
+.feedback-desc { font-size: 0.9em; color: #666; margin: 0 0 16px; }
+.feedback-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.feedback-btn {
+    display: inline-block; background: linear-gradient(135deg, #2c3e50, #3498DB);
+    color: #fff; padding: 10px 28px; border-radius: 24px;
+    text-decoration: none; font-weight: 600; font-size: 0.95em;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(44, 62, 80, 0.3); }
+.feedback-alt { font-size: 0.85em; color: #888; }
+@media (max-width: 480px) {
+    .feedback-inner { padding: 20px 18px; }
+    .feedback-btn { padding: 8px 20px; font-size: 0.9em; }
+}
 </style>
 </head>
 <body>
@@ -95,6 +116,16 @@ a { color: #0066cc; text-decoration: none; }
 <div class="footer">
 <p>— END —</p>
 <p>Spinor-Taiji Model · Through the mirror of spinors, illuminate the way of Taiji</p>
+</div>
+<div class="feedback-section">
+    <div class="feedback-inner">
+        <p class="feedback-title">This declaration is a living document. We welcome your feedback.</p>
+        <p class="feedback-desc">Found an error, have a suggestion, or any questions? Let us know.</p>
+        <div class="feedback-actions">
+            <a href="https://github.com/skyboyhjj/spinor-taiji-model/issues/new?template=content_feedback.yml&labels=source:statement" target="_blank" class="feedback-btn">Submit Feedback</a>
+            <span class="feedback-alt">or follow WeChat: TS爱心联盟</span>
+        </div>
+    </div>
 </div>
 <div class="nav-buttons">
     <button class="back-to-home" id="backToHome" title="Back to Home">🏠</button>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旋量-太极词汇表（预览版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #D4AF37;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2C3E50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .tag-line {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498DB;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .tag-line p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #2C3E50;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498DB;
+            position: relative;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #D4AF37;
+        }
+
+        .glossary-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .glossary-item:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .term {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2C3E50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .definition-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .definition-item {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            background-color: white;
+            border-left: 4px solid transparent;
+        }
+
+        .definition-item.physical {
+            border-left-color: #3498DB;
+        }
+
+        .definition-item.philosophy {
+            border-left-color: #27AE60;
+        }
+
+        .definition-item.extension {
+            border-left-color: #F39C12;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+
+        .tag-physical { color: #3498DB; }
+        .tag-philosophy { color: #27AE60; }
+        .tag-extension { color: #F39C12; }
+
+        .tag-icon {
+            font-size: 1.2em;
+        }
+
+        .definition-text {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .related-terms {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .related-terms strong {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .related-terms a {
+            color: #3498DB;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: color 0.2s;
+        }
+
+        .related-terms a:hover {
+            color: #2980B9;
+            text-decoration: underline;
+        }
+
+        .quick-reference {
+            overflow-x: auto;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .reference-table th {
+            background-color: #2C3E50;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .reference-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reference-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .reference-table .category {
+            font-weight: 600;
+            color: #2C3E50;
+        }
+
+        .tag-box {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .tag-box.blue { background-color: #3498DB; }
+        .tag-box.green { background-color: #27AE60; }
+        .tag-box.orange { background-color: #F39C12; }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            font-style: italic;
+            border-top: 1px dashed #ddd;
+            margin-top: 40px;
+        }
+
+        /* 颜色标签 */
+        .color-blue { color: #3498DB; }
+        .color-green { color: #27AE60; }
+        .color-orange { color: #F39C12; }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            section { padding: 20px; }
+            .term { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>旋量-太极词汇表</h1>
+            <p class="subtitle">三层标签 & 相关词条标注版</p>
+        </header>
+
+        <div class="tag-line">
+            <p>以下定义，是在"万物皆振动"与"旋量-太极"模型的交叉读解中重新锚定的。</p>
+            <p><em>名可名，非常名</em>——这些定义不是最终的真理，是可操作的比喻脚手架。</p>
+        </div>
+
+        <!-- 一、频谱一元论：全景框架 -->
+        <section>
+            <h2>一、频谱一元论：全景框架</h2>
+            
+            <div class="glossary-item">
+                <div class="term">频谱一元论</div>
+                <ul class="definition-list">
+                    <li class="definition-item extension">
+                        <span class="tag tag-extension"><span class="tag-icon">🟠</span> 创见延伸</span>
+                        <p class="definition-text">思想、情绪、能量、物质并非四种不同的"东西"，而是同一振动频谱上从极高频到极低频的显化频段。此处的"一元"不是指宇宙由一种"实体"构成，而是指它们是同一种振动在不同频率上的显化——如同冰、水、汽是同一物质的三态。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#思想">思想</a>
+                    <a href="#情绪">情绪</a>
+                    <a href="#能量">能量</a>
+                    <a href="#物质">物质</a>
+                    <a href="#旋量">旋量</a>
+                    <a href="#信息">信息</a>
+                    <a href="#精气神">精气神</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term">旋量旋转（动力本源）</div>
+                <ul class="definition-list">
+                    <li class="definition-item physical">
+                        <span class="tag tag-physical"><span class="tag-icon">🔵</span> 物理事实</span>
+                        <p class="definition-text">旋量是量子场论中描述费米子的数学对象，其自旋是内禀属性。</p>
+                    </li>
+                    <li class="definition-item philosophy">
+                        <span class="tag tag-philosophy"><span class="tag-icon">🟢</span> 哲学类比</span>
+                        <p class="definition-text">宇宙底层唯一永动的根本动力。它驱动整个频谱从极高频（思想）到极低频（物质）的升降、凝结与消解。是"反者道之动"的动力学核心。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#旋量">旋量</a>
+                    <a href="#频谱一元论">频谱一元论</a>
+                    <a href="#反者道之动">反者道之动</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二、频谱频段：从高到低的显化（节选） -->
+        <section>
+            <h2>二、频谱频段：从高到低的显化（节选）</h2>
+            
+            <div class="glossary-item">
+                <div class="term" id="神">神</div>
+                <ul class="definition-list">
+                    <li class="definition-item physical">
+                        <span class="tag tag-physical"><span class="tag-icon">🔵</span> 文化事实</span>
+                        <p class="definition-text">道家"精气神"三宝之一，指生命最高层次的主宰与觉照。</p>
+                    </li>
+                    <li class="definition-item philosophy">
+                        <span class="tag tag-philosophy"><span class="tag-icon">🟢</span> 哲学类比</span>
+                        <p class="definition-text">振动频谱的高频端——旋量本身最精微的波动，平方的前奏。那清澈的、无念的觉知之光。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#精气神">精气神</a>
+                    <a href="#意识">意识</a>
+                    <a href="#思想">思想</a>
+                    <a href="#临在">临在</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term" id="思想">思想</div>
+                <ul class="definition-list">
+                    <li class="definition-item extension">
+                        <span class="tag tag-extension"><span class="tag-icon">🟠</span> 创见延伸</span>
+                        <p class="definition-text">振动频谱的极高频段——接近旋量本身的旋转。念头生灭，无形无相，尚未凝结为感受和行动。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#频谱一元论">频谱一元论</a>
+                    <a href="#神">神</a>
+                    <a href="#情绪">情绪</a>
+                    <a href="#信息">信息</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term" id="情绪">情绪</div>
+                <ul class="definition-list">
+                    <li class="definition-item extension">
+                        <span class="tag tag-extension"><span class="tag-icon">🟠</span> 创见延伸</span>
+                        <p class="definition-text">振动频谱的中高频段——旋量平方的第一次凝结，矢量初具轮廓，但尚未固化为行动。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#频谱一元论">频谱一元论</a>
+                    <a href="#思想">思想</a>
+                    <a href="#能量">能量</a>
+                    <a href="#气">气</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 三、底层操作：旋量与矢量（节选） -->
+        <section>
+            <h2>三、底层操作：旋量与矢量（节选）</h2>
+            
+            <div class="glossary-item">
+                <div class="term" id="旋量">旋量</div>
+                <ul class="definition-list">
+                    <li class="definition-item physical">
+                        <span class="tag tag-physical"><span class="tag-icon">🔵</span> 物理事实</span>
+                        <p class="definition-text">量子场论中描述费米子的数学对象，需720°旋转方能复原。</p>
+                    </li>
+                    <li class="definition-item philosophy">
+                        <span class="tag tag-philosophy"><span class="tag-icon">🟢</span> 哲学类比</span>
+                        <p class="definition-text">宇宙底层最小单位的旋转——旋转360°后状态反号，从显翻为隐，从阳翻为阴。它同时携带正负两个解。看不见，但一切可见皆由此平方而来。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#矢量">矢量</a>
+                    <a href="#平方">平方</a>
+                    <a href="#开方">开方</a>
+                    <a href="#旋量旋转">旋量旋转</a>
+                    <a href="#720°复原">720°复原</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term" id="平方">平方</div>
+                <ul class="definition-list">
+                    <li class="definition-item extension">
+                        <span class="tag tag-extension"><span class="tag-icon">🟠</span> 创见延伸</span>
+                        <p class="definition-text">从旋量到矢量的操作——从潜能（空）凝结为体验（色）。在人体上对应吸气。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#旋量">旋量</a>
+                    <a href="#矢量">矢量</a>
+                    <a href="#开方">开方</a>
+                    <a href="#呼吸">呼吸</a>
+                    <a href="#道生一">道生一</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 七、生命状态：频谱的相干与卡顿（节选） -->
+        <section>
+            <h2>七、生命状态：频谱的相干与卡顿（节选）</h2>
+            
+            <div class="glossary-item">
+                <div class="term" id="精之至">精之至</div>
+                <ul class="definition-list">
+                    <li class="definition-item physical">
+                        <span class="tag tag-physical"><span class="tag-icon">🔵</span> 文化事实</span>
+                        <p class="definition-text">《道德经》第五十五章："未知牝牡之合而朘作，精之至也。"</p>
+                    </li>
+                    <li class="definition-item philosophy">
+                        <span class="tag tag-philosophy"><span class="tag-icon">🟢</span> 哲学类比</span>
+                        <p class="definition-text">旋量场的相干度达到极致——正负两个解紧密耦合，阴不脱离阳而独立存在。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#含德之厚">含德之厚</a>
+                    <a href="#和之至">和之至</a>
+                    <a href="#无死地">无死地</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term" id="和之至">和之至</div>
+                <ul class="definition-list">
+                    <li class="definition-item physical">
+                        <span class="tag tag-physical"><span class="tag-icon">🔵</span> 文化事实</span>
+                        <p class="definition-text">《道德经》第五十五章："终日号而不嗄，和之至也。"</p>
+                    </li>
+                    <li class="definition-item philosophy">
+                        <span class="tag tag-philosophy"><span class="tag-icon">🟢</span> 哲学类比</span>
+                        <p class="definition-text">720°旋转平滑无阻——没有卡住的相位，没有抗拒的翻转，因此没有一个相位可以被攻击。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#含德之厚">含德之厚</a>
+                    <a href="#精之至">精之至</a>
+                    <a href="#无死地">无死地</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term" id="临在">临在</div>
+                <ul class="definition-list">
+                    <li class="definition-item extension">
+                        <span class="tag tag-extension"><span class="tag-icon">🟠</span> 创见延伸</span>
+                        <p class="definition-text">旋量场的完全相干状态——单一旋量平滑旋转，过去和未来不干扰此刻的平方操作。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#域/觉知">域/觉知</a>
+                    <a href="#当下">当下</a>
+                    <a href="#心流">心流</a>
+                </div>
+            </div>
+
+            <div class="glossary-item">
+                <div class="term" id="心流">心流</div>
+                <ul class="definition-list">
+                    <li class="definition-item extension">
+                        <span class="tag tag-extension"><span class="tag-icon">🟠</span> 创见延伸</span>
+                        <p class="definition-text">临在的行动版本——旋量在平方方向上的完全展开，且开方紧随其后，吸呼完整，没有损耗。</p>
+                    </li>
+                </ul>
+                <div class="related-terms">
+                    <strong>相关词条：</strong>
+                    <a href="#临在">临在</a>
+                    <a href="#平方">平方</a>
+                    <a href="#开方">开方</a>
+                    <a href="#呼吸">呼吸</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 附：快速检索表（节选） -->
+        <section>
+            <h2>附：快速检索表（节选）</h2>
+            <div class="quick-reference">
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>分类</th>
+                            <th>词汇</th>
+                            <th>一句定义</th>
+                            <th>标签</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category">全景框架</td>
+                            <td><strong>频谱一元论</strong></td>
+                            <td>思想、情绪、能量、物质是同一振动频谱上的不同频段</td>
+                            <td><span class="tag-box orange"></span> 🟠</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>旋量旋转</strong></td>
+                            <td>驱动整个频谱升降的永动之源</td>
+                            <td><span class="tag-box blue"></span> <span class="tag-box green"></span> 🔵🟢</td>
+                        </tr>
+                        <tr>
+                            <td class="category">频谱频段</td>
+                            <td><strong>神</strong></td>
+                            <td>高频端——旋量最精微的波动，觉知之光</td>
+                            <td><span class="tag-box blue"></span> <span class="tag-box green"></span> 🔵🟢</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>思想</strong></td>
+                            <td>极高频——接近旋量本身的旋转，念头生灭</td>
+                            <td><span class="tag-box orange"></span> 🟠</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>情绪</strong></td>
+                            <td>中高频——旋量平方的第一次凝结</td>
+                            <td><span class="tag-box orange"></span> 🟠</td>
+                        </tr>
+                        <tr>
+                            <td class="category">生命状态</td>
+                            <td><strong>精之至</strong></td>
+                            <td>旋量场的相干度达到极致</td>
+                            <td><span class="tag-box blue"></span> <span class="tag-box green"></span> 🔵🟢</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>和之至</strong></td>
+                            <td>720°旋转平滑无阻</td>
+                            <td><span class="tag-box blue"></span> <span class="tag-box green"></span> 🔵🟢</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>临在</strong></td>
+                            <td>旋量场的完全相干——单一频率，无杂波</td>
+                            <td><span class="tag-box orange"></span> 🟠</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>心流</strong></td>
+                            <td>临在的行动版本，吸呼完整</td>
+                            <td><span class="tag-box orange"></span> 🟠</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p><em>名词只是手指。真正要紧的，是手指指着的那个。而那个，名可名，非常名。</em></p>
+            <p style="margin-top: 10px; font-size: 0.9em;">—— 《旋量-太极词汇表》</p>
+        </footer>
+    </div>
+</body>
+</html>

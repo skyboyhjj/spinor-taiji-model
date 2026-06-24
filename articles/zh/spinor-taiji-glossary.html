@@ -117,6 +117,27 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
 .related-terms strong { color: #7f8c8d; font-size: 0.9em; }
 .related-link { color: #3498DB; text-decoration: none; margin-right: 10px; transition: color 0.2s; }
 .related-link:hover { color: #2980B9; text-decoration: underline; }
+.feedback-section { margin: 30px 0 10px; padding: 0; }
+.feedback-inner {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+    border: 1px solid #c5d5f0; border-radius: 12px;
+    padding: 28px 32px; text-align: center;
+}
+.feedback-title { font-size: 1.1em; font-weight: 600; color: #2c3e50; margin: 0 0 8px; }
+.feedback-desc { font-size: 0.9em; color: #666; margin: 0 0 16px; }
+.feedback-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.feedback-btn {
+    display: inline-block; background: linear-gradient(135deg, #2c3e50, #3498DB);
+    color: #fff; padding: 10px 28px; border-radius: 24px;
+    text-decoration: none; font-weight: 600; font-size: 0.95em;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(44, 62, 80, 0.3); }
+.feedback-alt { font-size: 0.85em; color: #888; }
+@media (max-width: 480px) {
+    .feedback-inner { padding: 20px 18px; }
+    .feedback-btn { padding: 8px 20px; font-size: 0.9em; }
+}
 </style>
 </head>
 <body>
@@ -613,6 +634,16 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
     <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
 </div>
 <footer><p class="footer-text">— 旋量-太极模型 · 名可名，非常名 —</p></footer>
+<div class="feedback-section">
+    <div class="feedback-inner">
+        <p class="feedback-title">这份词汇表是活着的文档，期待你的反馈</p>
+        <p class="feedback-desc">发现错误、有改进建议、或有任何疑问？欢迎告诉我们。</p>
+        <div class="feedback-actions">
+            <a href="https://github.com/skyboyhjj/spinor-taiji-model/issues/new?template=content_feedback.yml&labels=source:glossary" target="_blank" class="feedback-btn">提交反馈</a>
+            <span class="feedback-alt">或关注微信公众号：TS爱心联盟</span>
+        </div>
+    </div>
+</div>
 <script>
 const searchInput = document.getElementById("searchInput");
 const termCards = document.querySelectorAll(".term-card");

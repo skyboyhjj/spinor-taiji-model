@@ -1,0 +1,54 @@
+name: 内容反馈
+description: 对声明、词汇表等内容的纠错、建议或疑问
+title: "[反馈] "
+labels: ["status:triage"]
+body:
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: 反馈类型
+      description: 请选择反馈类型
+      options:
+        - 内容纠错
+        - 改进建议
+        - 疑问求助
+        - 赞赏鼓励
+    validations:
+      required: true
+  - type: dropdown
+    id: source_page
+    attributes:
+      label: 来源页面
+      description: 反馈涉及哪个页面？
+      options:
+        - 旋量-太极模型声明
+        - 旋量-太极词汇表
+        - 其他页面
+    validations:
+      required: true
+  - type: input
+    id: section
+    attributes:
+      label: 涉及章节/词条
+      description: 请指出反馈涉及的具体章节或词条名称
+      placeholder: 如：第三章 三层标签系统 / 词条"频谱一元论"
+  - type: textarea
+    id: description
+    attributes:
+      label: 具体描述
+      description: 请详细描述你的反馈内容
+      placeholder: 请说明具体问题或建议...
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议修改方案（可选）
+      description: 如果你有具体的修改建议，请在此说明
+      placeholder: 建议改为...
+  - type: input
+    id: contact
+    attributes:
+      label: 联系方式（可选）
+      description: 如需后续沟通，可留下邮箱或微信
+      placeholder: email@example.com
