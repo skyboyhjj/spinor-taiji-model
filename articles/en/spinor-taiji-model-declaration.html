@@ -84,6 +84,11 @@ a { color: #0066cc; text-decoration: none; }
 .feedback-float.show { opacity: 1; visibility: visible; }
 .feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
 @media (max-width: 768px) {
+    body { font-size: 15px; padding: 20px 14px 40px; }
+    h1 { font-size: 1.6em; }
+    h2 { font-size: 1.3em; margin: 36px 0 16px; }
+    table { font-size: 0.82em; }
+    thead th, tbody td { padding: 8px 10px; }
     .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
     .back-to-home {
         right: 65px;
@@ -116,8 +121,15 @@ a { color: #0066cc; text-decoration: none; }
 .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(44, 62, 80, 0.3); }
 .feedback-alt { font-size: 0.85em; color: #888; }
 @media (max-width: 480px) {
+    body { font-size: 14px; padding: 16px 10px 32px; }
+    h1 { font-size: 1.4em; }
+    h2 { font-size: 1.15em; }
+    table { font-size: 0.75em; }
     .feedback-inner { padding: 20px 18px; }
     .feedback-btn { padding: 8px 20px; font-size: 0.9em; }
+}
+@media print {
+    body { font-size: 12pt; line-height: 1.6; padding: 0; color: #000; }
 }
 .feedback-overlay {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
