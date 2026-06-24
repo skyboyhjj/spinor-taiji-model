@@ -89,7 +89,19 @@
         }
         .back-to-top.show { opacity: 1; visibility: visible; }
         .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5); }
+        .feedback-float {
+            position: fixed; bottom: 90px; right: 30px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white; border: none; border-radius: 24px;
+            cursor: pointer; opacity: 0; visibility: hidden;
+            transition: all 0.3s; z-index: 1000; font-size: 15px;
+            padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .feedback-float.show { opacity: 1; visibility: visible; }
+        .feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
         @media (max-width: 768px) {
+            .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
             body { font-size: 15px; padding: 20px 14px 40px; }
             h1 { font-size: 1.6em; }
             h2 { font-size: 1.3em; margin: 36px 0 16px; }
@@ -143,6 +155,48 @@
             .feedback-inner { padding: 20px 18px; }
             .feedback-btn { padding: 8px 20px; font-size: 0.9em; }
         }
+        .feedback-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+            z-index: 2000; align-items: center; justify-content: center;
+        }
+        .feedback-overlay.active { display: flex; }
+        .feedback-modal {
+            background: #fff; border-radius: 16px; padding: 32px; max-width: 440px;
+            width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            position: relative; max-height: 90vh; overflow-y: auto;
+        }
+        .feedback-modal-close {
+            position: absolute; top: 14px; right: 18px; background: none;
+            border: none; font-size: 22px; cursor: pointer; color: #999; line-height: 1;
+        }
+        .feedback-modal-close:hover { color: #333; }
+        .feedback-modal h3 { font-size: 1.2em; margin: 0 0 6px; color: #2c3e50; }
+        .feedback-modal-sub { font-size: 0.85em; color: #888; margin: 0 0 20px; }
+        .feedback-form-group { margin-bottom: 16px; }
+        .feedback-form-group label { display: block; font-size: 0.9em; font-weight: 600; color: #555; margin-bottom: 6px; }
+        .feedback-form-group select,
+        .feedback-form-group textarea,
+        .feedback-form-group input {
+            width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 0.95em; font-family: inherit; outline: none; transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .feedback-form-group select:focus,
+        .feedback-form-group textarea:focus,
+        .feedback-form-group input:focus { border-color: #f39c12; }
+        .feedback-form-group textarea { min-height: 120px; resize: vertical; }
+        .feedback-submit {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: #fff; border: none; border-radius: 24px; font-size: 1em; font-weight: 600;
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feedback-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(243, 156, 18, 0.4); }
+        .feedback-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .feedback-success { display: none; text-align: center; padding: 20px 0; }
+        .feedback-success.show { display: block; }
+        .feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
+        .feedback-success p { color: #555; margin: 4px 0; }
+        @media print { .feedback-float, .feedback-overlay { display: none !important; } }
     </style>
 </head>
 <body>
@@ -248,7 +302,7 @@
                 <p class="feedback-title">这份声明是活着的文档，期待你的反馈</p>
                 <p class="feedback-desc">发现错误、有改进建议、或有任何疑问？欢迎告诉我们。</p>
                 <div class="feedback-actions">
-                    <a href="https://github.com/skyboyhjj/spinor-taiji-model/issues/new?template=content_feedback.yml&labels=source:statement" target="_blank" class="feedback-btn">提交反馈</a>
+                    <a href="javascript:void(0)" onclick="openFeedback()" class="feedback-btn">提交反馈</a>
                     <span class="feedback-alt">或关注微信公众号：TS爱心联盟</span>
                 </div>
             </div>
@@ -257,17 +311,111 @@
     <div class="nav-buttons">
         <button class="back-to-home" id="backToHome" title="返回首页">🏠</button>
         <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
+        <button class="feedback-float" id="feedbackFloat" title="反馈与建议">📬 反馈</button>
     </div>
-    <script>
-    const backToTopBtn = document.getElementById("backToTop");
-    const backToHomeBtn = document.getElementById("backToHome");
-    window.addEventListener("scroll", function() {
-        const isVisible = window.scrollY > 300;
-        backToTopBtn.classList.toggle("show", isVisible);
-        backToHomeBtn.classList.toggle("show", isVisible);
-    });
-    backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-    backToHomeBtn.addEventListener("click", () => window.location.href = "/");
-    </script>
+    <div class="feedback-overlay" id="feedbackOverlay">
+    <div class="feedback-modal">
+        <button class="feedback-modal-close" id="feedbackClose">&times;</button>
+        <h3>📬 反馈与建议</h3>
+        <p class="feedback-modal-sub">这份文档因你的反馈而不断进化</p>
+        <div id="feedbackForm">
+            <div class="feedback-form-group">
+                <label for="fbType">反馈类型</label>
+                <select id="fbType">
+                    <option value="suggestion">改进建议</option>
+                    <option value="correction">内容纠错</option>
+                    <option value="question">疑问求助</option>
+                    <option value="appreciation">赞赏鼓励</option>
+                </select>
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbContent">具体内容 <span style="color:#e74c3c">*</span></label>
+                <textarea id="fbContent" placeholder="请描述你的反馈内容…" required></textarea>
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbContact">联系方式（选填）</label>
+                <input type="text" id="fbContact" placeholder="邮箱或微信，便于后续沟通">
+            </div>
+            <button class="feedback-submit" id="fbSubmit">提交反馈</button>
+        </div>
+        <div class="feedback-success" id="feedbackSuccess">
+            <div class="feedback-success-icon">🎉</div>
+            <p><strong>感谢你的反馈！</strong></p>
+            <p style="font-size:0.85em">我们会尽快处理，如有需要会通过你留下的联系方式回复。</p>
+        </div>
+    </div>
+</div>
+<script>
+const backToTopBtn = document.getElementById("backToTop");
+const backToHomeBtn = document.getElementById("backToHome");
+const feedbackFloat = document.getElementById("feedbackFloat");
+const feedbackOverlay = document.getElementById("feedbackOverlay");
+const feedbackClose = document.getElementById("feedbackClose");
+const feedbackForm = document.getElementById("feedbackForm");
+const feedbackSuccess = document.getElementById("feedbackSuccess");
+const fbSubmit = document.getElementById("fbSubmit");
+
+window.addEventListener("scroll", function() {
+    const isVisible = window.scrollY > 300;
+    backToTopBtn.classList.toggle("show", isVisible);
+    backToHomeBtn.classList.toggle("show", isVisible);
+    feedbackFloat.classList.toggle("show", isVisible);
+});
+backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+backToHomeBtn.addEventListener("click", () => window.location.href = "/");
+
+function openFeedback() {
+    feedbackOverlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+function closeFeedback() {
+    feedbackOverlay.classList.remove("active");
+    document.body.style.overflow = "";
+    feedbackForm.style.display = "";
+    feedbackSuccess.classList.remove("show");
+    document.getElementById("fbContent").value = "";
+}
+feedbackFloat.addEventListener("click", openFeedback);
+feedbackClose.addEventListener("click", closeFeedback);
+feedbackOverlay.addEventListener("click", function(e) {
+    if (e.target === feedbackOverlay) closeFeedback();
+});
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && feedbackOverlay.classList.contains("active")) closeFeedback();
+});
+
+fbSubmit.addEventListener("click", async function() {
+    const content = document.getElementById("fbContent").value.trim();
+    if (content.length < 5) {
+        alert("反馈内容至少需要5个字符");
+        return;
+    }
+    fbSubmit.disabled = true;
+    fbSubmit.textContent = "提交中…";
+    try {
+        const resp = await fetch("/api/feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                type: document.getElementById("fbType").value,
+                source: "statement",
+                content: content,
+                contact: document.getElementById("fbContact").value.trim()
+            })
+        });
+        const data = await resp.json();
+        if (data.success) {
+            feedbackForm.style.display = "none";
+            feedbackSuccess.classList.add("show");
+        } else {
+            alert("提交失败：" + (data.error || "请稍后重试"));
+        }
+    } catch (e) {
+        alert("网络错误，请稍后重试。也可通过微信公众号「TS爱心联盟」提交反馈。");
+    }
+    fbSubmit.disabled = false;
+    fbSubmit.textContent = "提交反馈";
+});
+</script>
 </body>
 </html>
