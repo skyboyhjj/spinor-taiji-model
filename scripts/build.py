@@ -30,6 +30,17 @@ def main():
     shutil.copytree(docs_src, dist_docs)
     print("复制 docs 目录")
 
+    # 复制 functions 目录（Cloudflare Pages Functions）
+    functions_src = os.path.join(project_root, "functions")
+    dist_functions = os.path.join(dist_dir, "functions")
+    if os.path.exists(functions_src):
+        if os.path.exists(dist_functions):
+            shutil.rmtree(dist_functions)
+        shutil.copytree(functions_src, dist_functions)
+        print("复制 functions 目录（Cloudflare Pages Functions）")
+    else:
+        print("警告：未找到 functions 目录")
+
     # 从配置文件加载别名映射
     config = load_config(config_path)
     alias_map = config["aliases"]
