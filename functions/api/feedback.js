@@ -30,28 +30,39 @@ export async function onRequestPost(context) {
   
   const allFiles = [];
   for (const [key, value] of formData.entries()) {
+    if (key.startsWith('files')) {
+      console.log(`Found file field: ${key}, type: ${typeof value}, size: ${value?.size}, name: ${value?.name}`);
+    }
     if (key.startsWith('files') && value && typeof value === 'object' && value.size > 0) {
-      allFiles.push(value);
+      allFiles.push({ key, file: value });
     }
   }
+
+  console.log(`Total files received: ${allFiles.length}`);
 
   const githubRepo = env.GITHUB_REPO || 'skyboyhjj/spinor-taiji-model';
   const githubBranch = env.GITHUB_BRANCH || 'main';
 
   const uploadedImages = [];
+  const imageErrors = [];
 
   if (allFiles.length > 0) {
     const timestamp = Date.now();
     for (let i = 0; i < allFiles.length; i++) {
-      const file = allFiles[i];
+      const { key, file } = allFiles[i];
       try {
         const buffer = await file.arrayBuffer();
+        console.log(`File ${i} buffer size: ${buffer.byteLength}`);
+        
         const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        console.log(`File ${i} base64 length: ${base64.length}`);
         
         const ext = file.name?.split('.').pop() || 'png';
         const safeExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext.toLowerCase()) ? ext.toLowerCase() : 'png';
         const fileName = `feedback-${timestamp}-${i + 1}.${safeExt}`;
         const filePath = `feedback-images/${fileName}`;
+
+        console.log(`Uploading to: ${filePath}`);
 
         const uploadResponse = await fetch(`https://api.github.com/repos/${githubRepo}/contents/${filePath}`, {
           method: 'PUT',
@@ -67,16 +78,21 @@ export async function onRequestPost(context) {
           })
         });
 
+        console.log(`Upload response status: ${uploadResponse.status}`);
+
         if (uploadResponse.ok) {
           const uploadResult = await uploadResponse.json();
+          console.log(`Upload success: ${uploadResult.content?.download_url}`);
           const rawUrl = `https://raw.githubusercontent.com/${githubRepo}/${githubBranch}/${filePath}`;
           uploadedImages.push({ name: fileName, url: rawUrl });
         } else {
           const errorText = await uploadResponse.text();
-          console.error('Image upload failed:', errorText);
+          console.error(`Upload failed: ${errorText}`);
+          imageErrors.push({ file: file.name, error: errorText });
         }
       } catch (e) {
-        console.error('Image processing error:', e.message);
+        console.error(`Image processing error: ${e.message}`);
+        imageErrors.push({ file: file.name, error: e.message });
       }
     }
   }
@@ -127,7 +143,12 @@ export async function onRequestPost(context) {
 
     if (!githubResponse.ok) {
       const errorText = await githubResponse.text();
-      return new Response(JSON.stringify({ error: '提交失败（GitHub API 错误）', detail: errorText }), {
+      return new Response(JSON.stringify({ 
+        error: '提交失败（GitHub API 错误）', 
+        detail: errorText,
+        imagesUploaded: uploadedImages.length,
+        imageErrors: imageErrors
+      }), {
         status: 502,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
@@ -135,12 +156,22 @@ export async function onRequestPost(context) {
 
     const issue = await githubResponse.json();
 
-    return new Response(JSON.stringify({ success: true, url: issue.html_url }), {
+    return new Response(JSON.stringify({ 
+      success: true, 
+      url: issue.html_url,
+      imagesUploaded: uploadedImages.length,
+      imageErrors: imageErrors
+    }), {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
 
   } catch (e) {
-    return new Response(JSON.stringify({ error: '提交失败，请稍后重试', detail: e.message }), {
+    return new Response(JSON.stringify({ 
+      error: '提交失败，请稍后重试', 
+      detail: e.message,
+      imagesUploaded: uploadedImages.length,
+      imageErrors: imageErrors
+    }), {
       status: 500,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
