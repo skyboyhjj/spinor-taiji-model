@@ -37,6 +37,31 @@ export async function onRequestPost(context) {
     content,
     '',
     contact ? `- **联系方式**: ${contact}` : '',
+  ].join('\n');
+
+  const allFiles = [];
+  for (const [key, value] of formData.entries()) {
+    if (key.startsWith('files') && value && typeof value === 'object' && value.size > 0) {
+      allFiles.push(value);
+    }
+  }
+
+  if (allFiles.length > 0) {
+    issueBody += '\n\n---\n\n### 📷 附件图片\n';
+    for (let i = 0; i < allFiles.length; i++) {
+      const file = allFiles[i];
+      try {
+        const buffer = await file.arrayBuffer();
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        const dataUrl = `data:${file.type || 'image/png'};base64,${base64}`;
+        issueBody += `\n![图片${i + 1}](${dataUrl})\n`;
+      } catch (e) {
+        issueBody += `\n[图片${i + 1}: 读取失败]\n`;
+      }
+    }
+  }
+
+  issueBody += [
     '',
     '---',
     `> 标签: \`status:triage\` \`source:${source}\` \`type:${type}\``,
@@ -72,42 +97,6 @@ export async function onRequestPost(context) {
     }
 
     const issue = await githubResponse.json();
-    const issueNumber = issue.number;
-
-    const files = formData.getAll('files');
-    if (files.length > 0 && files[0] !== '') {
-      for (const file of files) {
-        if (!file || file.size === 0) continue;
-        
-        const uploadResponse = await fetch(`https://uploads.github.com/repos/${githubRepo}/issues/${issueNumber}/uploads`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `token ${env.GITHUB_TOKEN}`,
-            'Content-Type': file.type || 'application/octet-stream',
-            'User-Agent': 'spinor-taiji-feedback',
-            'Accept': 'application/vnd.github.v3+json'
-          },
-          body: file
-        });
-
-        if (uploadResponse.ok) {
-          const uploadResult = await uploadResponse.json();
-          issueBody += `\n\n![${uploadResult.name}](${uploadResult.url})`;
-        }
-      }
-
-      if (issueBody !== issue.body) {
-        await fetch(`https://api.github.com/repos/${githubRepo}/issues/${issueNumber}`, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `token ${env.GITHUB_TOKEN}`,
-            'Content-Type': 'application/json',
-            'User-Agent': 'spinor-taiji-feedback'
-          },
-          body: JSON.stringify({ body: issueBody })
-        });
-      }
-    }
 
     return new Response(JSON.stringify({ success: true, url: issue.html_url }), {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
