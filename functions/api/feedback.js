@@ -38,14 +38,66 @@ export async function onRequestPost(context) {
 
   const type = bodyData.type;
   const source = bodyData.source;
-  const content = bodyData.content;
-  const contact = bodyData.contact;
+  const content = bodyData.content ? String(bodyData.content).trim() : '';
+  const contact = bodyData.contact ? String(bodyData.contact).trim() : '';
   const files = bodyData.files || [];
 
-  if (!content || content.trim().length < 5) {
-    return new Response(JSON.stringify({ error: '反馈内容不能为空或过短（至少5个字符）' }), {
+  const MAX_CONTENT_LENGTH = 2000;
+  const MAX_CONTACT_LENGTH = 200;
+  const MAX_FILES = 3;
+  const MAX_FILE_SIZE_BASE64 = 7 * 1024 * 1024;
+  const ALLOWED_TYPES = ['suggestion', 'correction', 'question', 'appreciation'];
+  const ALLOWED_SOURCES = ['statement', 'glossary', 'other'];
+
+  if (!content || content.length < 1) {
+    return new Response(JSON.stringify({ error: '反馈内容不能为空' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
+  if (content.length > MAX_CONTENT_LENGTH) {
+    return new Response(JSON.stringify({ error: `反馈内容不能超过${MAX_CONTENT_LENGTH}字` }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
+  if (contact.length > MAX_CONTACT_LENGTH) {
+    return new Response(JSON.stringify({ error: `联系方式不能超过${MAX_CONTACT_LENGTH}字` }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
+  if (!ALLOWED_TYPES.includes(type)) {
+    return new Response(JSON.stringify({ error: '无效的反馈类型' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
+  if (!ALLOWED_SOURCES.includes(source)) {
+    return new Response(JSON.stringify({ error: '无效的来源' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
+  const safeFiles = [];
+  const allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+  for (let i = 0; i < Math.min(files.length, MAX_FILES); i++) {
+    const f = files[i];
+    if (!f || !f.base64 || typeof f.base64 !== 'string') continue;
+    if (f.base64.length > MAX_FILE_SIZE_BASE64) continue;
+    const ext = (f.name || '').split('.').pop()?.toLowerCase() || 'png';
+    if (!allowedExts.includes(ext)) continue;
+    const cleanName = (f.name || `image${i + 1}.${ext}`).replace(/[^\w.\-]/g, '_');
+    safeFiles.push({
+      name: cleanName,
+      type: f.type || 'image/png',
+      size: f.size || 0,
+      base64: f.base64
     });
   }
 
@@ -60,20 +112,12 @@ export async function onRequestPost(context) {
   const uploadedImages = [];
   const imageErrors = [];
 
-  if (files.length > 0) {
+  if (safeFiles.length > 0) {
     const timestamp = Date.now();
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    for (let i = 0; i < safeFiles.length; i++) {
+      const file = safeFiles[i];
       try {
-        let base64;
-        if (file.base64) {
-          base64 = file.base64;
-        } else if (file._blob) {
-          const buffer = await file._blob.arrayBuffer();
-          base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-        } else {
-          continue;
-        }
+        const base64 = file.base64;
 
         const ext = (file.name || '').split('.').pop()?.toLowerCase() || 'png';
         const safeExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext) ? ext : 'png';
@@ -120,8 +164,8 @@ export async function onRequestPost(context) {
     contact ? `- **联系方式**: ${contact}` : '',
   ].join('\n');
 
-  if (files.length > 0) {
-    issueBody += `\n\n📎 **附件**: ${files.length} 张图片`;
+  if (safeFiles.length > 0) {
+    issueBody += `\n\n📎 **附件**: ${safeFiles.length} 张图片`;
   }
 
   if (uploadedImages.length > 0) {
