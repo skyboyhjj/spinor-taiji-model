@@ -21,16 +21,59 @@ export async function onRequestPost(context) {
     fileUploadTest: null
   };
 
+  function isBlobLike(value) {
+    if (!value) return false;
+    if (typeof value !== 'object') return false;
+    if (typeof value.arrayBuffer === 'function') return true;
+    if (typeof value.stream === 'function') return true;
+    if (value.size !== undefined && value.type !== undefined) return true;
+    return false;
+  }
+
   for (const [key, value] of formData.entries()) {
-    if (typeof value === 'object' && value.size !== undefined) {
+    if (isBlobLike(value)) {
       result.files.push({
         field: key,
-        name: value.name,
-        type: value.type,
+        name: value.name || key,
+        type: value.type || 'application/octet-stream',
         size: value.size
       });
+    } else if (typeof value === 'string') {
+      if (key.startsWith('files')) {
+        result.formFields[key] = `[string, length=${value.length}, starts with binary=${value.charCodeAt(0) > 127}]`;
+      } else {
+        result.formFields[key] = value;
+      }
     } else {
-      result.formFields[key] = value;
+      result.formFields[key] = String(value);
+    }
+  }
+
+  const fileKeys = [];
+  for (const key of formData.keys()) {
+    if (key.startsWith('files') || key === 'file') {
+      fileKeys.push(key);
+    }
+  }
+  result.fileKeys = fileKeys;
+
+  for (const key of fileKeys) {
+    try {
+      const file = formData.get(key);
+      if (file && isBlobLike(file)) {
+        const alreadyListed = result.files.find(f => f.field === key);
+        if (!alreadyListed) {
+          result.files.push({
+            field: key,
+            name: file.name || key,
+            type: file.type || 'application/octet-stream',
+            size: file.size,
+            fromGet: true
+          });
+        }
+      }
+    } catch (e) {
+      result.formFields[`${key}_getError`] = e.message;
     }
   }
 
@@ -56,15 +99,14 @@ export async function onRequestPost(context) {
   }
 
   if (result.files.length > 0) {
-    const file = result.files[0];
-    const fileObj = formData.get(file.field);
-    if (fileObj) {
-      try {
+    try {
+      const firstFile = result.files[0];
+      const fileObj = formData.get(firstFile.field);
+      if (fileObj) {
         const buffer = await fileObj.arrayBuffer();
         const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-        const testFileName = `diagnostic-test-${Date.now()}.txt`;
+        const testFileName = `diagnostic-test-${Date.now()}.png`;
         const testFilePath = `feedback-images/${testFileName}`;
-        const testContent = btoa('Diagnostic test file - safe to delete');
 
         const uploadResponse = await fetch(`https://api.github.com/repos/${githubRepo}/contents/${testFilePath}`, {
           method: 'PUT',
@@ -74,8 +116,8 @@ export async function onRequestPost(context) {
             'User-Agent': 'spinor-taiji-diagnostic'
           },
           body: JSON.stringify({
-            message: 'diagnostic test',
-            content: testContent,
+            message: 'diagnostic test image',
+            content: base64,
             branch: githubBranch
           })
         });
@@ -83,16 +125,24 @@ export async function onRequestPost(context) {
         result.fileUploadTest = {
           status: uploadResponse.status,
           success: uploadResponse.ok,
-          testFile: testFilePath
+          testFile: testFilePath,
+          fileSize: buffer.byteLength,
+          base64Length: base64.length
         };
 
         if (!uploadResponse.ok) {
           result.fileUploadTest.error = await uploadResponse.text();
         }
-      } catch (e) {
-        result.fileUploadTest = { error: e.message };
       }
+    } catch (e) {
+      result.fileUploadTest = { error: e.message, stack: e.stack };
     }
+  } else if (fileKeys.length > 0) {
+    result.fileUploadTest = {
+      skipped: true,
+      reason: 'No file objects detected (files came as strings)',
+      fileKeysFound: fileKeys.length
+    };
   }
 
   return new Response(JSON.stringify(result, null, 2), {

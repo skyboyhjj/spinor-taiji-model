@@ -28,17 +28,35 @@ export async function onRequestPost(context) {
 
   const issueTitle = `[反馈] ${typeLabel[type] || type} - ${sourceLabel[source] || source}`;
   
+  function isBlobLike(value) {
+    if (!value) return false;
+    if (typeof value !== 'object') return false;
+    if (typeof value.arrayBuffer === 'function') return true;
+    if (typeof value.stream === 'function') return true;
+    if (value.size !== undefined && value.type !== undefined) return true;
+    return false;
+  }
+
   const allFiles = [];
-  for (const [key, value] of formData.entries()) {
-    if (key.startsWith('files')) {
-      console.log(`Found file field: ${key}, type: ${typeof value}, size: ${value?.size}, name: ${value?.name}`);
-    }
-    if (key.startsWith('files') && value && typeof value === 'object' && value.size > 0) {
-      allFiles.push({ key, file: value });
+  const fileKeys = [];
+  for (const key of formData.keys()) {
+    if (key.startsWith('files') || key === 'file') {
+      fileKeys.push(key);
     }
   }
 
-  console.log(`Total files received: ${allFiles.length}`);
+  for (const key of fileKeys) {
+    try {
+      const file = formData.get(key);
+      if (file && isBlobLike(file) && file.size > 0) {
+        allFiles.push({ key, file });
+      }
+    } catch (e) {
+      console.error(`Error getting file ${key}:`, e.message);
+    }
+  }
+
+  console.log(`File keys found: ${fileKeys.length}, files detected: ${allFiles.length}`);
 
   const githubRepo = env.GITHUB_REPO || 'skyboyhjj/spinor-taiji-model';
   const githubBranch = env.GITHUB_BRANCH || 'main';
