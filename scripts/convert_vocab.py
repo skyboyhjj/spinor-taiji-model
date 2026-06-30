@@ -529,23 +529,48 @@ fbSubmit?.addEventListener('click', async function(e) {
     fbSubmit.disabled = true;
     fbSubmit.textContent = '提交中…';
     try {
-        const formData = new FormData();
-        formData.append('type', document.getElementById('fbType').value);
-        formData.append('source', 'glossary');
-        formData.append('content', content);
-        formData.append('contact', document.getElementById('fbContact').value.trim());
-        uploadedFiles.forEach((file, i) => {
-            formData.append(`files[${i}]`, file);
-        });
+        const fileDataList = [];
+        for (const file of uploadedFiles) {
+            const reader = new FileReader();
+            const dataUrl = await new Promise((resolve, reject) => {
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+            const base64 = dataUrl.split(',')[1];
+            const mime = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+            fileDataList.push({
+                name: file.name,
+                type: file.type || mime,
+                size: file.size,
+                base64: base64
+            });
+        }
+        
+        const payload = {
+            type: document.getElementById('fbType').value,
+            source: 'glossary',
+            content: content,
+            contact: document.getElementById('fbContact').value.trim(),
+            files: fileDataList
+        };
         
         const resp = await fetch('/api/feedback', {
             method: 'POST',
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         });
         const data = await resp.json();
         if (data.success) {
             feedbackForm.style.display = 'none';
             feedbackSuccess.classList.add('show');
+            if (data.imagesUploaded !== undefined) {
+                const successMsgEl = feedbackSuccess.querySelector('p');
+                if (successMsgEl) {
+                    successMsgEl.textContent = `🎉 感谢你的反馈！\n图片上传: ${data.imagesUploaded}/${uploadedFiles.length}`;
+                    successMsgEl.style.whiteSpace = 'pre-line';
+                }
+            }
         } else {
             throw new Error(data.error || 'API返回错误');
         }
@@ -557,7 +582,7 @@ fbSubmit?.addEventListener('click', async function(e) {
             const contact = document.getElementById('fbContact').value.trim();
             const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
             const title = encodeURIComponent(`[反馈] ${typeLabel[type] || type} - 词汇表`);
-            const body = encodeURIComponent(`## 反馈详情\n\n- **类型**: ${typeLabel[type] || type}\n- **来源**: 词汇表\n\n${content}\n\n${contact ? `- **联系方式**: ${contact}` : ''}`);
+            const body = encodeURIComponent(`## 反馈详情\n\n- **类型**: ${typeLabel[type] || type}\n- **来源**: 词汇表\n\n${content}\n\n${contact ? `- **联系方式**: ${contact}` : ''}\n\n---\n*带图片的反馈请直接在GitHub页面上传截图*`);
             window.open(`https://github.com/skyboyhjj/spinor-taiji-model/issues/new?title=${title}&body=${body}`, '_blank');
         }
     } finally {

@@ -1,9 +1,34 @@
 export async function onRequestPost(context) {
   const { request, env } = context;
 
-  let formData;
+  let bodyData;
   try {
-    formData = await request.formData();
+    const contentType = request.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      bodyData = await request.json();
+    } else {
+      const formData = await request.formData();
+      bodyData = {
+        type: formData.get('type'),
+        source: formData.get('source'),
+        content: formData.get('content'),
+        contact: formData.get('contact'),
+        files: []
+      };
+      for (const key of formData.keys()) {
+        if (key.startsWith('files') || key === 'file') {
+          const val = formData.get(key);
+          if (val && typeof val === 'object' && val.arrayBuffer) {
+            bodyData.files.push({
+              name: val.name || key,
+              type: val.type || 'image/png',
+              size: val.size,
+              _blob: val
+            });
+          }
+        }
+      }
+    }
   } catch {
     return new Response(JSON.stringify({ error: '请求格式无效' }), {
       status: 400,
@@ -11,10 +36,11 @@ export async function onRequestPost(context) {
     });
   }
 
-  const type = formData.get('type');
-  const source = formData.get('source');
-  const content = formData.get('content');
-  const contact = formData.get('contact');
+  const type = bodyData.type;
+  const source = bodyData.source;
+  const content = bodyData.content;
+  const contact = bodyData.contact;
+  const files = bodyData.files || [];
 
   if (!content || content.trim().length < 5) {
     return new Response(JSON.stringify({ error: '反馈内容不能为空或过短（至少5个字符）' }), {
@@ -27,36 +53,6 @@ export async function onRequestPost(context) {
   const sourceLabel = { statement: '声明', glossary: '词汇表', other: '其他' };
 
   const issueTitle = `[反馈] ${typeLabel[type] || type} - ${sourceLabel[source] || source}`;
-  
-  function isBlobLike(value) {
-    if (!value) return false;
-    if (typeof value !== 'object') return false;
-    if (typeof value.arrayBuffer === 'function') return true;
-    if (typeof value.stream === 'function') return true;
-    if (value.size !== undefined && value.type !== undefined) return true;
-    return false;
-  }
-
-  const allFiles = [];
-  const fileKeys = [];
-  for (const key of formData.keys()) {
-    if (key.startsWith('files') || key === 'file') {
-      fileKeys.push(key);
-    }
-  }
-
-  for (const key of fileKeys) {
-    try {
-      const file = formData.get(key);
-      if (file && isBlobLike(file) && file.size > 0) {
-        allFiles.push({ key, file });
-      }
-    } catch (e) {
-      console.error(`Error getting file ${key}:`, e.message);
-    }
-  }
-
-  console.log(`File keys found: ${fileKeys.length}, files detected: ${allFiles.length}`);
 
   const githubRepo = env.GITHUB_REPO || 'skyboyhjj/spinor-taiji-model';
   const githubBranch = env.GITHUB_BRANCH || 'main';
@@ -64,23 +60,25 @@ export async function onRequestPost(context) {
   const uploadedImages = [];
   const imageErrors = [];
 
-  if (allFiles.length > 0) {
+  if (files.length > 0) {
     const timestamp = Date.now();
-    for (let i = 0; i < allFiles.length; i++) {
-      const { key, file } = allFiles[i];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       try {
-        const buffer = await file.arrayBuffer();
-        console.log(`File ${i} buffer size: ${buffer.byteLength}`);
-        
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-        console.log(`File ${i} base64 length: ${base64.length}`);
-        
-        const ext = file.name?.split('.').pop() || 'png';
-        const safeExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext.toLowerCase()) ? ext.toLowerCase() : 'png';
+        let base64;
+        if (file.base64) {
+          base64 = file.base64;
+        } else if (file._blob) {
+          const buffer = await file._blob.arrayBuffer();
+          base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        } else {
+          continue;
+        }
+
+        const ext = (file.name || '').split('.').pop()?.toLowerCase() || 'png';
+        const safeExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext) ? ext : 'png';
         const fileName = `feedback-${timestamp}-${i + 1}.${safeExt}`;
         const filePath = `feedback-images/${fileName}`;
-
-        console.log(`Uploading to: ${filePath}`);
 
         const uploadResponse = await fetch(`https://api.github.com/repos/${githubRepo}/contents/${filePath}`, {
           method: 'PUT',
@@ -96,21 +94,17 @@ export async function onRequestPost(context) {
           })
         });
 
-        console.log(`Upload response status: ${uploadResponse.status}`);
-
         if (uploadResponse.ok) {
-          const uploadResult = await uploadResponse.json();
-          console.log(`Upload success: ${uploadResult.content?.download_url}`);
           const rawUrl = `https://raw.githubusercontent.com/${githubRepo}/${githubBranch}/${filePath}`;
           uploadedImages.push({ name: fileName, url: rawUrl });
         } else {
           const errorText = await uploadResponse.text();
-          console.error(`Upload failed: ${errorText}`);
-          imageErrors.push({ file: file.name, error: errorText });
+          console.error(`Upload failed for ${fileName}:`, errorText.substring(0, 200));
+          imageErrors.push({ file: file.name || fileName, error: errorText.substring(0, 200) });
         }
       } catch (e) {
-        console.error(`Image processing error: ${e.message}`);
-        imageErrors.push({ file: file.name, error: e.message });
+        console.error(`Image processing error:`, e.message);
+        imageErrors.push({ file: file.name || `image${i+1}`, error: e.message });
       }
     }
   }
@@ -126,8 +120,8 @@ export async function onRequestPost(context) {
     contact ? `- **联系方式**: ${contact}` : '',
   ].join('\n');
 
-  if (allFiles.length > 0) {
-    issueBody += `\n\n📎 **附件**: ${allFiles.length} 张图片`;
+  if (files.length > 0) {
+    issueBody += `\n\n📎 **附件**: ${files.length} 张图片`;
   }
 
   if (uploadedImages.length > 0) {
