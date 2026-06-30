@@ -371,7 +371,8 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && feedbackOverlay?.classList.contains('active')) closeFeedback();
 });
 
-fbSubmit?.addEventListener('click', async function() {
+fbSubmit?.addEventListener('click', async function(e) {
+    e.preventDefault();
     const content = document.getElementById('fbContent').value.trim();
     if (content.length < 5) {
         alert('反馈内容至少需要5个字符');
