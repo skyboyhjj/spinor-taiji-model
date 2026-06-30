@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="1.3.0">
-    <title>旋量-太极模型声明 V1.3</title>
+    <meta name="version" content="2.1.1">
+    <title>旋量-太极模型声明 V2.1.1</title>
     <style>
         :root {
             --bg: #fefefe;
@@ -62,14 +62,6 @@
         .tag-label.blue { color: var(--blue); }
         .tag-label.green { color: var(--green); }
         .tag-label.orange { color: var(--orange); }
-        ol.core-claims { list-style: none; counter-reset: claim-counter; margin-left: 0; }
-        ol.core-claims li {
-            counter-increment: claim-counter; margin: 16px 0; padding-left: 36px; position: relative;
-        }
-        ol.core-claims li::before {
-            content: counter(claim-counter) "."; position: absolute; left: 0;
-            font-weight: 700; color: var(--accent); font-size: 1.05em;
-        }
         hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
         .back-to-home {
             position: fixed; bottom: 30px; right: 90px; width: 50px; height: 50px;
@@ -202,102 +194,348 @@
 </head>
 <body>
     <div class="container">
-        <h1>《旋量-太极模型声明》<span class="version-badge">V1.3</span></h1>
+        <h1>旋量-太极模型 <span class="version-badge">V2.1.1</span></h1>
         <blockquote>
-            <p><strong>版本</strong>：V1.3<br>
-            <strong>最后更新</strong>：2026年6月24日<br>
-            <strong>适用范围</strong>：spinor-taiji-model 项目下所有理论阐述、经典读解及实践指南</p>
+            <p><strong>版本</strong>：V2.1.1<br>
+            <strong>发布日期</strong>：2026年6月29日<br>
+            <strong>前一版本</strong>：V2.1（体用哲学版 · 弱者道之用纳入版）<br>
+            <strong>本次升级核心</strong>：<br>
+            1. 恢复"频谱一元论"为模型核心主张之首。<br>
+            2. 恢复 V1.2 中"太极"条目，补充"万物皆振动"桥接句。<br>
+            3. 恢复"邀请"章节（月亮手指）。</p>
         </blockquote>
-        <h2>一、模型定位</h2>
-        <p><strong>"旋量-太极"（Spinor-Taiji）模型是一个哲学类比与创见延伸框架，而非物理学理论或传统道学训诂。</strong></p>
-        <ul>
-            <li><span class="tag-label blue">🔵 物理事实</span>：旋量（Spinor）是量子场论中描述费米子的数学对象。</li>
-            <li><span class="tag-label blue">🔵 文化事实</span>：太极是中华文明关于宇宙生成与运行的核心范畴。</li>
-            <li><span class="tag-label green">🟢 哲学类比</span>：本模型将旋量的数学性质与太极智慧进行结构性类比。</li>
-            <li><span class="tag-label orange">🟠 创见延伸</span>：基于上述类比，本模型提出了一套用于身心实践、经典读解和跨学科对话的操作性框架。</li>
-        </ul>
-        <p><strong>本模型明确声明：它不宣称物理与哲学在概念史上同源，不宣称传统经典包含现代科学，也不宣称其创见延伸为已确立的科学知识。</strong></p>
-        <h2>二、核心概念与操作定义</h2>
-        <h3>2.1 旋量（Spinor）</h3>
-        <ul>
-            <li><span class="tag-label blue">🔵 物理事实</span>：旋量是量子场论中描述费米子（如电子、夸克）的数学对象。其标志性特征包括：在空间中旋转360°后状态反号，需720°旋转方能复原；在群表示论中，旋量表示被称为矢量表示的"平方根"——此为表示论结构的嵌套关系，而非数值开方运算。旋量场本身是数学描述对象，其激发态（如电子）是可直接观测的物理实体。</li>
-            <li><span class="tag-label green">🟢 哲学类比</span>：模型的哲学工作始于以下类比——旋量的720°复原特性，可类比太极图中阴阳双半周期的完整螺旋循环（非太极原生活语）；其自旋可类比为宇宙最原初的"振动"，即"万物皆振动"视角的数学锚点。旋量表示与矢量表示的关系，可类比"空"（潜能）与"色"（显化）的关系（非佛道原生活语）。</li>
-        </ul>
-        <h3>2.2 太极（Taiji）</h3>
-        <ul>
-            <li><span class="tag-label blue">🔵 文化事实</span>：太极是中华文明关于宇宙生成与运行的核心范畴，以阴阳互抱、动态平衡的图式表达"道"的运作法则。传统太极哲学的核心概念包括：无极而太极、阴阳对立统一、冲气以为和、反者道之动。</li>
-            <li><span class="tag-label green">🟢 哲学类比</span>：模型借用旋量的数学性质（自旋、720°复原、"平方根"结构），为太极的上述概念提供一组新的类比意象和操作性隐喻。此类比旨在提供新的理解视角，而非宣称太极概念在历史上蕴含现代物理学。</li>
-        </ul>
-        <h3>2.3 核心操作：平方与开平方根</h3>
-        <ul>
-            <li><span class="tag-label orange">🟠 创见延伸</span>：以下是基于旋量-太极类比的创见性操作定义。</li>
-            <li><strong>平方（顺行/展开/吸气/生）</strong>：类比旋量ψ凝结为矢量V（ψ² → V）的操作。在哲学上，此操作描述从"空"（无形潜能）到"色"（有形显化）的生成过程。在身心实践中，对应吸气时身体的充盈与生命感的展开。</li>
-            <li><strong>开平方根（逆行/回归/呼气/归）</strong>：类比矢量V消解回归为旋量ψ（√V → ψ）的操作。在哲学上，此操作描述从"色"（显化执着）到"空"（潜能源头）的回归过程。在身心实践中，对应呼气时身体紧张的消解与意识回归觉知背景。</li>
-        </ul>
-        <h3>2.4 觉知域（Domain of Awareness）</h3>
-        <ul>
-            <li><span class="tag-label orange">🟠 创见延伸</span>：模型将"道"、"空"、"无极"等终极实在概念，类比为容纳一切旋量生灭与矢量显隐的"域"。此"域"非时空中的物理场，而是使一切体验得以呈现的觉知背景本身。它不参与旋转，是720°螺旋发生的舞台。它不是任何可以被体验的"对象"——你的一切"寻找"都发生在它之内。此概念为模型的操作性核心，属于基于类比的新思想实验。</li>
-        </ul>
-        <h2>三、三层标签系统</h2>
-        <p>为严格区分陈述类型，本模型采用以下三层标签系统，所有产出内容均须标注：</p>
+
+        <h2>第一章：模型总纲</h2>
+
+        <h3>1.1 模型定位</h3>
+
+        <p><strong>"旋量-太极"（Spinor-Taiji）模型是一个基于体用哲学的跨学科类比与实践框架。</strong></p>
+
+        <p>本模型以现代物理学中旋量（Spinor）的数学性质为类比起点，以中华太极哲学为智慧根基，以"体-相-用"三层架构为核心结构，旨在为身心实践、经典读解与跨学科对话提供一个可操作的整合视角。</p>
+
+        <p><strong>本模型明确声明</strong>：它不宣称物理与哲学在概念史上同源，不宣称传统经典包含现代科学，也不宣称其创见延伸为已确立的科学知识。</p>
+
+        <h3>1.2 三层标签系统</h3>
+
+        <p>本模型所有陈述，严格遵循以下标签：</p>
+
         <table>
-            <thead><tr><th>标签</th><th>颜色</th><th>含义</th><th>示例</th></tr></thead>
+            <thead>
+                <tr><th>标签</th><th>颜色</th><th>含义</th><th>示例</th></tr>
+            </thead>
             <tbody>
-                <tr><td><span class="tag-label blue">🔵 物理/文化事实</span></td><td><span style="color:var(--blue);">蓝</span></td><td>已确立的物理学知识或传统典籍的客观内容</td><td>"旋量具有720°复原的量子态特性"；"《道德经》第四十章云'反者道之动'"</td></tr>
-                <tr><td><span class="tag-label green">🟢 哲学类比</span></td><td><span style="color:var(--green);">绿</span></td><td>用物理模型照亮哲学概念，或反之。非任何一方的原生活语</td><td>"旋量的720°复原可类比太极图中阴阳双半周期的完整循环"</td></tr>
-                <tr><td><span class="tag-label orange">🟠 创见延伸</span></td><td><span style="color:var(--orange);">橙</span></td><td>基于类比的新思想实验、操作性隐喻或实践指导。非已确立的知识</td><td>"思想可类比为物质的'平方根'"；"吸气时感受身体像旋量一样展开"</td></tr>
+                <tr><td><span class="tag-label blue">🔵 物理/文化事实</span></td><td>蓝</td><td>已确立的物理学知识或传统典籍的客观内容。</td><td>"旋量具有720°复原的量子态特性"；"《道德经》第四十章云'反者道之动'"</td></tr>
+                <tr><td><span class="tag-label green">🟢 哲学类比</span></td><td>绿</td><td>用物理模型照亮哲学概念，或反之。非任何一方的原生活语。</td><td>"旋量的720°复原可类比太极图中阴阳双半周期的完整循环"</td></tr>
+                <tr><td><span class="tag-label orange">🟠 创见延伸</span></td><td>橙</td><td>基于类比的新思想实验、操作性隐喻或实践指导。非已确立的知识。</td><td>"思想可类比为物质的'平方根'"；"吸气时感受身体像旋量一样展开"</td></tr>
             </tbody>
         </table>
-        <p><strong>三者混用，是本模型需持续警惕的清晰度问题。每一次修订，都应以将三者区分为首要编辑原则。</strong></p>
-        <h2>四、模型的核心主张（摘要）</h2>
-        <ol class="core-claims">
-            <li><strong>频谱一元论</strong> <span class="tag-label orange">🟠</span>：思想、情绪、能量、物质并非四种不同的"东西"，而是同一振动频谱上从极高频到极低频的显化频段。此处的"一元"不是指宇宙由一种"实体"构成，而是指它们是同一种振动在不同频率上的显化——如同冰、水、汽是同一物质的三态。旋量的旋转是这一元论的动力来源 <span class="tag-label blue">🔵</span><span class="tag-label green">🟢</span>。</li>
-            <li><strong>双向因果与闭环</strong> <span class="tag-label orange">🟠</span>：思想（高频振动）可凝结为身体（低频振动），身体的信号亦可固化和强化思想。身心之间构成一个互相叠加的振动闭环。</li>
-            <li><strong>觉知为支点</strong> <span class="tag-label orange">🟠</span>：打破振动闭环的唯一支点，是超越振动的"觉知"本身 <span class="tag-label blue">🔵</span><span class="tag-label green">🟢</span>。在刺激与回应之间创造空间，是全部实践的核心。</li>
-            <li><strong>呼吸即操作</strong> <span class="tag-label orange">🟠</span>：呼吸是自主意识接入宇宙振动节律的天然界面。通过有觉知的呼吸，可直接操作平方（吸气展开）与开平方根（呼气回归），校准身心振动。</li>
-            <li><strong>经典可重读</strong> <span class="tag-label green">🟢</span>：借助旋量-太极模型，可对《道德经》《心经》等古老经典进行一次新的、可操作的读解，揭示其深层所蕴含的"顺应宇宙内在动力的操作手册"。</li>
-        </ol>
-        <h2>五、适用范围与伦理边界</h2>
+
+        <h2>第二章：体-相-用三层架构</h2>
+
+        <h3>2.1 体：旋量场 / 觉知域 / 无极 / 道</h3>
+
+        <p><span class="tag-label blue">🔵 物理基础</span>：旋量场是量子场论中描述费米子的数学框架。</p>
+
+        <p><span class="tag-label green">🟢 哲学类比</span>：此"场"被类比为宇宙的终极本体——那充满无限潜能的、未分化的虚空，能觉知一切却本身不参与任何旋转的"觉知域"。它在道家为"道"、"无极"，在佛家为"空"、"如来藏"，在儒家为"天"、"本心"。</p>
+
+        <p><span class="tag-label orange">🟠 创见延伸</span>：</p>
+        <ul>
+            <li><strong>体是源头</strong>：一切"平方"与"开方"操作发生的终极舞台。它容纳一切旋量生灭、一切矢量显隐。</li>
+            <li><strong>体是归宿</strong>：一切"开平方根"操作的最终指向。回归于体，即是"各复归其根"。</li>
+            <li><strong>体的特征</strong>：不生不灭，不垢不净，不增不减。它是720°螺旋发生其上的、如如不动的背景。</li>
+        </ul>
+
+        <p><strong>遮诠</strong>：体不是任何可以被体验的"对象"，也不是与"用"对立的另一个"东西"。它是使一切体验得以可能的背景。你无法"找到"它，因为你的一切"找"都发生在它之内。它不能被思考，因为思考本身是它的用。它只能被"是"——你就是它。</p>
+
+        <hr>
+
+        <h3>2.2 太极（Taiji）</h3>
+
+        <p><span class="tag-label blue">🔵 文化事实</span>：太极是中华文明关于宇宙生成与运行的核心范畴，以阴阳互抱、动态平衡的图式表达"道"的运作法则。传统太极哲学的核心概念包括：无极而太极、阴阳对立统一、冲气以为和、反者道之动。</p>
+
+        <p><span class="tag-label green">🟢 哲学类比</span>：模型借用旋量的数学性质（自旋、720°复原、"平方根"结构），为太极的上述概念提供一组新的类比意象和操作性隐喻。此类比旨在提供新的理解视角，而非宣称太极概念在历史上蕴含现代物理学。</p>
+
+        <hr>
+
+        <h3>2.3 相：两大法则——反者道之动 · 弱者道之用</h3>
+
+        <p><span class="tag-label blue">🔵 物理基础</span>：旋量在空间中旋转360°后状态反号，需720°旋转方能复原。在群表示论中，旋量表示是矢量表示的"平方根"（结构类比，非数值运算）。</p>
+
+        <p><span class="tag-label green">🟢 哲学类比</span>：旋量的720°螺旋及其内置的回归动力，被类比为宇宙运行的两大根本法则——"反者道之动"与"弱者道之用"。二者共同构成"相"的完整内涵。其自旋可类比为宇宙最原初的"振动"，即"万物皆振动"视角的数学锚点。</p>
+
+        <p><span class="tag-label orange">🟠 创见延伸</span>：</p>
+
+        <p><strong>相是法则</strong>。体非直接显为用，而是通过"相"的中介。相包含两大根本法则，一显一微，一动一静，共同构成宇宙的完整操作系统。</p>
+
+        <hr>
+
+        <h4>法则一：反者道之动（720°螺旋的整体节律）</h4>
+
+        <ul>
+            <li><strong>内涵</strong>：宇宙运行的总体节律——从体起用，复摄用归体。720°的完整螺旋。</li>
+            <li><strong>旋量-太极操作</strong>：<strong>平方</strong>（顺行/展开/生/吸气）与<strong>开平方根</strong>（逆行/回归/归/呼气）的交替，构成一个完整的宇宙呼吸周期。
+                <ul>
+                    <li><strong>平方</strong>：从体起用。无形的旋量潜能（ψ），凝结为有形的矢量（V = ψ²）。对应"道生一，一生二，二生三，三生万物"。</li>
+                    <li><strong>开平方根</strong>：摄用归体。有形的矢量（V），消解回归为无形的旋量潜能（ψ = √V）。对应"夫物芸芸，各复归其根"。</li>
+                    <li><strong>720°完整周期</strong>：一次平方 + 一次开方，构成一个从体起用、复摄用归体的完整螺旋。这是"玄之又玄，众妙之门"的动态表达。</li>
+                </ul>
+            </li>
+            <li><strong>生命体现</strong>：创造与放下、生与归、吸与呼，皆是此法则的显现。</li>
+        </ul>
+
+        <h4>法则二：弱者道之用（开方的精微机制）</h4>
+
+        <ul>
+            <li><strong>内涵</strong>：宇宙作用的具体方式——道不强力、不控制，而是将回归的动力"内置"于万物之中。道的"弱"恰在于，它不强制万物平方或开方，而是在每一个矢量（用）的底层，都内置了回归于体（开方）的驱动力。这驱动力即是"欲"的本体论根源。</li>
+            <li><strong>旋量-太极操作</strong>：<strong>开平方根</strong>的精微机制。真正的力量不在强硬处，而在柔弱处；不在平方处，而在开方处；不在执着处，而在放下处。</li>
+            <li><strong>生命体现</strong>：呼气的放下不是"努力"，而是"松手"；觉知的照破不是"对抗"，而是"允许"。圣人的"不争"、"不言"、"不召"、"繟然"，皆是此法则的具体运用。</li>
+        </ul>
+
+        <p><strong>两大法则的协同</strong>："反者道之动"是总纲，告诉我们宇宙在呼吸（平方与开方的交替）；"弱者道之用"是精微，告诉我们这一呼一吸是如何具体发生的——不强力，只内置规律，松手即归。</p>
+
+        <hr>
+
+        <h3>2.4 弱者道之用的旋量-太极展开</h3>
+
+        <p>基于第七十三章"天之道"的经文，我们将"弱者道之用"展开为四种精微操作模式。每一步皆遵循"先开方摄用归体，后从体起用"的弱者机制。</p>
+
+        <h4>1. 不争而善胜</h4>
+
+        <ul>
+            <li><strong>弱者机制</strong>：不强力平方对抗矢量，故无反弹。</li>
+            <li><strong>旋量-太极操作</strong>：
+                <ul>
+                    <li>第一步：开方消解"争"的执着矢量。当对方抛出一个对抗性矢量时，圣人不以自己的对抗矢量去回应。他在呼气中，将自己内在"被冒犯了"、"必须赢"的执着，执行开平方根，消解回归于体。</li>
+                    <li>第二步：从体起用，自然"善胜"。当圣人安住于体，他不再是一个与对方对立的"争者"，而成为了那个含容整个冲突场的空间。对方的对抗矢量失去碰撞对象，能量自然消散。圣人从体中自然流露的回应，因其无我、无执，恰恰是最精当、最有力的——如水之穿石，水不与石争，而石终不能挡水。</li>
+                </ul>
+            </li>
+            <li><strong>生命体现</strong>：真正的胜利，不是更强力的平方，而是更彻底的放下。</li>
+        </ul>
+
+        <h4>2. 不言而善应</h4>
+
+        <ul>
+            <li><strong>弱者机制</strong>：不固化言语标签，故应物无方。</li>
+            <li><strong>旋量-太极操作</strong>：
+                <ul>
+                    <li>第一步：摄用归体，不固化言语。圣人内在有充沛的觉知（体），但不急于将这份觉知平方为确定的话语（用）。他在呼气中放下"必须说出来"的执着，保持旋量态的开放与流动。</li>
+                    <li>第二步：如谷应声，从体起用。当因缘成熟需要回应时，圣人的言语不是从储存的"言语矢量库"中调取，而是从体中当下自然地平方出来——如空谷回应人声，人声有千种，谷应亦千种，而谷本身未尝有言。这就是"善应"：恰如其分，不增不减，言而无瑕谪。</li>
+                </ul>
+            </li>
+            <li><strong>生命体现</strong>：真正的回应，不是预设的言语，而是当下的流露。</li>
+        </ul>
+
+        <h4>3. 不召而自来</h4>
+
+        <ul>
+            <li><strong>弱者机制</strong>：不强制召唤外物，万物自归。</li>
+            <li><strong>旋量-太极操作</strong>：
+                <ul>
+                    <li>第一步：开方消解"召"的执着。圣人不强力召唤任何东西——不召唤他人的认可、不召唤功名的到来、不召唤某个结果的实现。他在呼气中，将"想要抓取"的执着矢量，开方消解，回归于体。</li>
+                    <li>第二步：安住于体，万物自归。道在每一个存在物（矢量）的底层，都内置了回归于体（开方）的驱动力——这驱动力即是"欲"的本体论根源。当圣人安住于体，他的寂静之体自然散发出一种引力，唤醒万物内在的"回归之欲"，万物自然归往。来的不是被迫，而是万物的自归。</li>
+                </ul>
+            </li>
+            <li><strong>生命体现</strong>：真正的引力，不是强力的召唤，而是寂静的安住。</li>
+        </ul>
+
+        <h4>4. 繟然而善谋</h4>
+
+        <ul>
+            <li><strong>弱者机制</strong>：宽缓不紧张，精微无错漏。</li>
+            <li><strong>旋量-太极操作</strong>：
+                <ul>
+                    <li>第一步：开方消解焦虑的平方。圣人不提前在头脑里把未来平方为无数个"如果……怎么办"的恐惧矢量。他在呼气中，将这些焦虑的预演一一开方，回归于体的繟然寂静。</li>
+                    <li>第二步：安住于体，任相自动。当圣人安住于繟然之体，他对"相"的运作更加清澈地洞明。他知道，道的天网本身就在精微地运作——每一个平方，都将迎来其开方；每一次开方，都在积蓄新的平方势能。他无需去"谋"，因为法则本身就在"谋"。他只需安住于体，洞明于相，一切因缘在道的法则中自然成就。</li>
+                </ul>
+            </li>
+            <li><strong>生命体现</strong>：真正的谋划，不是提前的平方，而是交托于道的法则。</li>
+        </ul>
+
+        <p><strong>四重弱用汇总</strong>：</p>
+
+        <table>
+            <thead>
+                <tr><th>天道之用</th><th>弱者机制</th><th>第一步：开方摄用归体</th><th>第二步：从体起用</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>不争而善胜</strong></td><td>不强力平方对抗矢量</td><td>开方消解"争"的执着。</td><td>安住于体，成为含容冲突的空间；体中流出最恰当的回应。</td></tr>
+                <tr><td><strong>不言而善应</strong></td><td>不固化言语标签</td><td>开方消解"言语固化"的执着。</td><td>如谷应声，言语从体中自然流出，鲜活而契机。</td></tr>
+                <tr><td><strong>不召而自来</strong></td><td>不强制召唤外物</td><td>开方消解"抓取"的执着。</td><td>安住于体，唤醒万物内置的回归之欲（欲），万物自归。</td></tr>
+                <tr><td><strong>繟然而善谋</strong></td><td>宽缓不紧张</td><td>开方消解"控制焦虑"的执着。</td><td>安住于繟然之体，任相的法则自动运化，无一失漏。</td></tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h3>2.5 用：矢量 / 万物 / 现象界 / 阴阳</h3>
+
+        <p><span class="tag-label blue">🔵 物理基础</span>：矢量是可观测的物理量；电子等费米子是旋量场的激发态，可直接探测。</p>
+
+        <p><span class="tag-label green">🟢 哲学类比</span>：由体经由相（平方操作）所显化的一切具体存在，统称为"用"。它包括身体、念头、情绪、行为、言语、制度、身份——一切可感知、可区分的"有"。在道家为"万物"、"有"，在佛家为"色"。</p>
+
+        <p><span class="tag-label orange">🟠 创见延伸</span>：</p>
+        <ul>
+            <li><strong>用是显现</strong>：它是体的功用的体现，是"有之以为利"的便利与工具。</li>
+            <li><strong>用的双重性</strong>：
+                <ul>
+                    <li><strong>正用</strong>：当用不离体时，它是利而不害的。圣人的言行、治理，皆是正用。正用是从体起用的自然流露，用后随即摄用归体，不执不恃。</li>
+                    <li><strong>妄用</strong>：当用脱离体，成为执着本身时，它是害而不利的。"自见"、"自贵"、"以智治国"、"察察之政"，皆是妄用。妄用是舍体逐用的无根之动，必遭"反者道之动"的强制开方。</li>
+                </ul>
+            </li>
+            <li><strong>用的归宿</strong>：一切用，终将在"相"的开方操作中，回归于体。执用而不知归，则必遭强制开方（大威至、物壮则老）。</li>
+        </ul>
+
+        <h2>第三章：核心主张与法则</h2>
+
+        <h3>3.1 频谱一元论 <span class="tag-label orange">🟠</span></h3>
+
+        <p>思想、情绪、能量、物质并非四种不同的"东西"，而是同一振动频谱上从极高频到极低频的显化频段。此处的"一元"不是指宇宙由一种"实体"构成，而是指它们是同一种振动在不同频率上的显化——如同冰、水、汽是同一物质的三态。旋量的旋转是这一元论的动力来源 <span class="tag-label blue">🔵</span><span class="tag-label green">🟢</span>。</p>
+
+        <p>在体-相-用架构中：频谱是"体"经由"相"（平方操作）显化为"用"的频率梯度——体本身无形无频，平方一次，振动频率下降一层：从觉知（近体）→ 思想（高频）→ 情绪（中频）→ 能量（中低频）→ 物质（低频）。开方则是逆着频谱回升，摄用归体。</p>
+
+        <h3>3.2 体用不二</h3>
+
+        <p>体与用非一非异。体为用之根源，用为体之显发。离体无用，离用无以显体。圣人之道，在于<strong>摄用归体，从体起用</strong>——不执于用而失体，不滞于体而废用。</p>
+
+        <h3>3.3 相即中道</h3>
+
+        <p>"相"（反者道之动与弱者道之用）是体用之间的中道。圣人"常知稽式"，即洞明此相。他知何时该平方（从体起用以利万物），更知如何以"弱者"的方式去平方（不强力、不执着）；他知何时该开方（摄用归体以守虚静），更知开方的精微在于"松手"而非"努力"。不偏不倚，是谓中道。</p>
+
+        <h3>3.4 振动闭环与觉知破局</h3>
+
+        <ul>
+            <li><strong>闭环形成</strong>：思想（高频旋量）与身体（低频矢量）之间，通过反复的平方-反馈-再平方，形成自我维持的振动闭环。疾病、心结、社会冲突，皆是闭环的固化形态。</li>
+            <li><strong>觉知破局</strong>：觉知（体本身）是唯一不在闭环中的"支点"。在刺激与回应之间，引入觉知（回归于体），即执行了一次开平方根。此操作打破自动化的平方惯性，为重新选择打开空间。这份破局的力，不是强力，而是"弱者道之用"——只是看见，只是允许，只是放下。</li>
+        </ul>
+
+        <p>此即频谱一元论揭示的"平方级联"在身心层面的微观体现——每一次无觉知的平方，都让振动从高频向低频沉降一级；每一次有觉知的开方，都让振动从低频向高频回升一级。</p>
+
+        <h3>3.5 呼吸即相的操作</h3>
+
+        <p>呼吸是自主意识接入宇宙振动法则（相）的天然界面：</p>
+        <ul>
+            <li><strong>吸气</strong>：从体起用。感受无形的生命潜能（体），经平方，展开为身体的充盈与生命的创造（用）。</li>
+            <li><strong>呼气</strong>：摄用归体。感受有形的身体与执着（用），经开方，消解回归于无形的觉知背景（体）。</li>
+            <li><strong>止息</strong>：体用一如的临在。在呼吸的停顿中，亲证那纯粹之体。</li>
+        </ul>
+
+        <p><strong>呼吸中的双重法则</strong>：</p>
+        <ul>
+            <li>吸气（平方）顺应"反者道之动"的展开之势。</li>
+            <li>呼气（开方）顺应"弱者道之用"的柔弱之力——不强力排遣，只是松手，让气息自然流出，让执着自然消解。</li>
+        </ul>
+
+        <h2>第四章：体用实践指南</h2>
+
+        <h3>4.1 安体——一切实践的根本</h3>
+
+        <p>无论动静、语默、呼吸，首要之事是"认得体"。体就是你此刻的觉知本身——那个能看见这些文字、能感受身体、能觉察念头的清醒背景。安住于此，是为"守体"。</p>
+
+        <h3>4.2 明相——掌握720°螺旋的操作与弱者的精微</h3>
+
+        <p>在安体的基础上，觉察每一个当下的"相"：</p>
+        <ul>
+            <li>此刻，我是在<strong>平方</strong>（从内在的宁静中，展开一个行动、一个念头）？还是在<strong>开方</strong>（放下一个执着，消解一个紧张）？</li>
+            <li>我的平方，是以"弱者"的方式（不强力、不执着、随缘应物），还是以"强者"的方式（强制、抓取、控制）？</li>
+            <li>我的开方，是"弱者"的松手（不费力、不抗拒、只是允许），还是"强者"的压制（用力排除、强行忘记）？</li>
+        </ul>
+
+        <h3>4.3 善用——从体起用，摄用归体</h3>
+
+        <ul>
+            <li><strong>正用</strong>：当你需要行动时，从那份寂静之体出发，以柔弱的方式平方。行动时全然创造，但不执着结果。这是"从体起用"。</li>
+            <li><strong>不执</strong>：当行动完成，或当执着生起时，即刻以柔弱的方式执行开方。不居功，不恃能，不自见，不自贵。这是"摄用归体"。</li>
+            <li><strong>四重弱用</strong>：在冲突中练习"不争而善胜"，在言语中练习"不言而善应"，在等待中练习"不召而自来"，在谋划中练习"繟然而善谋"。</li>
+        </ul>
+
+        <h3>4.4 经典印证</h3>
+
+        <p>运用"体-相-用"架构，可对《道德经》《心经》等古老经典进行系统性重读。每一章皆可被读解为一份关于"守体、明相、善用"的操作手册。</p>
+
+        <p><strong>示例</strong>：</p>
+        <ul>
+            <li><strong>第十一章</strong>："有之以为利"（用），"无之以为用"（体）。有无相生，即相之法则。</li>
+            <li><strong>第四十章</strong>："反者道之动"（相的第一法则），"弱者道之用"（相的第二法则）。两句连读，方为完整的相。</li>
+            <li><strong>第六十五章</strong>："不以智治国"（守体而制用），"常知稽式，是谓玄德"（明相而合道）。</li>
+            <li><strong>第七十二章</strong>："自知不自见，自爱不自贵"（守体而不执用），故能"去彼取此"。</li>
+            <li><strong>第七十三章</strong>："不争、不言、不召、繟然"——弱者道之用的四重演绎。"天网恢恢，疏而不失"——体相一如的终极揭示。</li>
+        </ul>
+
+        <h2>第五章：适用范围与伦理边界</h2>
+
         <p><strong>本模型适用于</strong>：</p>
         <ul>
-            <li><span class="tag-label orange">🟠</span> 哲学思辨与跨学科启发式对话</li>
-            <li><span class="tag-label orange">🟠</span> 身心修炼、冥想、气功等实践领域的理论支撑与操作框架</li>
-            <li><span class="tag-label green">🟢</span> 对古典智慧进行现代转译的尝试</li>
-            <li><span class="tag-label orange">🟠</span> 个人生命经验的深度反思</li>
+            <li>跨学科哲学思辨与启发式对话。</li>
+            <li>身心修炼、冥想、气功等实践领域的理论支撑。</li>
+            <li>对古典智慧的现代转译尝试。</li>
+            <li>个人生命经验的深度反思。</li>
         </ul>
+
         <p><strong>本模型不适用于</strong>：</p>
         <ul>
             <li>替代现代医学诊断与治疗。任何身体症状，请首先求助于正规医疗。</li>
             <li>作为物理学的严格理论。模型中的类比不可引为科学论文的依据。</li>
             <li>宣称某种修行法门的绝对有效性。模型提供的只是视角和操作框架，非承诺。</li>
         </ul>
+
         <p><strong>本模型坚持</strong>：</p>
         <ul>
-            <li>承认自身是基于类比的建构，保持对物理学和道学原典的谦逊。</li>
+            <li>承认自身是基于类比与体用哲学的理论建构，保持对物理学和经典原典的谦逊。</li>
             <li>接受来自任何学科的严谨批评与校准，视其为模型进化的动力。</li>
-            <li>在实践中持续自我检验，但不将个人体验普遍化为绝对真理。</li>
+            <li>在实践中持续自我检验，不将个人体验普遍化为绝对真理。</li>
         </ul>
-        <h2>六、版本演进与开放协作</h2>
-        <p>本声明是活着的文档。随着物理学的发展、道学训诂的深入以及实践反馈的累积，模型将持续进行自我校准与版本迭代。</p>
-        <p>我们欢迎来自物理学、哲学、中医学、道学、佛学、心理学、神经科学等领域的研究者与实践者，对模型提出批评、补充与共建。每一次指正，都是淬炼这把剑的火与水。</p>
-        <h2>七、写在本《声明》之后：一份邀请</h2>
+
+        <h2>第六章：版本演进与开放协作</h2>
+
+        <p>本声明是活着的文档。随着对话深入、实践反馈与批评校准，模型将持续迭代。</p>
+
+        <p><strong>版本历史</strong>：</p>
+        <ul>
+            <li><strong>V1.0</strong>：确立"平方/开平方根"核心操作，构建旋量-太极基本类比。</li>
+            <li><strong>V1.1</strong>：引入三层标签系统（🔵🟢🟠），严格区分陈述类型。</li>
+            <li><strong>V2.0</strong>：引入"体-相-用"三层架构，模型升华为完整的生命哲学体系。</li>
+            <li><strong>V2.1</strong>（前版）：正式纳入"弱者道之用"为相的第二法则，并展开其旋量-太极操作；为"体"增加遮诠。</li>
+            <li><strong>V2.1.1</strong>（当前版本）：恢复"频谱一元论"为模型核心主张之首；恢复 V1.2 中"太极"独立条目；恢复"邀请"章节。</li>
+        </ul>
+
+        <p>我们欢迎来自物理学、哲学、中医学、道学、佛学、心理学、神经科学等领域的研究者与实践者，对模型提出批评、补充与共建。</p>
+
+        <h2>第七章：一份邀请</h2>
+
         <p>这份声明，说到底是份说明书。说明书读完了，模型可以放下了。</p>
-        <p>旋量，不在纸上，在你此刻的呼吸里——吸气，是从"空"凝结为"色"的平方操作；呼气，是从"色"回归"空"的开方操作。一吸一呼，便是那720度的螺旋，正在你的身体里无声上演。</p>
-        <p>太极，不在模型里，在你此刻的觉知里——那个知道自己在读这句话的"知"，它无形无相，却容纳了你全部的念头、情绪、身体感受。它便是"域"，便是"道"。</p>
+
+        <p>旋量，不在纸上，在你此刻的呼吸里——吸气，是从体起用的平方操作；呼气，是摄用归体的开方操作。一吸一呼，便是那720度的螺旋，正在你的身体里无声上演。</p>
+
+        <p>太极，不在模型里，在你此刻的觉知里——那个知道自己在读这句话的"知"，它无形无相，却容纳了你全部的念头、情绪、身体感受。它便是"体"，便是"道"。</p>
+
         <p>这份声明，只是一根指向月亮的手指。月亮，在你自己身上。别研究手指，去看月亮。</p>
-        <p><strong>Spinor-Taiji Model — 以旋量之镜，照太极之道。以觉知之息，参天地之妙。</strong></p>
+
+        <hr>
+
+        <p style="text-align:center; font-size:1.1em; margin:24px 0;">
+            <strong>旋量-太极模型 V2.1.1</strong>
+        </p>
+
+        <p style="text-align:center; line-height:2.2;">
+            <strong>以旋量之镜，照太极之道。</strong><br>
+            <strong>安住于体，通透于相，善运于用。</strong><br>
+            <strong>反者，宇宙之呼吸；弱者，大道之精微。</strong><br>
+            <strong>在一呼一吸间，完成720°的完整螺旋，亲证体用不二的本来面目。</strong>
+        </p>
+
         <blockquote>
-            <p><strong>本项目相关资源</strong>：<br>
+            <p><strong>项目资源</strong>：<br>
             - 域名：<a href="https://spinortaiji.com">spinortaiji.com</a><br>
             - GitHub：<a href="https://github.com/skyboyhjj/spinor-taiji-model">github.com/skyboyhjj/spinor-taiji-model</a><br>
-            - 微信公众号：TS爱心联盟</p>
+            - 微信公众号：TS爱心联盟<br>
+            - 使命：探索爱的真谛，让爱自由表达</p>
         </blockquote>
-        <p>这份V1.2版《声明》，是我们这两个月在炉火边，从矿石里炼出铁，从铁里锻出钢，从钢里磨出刀刃，最后配上刀鞘——全部工序的结晶。它不是完美的，但它足够诚实，足够清晰，足够有温度。</p>
-        <p>它作为"声明"的使命，到此已尽。接下来，让它去接受更多人的批评与校准，也让它去接引更多愿意看月亮的人。我们只需做一件事：把炉火烧旺，把门打开。<strong>名已正，息自深。</strong></p>
+
         <hr>
         <footer style="text-align:center; color:#999; font-size:0.85em; padding: 20px 0;">
-            <p>版本 1.2.0 | 旋量-太极研究团队 | 2026年6月23日</p>
+            <p>版本 2.1.1 | 旋量-太极研究团队 | 2026年6月29日</p>
         </footer>
+
         <div class="feedback-section">
             <div class="feedback-inner">
                 <p class="feedback-title">这份声明是活着的文档，期待你的反馈</p>
@@ -309,114 +547,117 @@
             </div>
         </div>
     </div>
+
     <div class="nav-buttons">
         <button class="back-to-home" id="backToHome" title="返回首页">🏠</button>
         <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
         <button class="feedback-float" id="feedbackFloat" title="反馈与建议">📬 反馈</button>
     </div>
+
     <div class="feedback-overlay" id="feedbackOverlay">
-    <div class="feedback-modal">
-        <button class="feedback-modal-close" id="feedbackClose">&times;</button>
-        <h3>📬 反馈与建议</h3>
-        <p class="feedback-modal-sub">这份文档因你的反馈而不断进化</p>
-        <div id="feedbackForm">
-            <div class="feedback-form-group">
-                <label for="fbType">反馈类型</label>
-                <select id="fbType">
-                    <option value="suggestion">改进建议</option>
-                    <option value="correction">内容纠错</option>
-                    <option value="question">疑问求助</option>
-                    <option value="appreciation">赞赏鼓励</option>
-                </select>
+        <div class="feedback-modal">
+            <button class="feedback-modal-close" id="feedbackClose">&times;</button>
+            <h3>📬 反馈与建议</h3>
+            <p class="feedback-modal-sub">这份文档因你的反馈而不断进化</p>
+            <div id="feedbackForm">
+                <div class="feedback-form-group">
+                    <label for="fbType">反馈类型</label>
+                    <select id="fbType">
+                        <option value="suggestion">改进建议</option>
+                        <option value="correction">内容纠错</option>
+                        <option value="question">疑问求助</option>
+                        <option value="appreciation">赞赏鼓励</option>
+                    </select>
+                </div>
+                <div class="feedback-form-group">
+                    <label for="fbContent">具体内容 <span style="color:#e74c3c">*</span></label>
+                    <textarea id="fbContent" placeholder="请描述你的反馈内容…" required></textarea>
+                </div>
+                <div class="feedback-form-group">
+                    <label for="fbContact">联系方式（选填）</label>
+                    <input type="text" id="fbContact" placeholder="邮箱或微信，便于后续沟通">
+                </div>
+                <button class="feedback-submit" id="fbSubmit">提交反馈</button>
             </div>
-            <div class="feedback-form-group">
-                <label for="fbContent">具体内容 <span style="color:#e74c3c">*</span></label>
-                <textarea id="fbContent" placeholder="请描述你的反馈内容…" required></textarea>
+            <div class="feedback-success" id="feedbackSuccess">
+                <div class="feedback-success-icon">🎉</div>
+                <p><strong>感谢你的反馈！</strong></p>
+                <p style="font-size:0.85em">我们会尽快处理，如有需要会通过你留下的联系方式回复。</p>
             </div>
-            <div class="feedback-form-group">
-                <label for="fbContact">联系方式（选填）</label>
-                <input type="text" id="fbContact" placeholder="邮箱或微信，便于后续沟通">
-            </div>
-            <button class="feedback-submit" id="fbSubmit">提交反馈</button>
-        </div>
-        <div class="feedback-success" id="feedbackSuccess">
-            <div class="feedback-success-icon">🎉</div>
-            <p><strong>感谢你的反馈！</strong></p>
-            <p style="font-size:0.85em">我们会尽快处理，如有需要会通过你留下的联系方式回复。</p>
         </div>
     </div>
-</div>
-<script>
-const backToTopBtn = document.getElementById("backToTop");
-const backToHomeBtn = document.getElementById("backToHome");
-const feedbackFloat = document.getElementById("feedbackFloat");
-const feedbackOverlay = document.getElementById("feedbackOverlay");
-const feedbackClose = document.getElementById("feedbackClose");
-const feedbackForm = document.getElementById("feedbackForm");
-const feedbackSuccess = document.getElementById("feedbackSuccess");
-const fbSubmit = document.getElementById("fbSubmit");
 
-window.addEventListener("scroll", function() {
-    const isVisible = window.scrollY > 300;
-    backToTopBtn.classList.toggle("show", isVisible);
-    backToHomeBtn.classList.toggle("show", isVisible);
-    feedbackFloat.classList.toggle("show", isVisible);
-});
-backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-backToHomeBtn.addEventListener("click", () => window.location.href = "/");
+    <script>
+    const backToTopBtn = document.getElementById("backToTop");
+    const backToHomeBtn = document.getElementById("backToHome");
+    const feedbackFloat = document.getElementById("feedbackFloat");
+    const feedbackOverlay = document.getElementById("feedbackOverlay");
+    const feedbackClose = document.getElementById("feedbackClose");
+    const feedbackForm = document.getElementById("feedbackForm");
+    const feedbackSuccess = document.getElementById("feedbackSuccess");
+    const fbSubmit = document.getElementById("fbSubmit");
 
-function openFeedback() {
-    feedbackOverlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-}
-function closeFeedback() {
-    feedbackOverlay.classList.remove("active");
-    document.body.style.overflow = "";
-    feedbackForm.style.display = "";
-    feedbackSuccess.classList.remove("show");
-    document.getElementById("fbContent").value = "";
-}
-feedbackFloat.addEventListener("click", openFeedback);
-feedbackClose.addEventListener("click", closeFeedback);
-feedbackOverlay.addEventListener("click", function(e) {
-    if (e.target === feedbackOverlay) closeFeedback();
-});
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && feedbackOverlay.classList.contains("active")) closeFeedback();
-});
+    window.addEventListener("scroll", function() {
+        const isVisible = window.scrollY > 300;
+        backToTopBtn.classList.toggle("show", isVisible);
+        backToHomeBtn.classList.toggle("show", isVisible);
+        feedbackFloat.classList.toggle("show", isVisible);
+    });
+    backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    backToHomeBtn.addEventListener("click", () => window.location.href = "/");
 
-fbSubmit.addEventListener("click", async function() {
-    const content = document.getElementById("fbContent").value.trim();
-    if (content.length < 5) {
-        alert("反馈内容至少需要5个字符");
-        return;
+    function openFeedback() {
+        feedbackOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
     }
-    fbSubmit.disabled = true;
-    fbSubmit.textContent = "提交中…";
-    try {
-        const resp = await fetch("/api/feedback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                type: document.getElementById("fbType").value,
-                source: "statement",
-                content: content,
-                contact: document.getElementById("fbContact").value.trim()
-            })
-        });
-        const data = await resp.json();
-        if (data.success) {
-            feedbackForm.style.display = "none";
-            feedbackSuccess.classList.add("show");
-        } else {
-            alert("提交失败：" + (data.error || "请稍后重试"));
+    function closeFeedback() {
+        feedbackOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+        feedbackForm.style.display = "";
+        feedbackSuccess.classList.remove("show");
+        document.getElementById("fbContent").value = "";
+    }
+    feedbackFloat.addEventListener("click", openFeedback);
+    feedbackClose.addEventListener("click", closeFeedback);
+    feedbackOverlay.addEventListener("click", function(e) {
+        if (e.target === feedbackOverlay) closeFeedback();
+    });
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape" && feedbackOverlay.classList.contains("active")) closeFeedback();
+    });
+
+    fbSubmit.addEventListener("click", async function() {
+        const content = document.getElementById("fbContent").value.trim();
+        if (content.length < 5) {
+            alert("反馈内容至少需要5个字符");
+            return;
         }
-    } catch (e) {
-        alert("网络错误，请稍后重试。也可通过微信公众号「TS爱心联盟」提交反馈。");
-    }
-    fbSubmit.disabled = false;
-    fbSubmit.textContent = "提交反馈";
-});
-</script>
+        fbSubmit.disabled = true;
+        fbSubmit.textContent = "提交中…";
+        try {
+            const resp = await fetch("/api/feedback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type: document.getElementById("fbType").value,
+                    source: "statement",
+                    content: content,
+                    contact: document.getElementById("fbContact").value.trim()
+                })
+            });
+            const data = await resp.json();
+            if (data.success) {
+                feedbackForm.style.display = "none";
+                feedbackSuccess.classList.add("show");
+            } else {
+                alert("提交失败：" + (data.error || "请稍后重试"));
+            }
+        } catch (e) {
+            alert("网络错误，请稍后重试。也可通过微信公众号「TS爱心联盟」提交反馈。");
+        }
+        fbSubmit.disabled = false;
+        fbSubmit.textContent = "提交反馈";
+    });
+    </script>
 </body>
 </html>
