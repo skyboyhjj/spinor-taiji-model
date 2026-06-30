@@ -28,6 +28,59 @@ export async function onRequestPost(context) {
 
   const issueTitle = `[反馈] ${typeLabel[type] || type} - ${sourceLabel[source] || source}`;
   
+  const allFiles = [];
+  for (const [key, value] of formData.entries()) {
+    if (key.startsWith('files') && value && typeof value === 'object' && value.size > 0) {
+      allFiles.push(value);
+    }
+  }
+
+  const githubRepo = env.GITHUB_REPO || 'skyboyhjj/spinor-taiji-model';
+  const githubBranch = env.GITHUB_BRANCH || 'main';
+
+  const uploadedImages = [];
+
+  if (allFiles.length > 0) {
+    const timestamp = Date.now();
+    for (let i = 0; i < allFiles.length; i++) {
+      const file = allFiles[i];
+      try {
+        const buffer = await file.arrayBuffer();
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        
+        const ext = file.name?.split('.').pop() || 'png';
+        const safeExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext.toLowerCase()) ? ext.toLowerCase() : 'png';
+        const fileName = `feedback-${timestamp}-${i + 1}.${safeExt}`;
+        const filePath = `feedback-images/${fileName}`;
+
+        const uploadResponse = await fetch(`https://api.github.com/repos/${githubRepo}/contents/${filePath}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${env.GITHUB_TOKEN}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'spinor-taiji-feedback'
+          },
+          body: JSON.stringify({
+            message: `feedback: ${fileName}`,
+            content: base64,
+            branch: githubBranch
+          })
+        });
+
+        if (uploadResponse.ok) {
+          const uploadResult = await uploadResponse.json();
+          const rawUrl = `https://raw.githubusercontent.com/${githubRepo}/${githubBranch}/${filePath}`;
+          uploadedImages.push({ name: fileName, url: rawUrl });
+        } else {
+          const errorText = await uploadResponse.text();
+          console.error('Image upload failed:', errorText);
+        }
+      } catch (e) {
+        console.error('Image processing error:', e.message);
+      }
+    }
+  }
+
   let issueBody = [
     '## 反馈详情',
     '',
@@ -39,26 +92,11 @@ export async function onRequestPost(context) {
     contact ? `- **联系方式**: ${contact}` : '',
   ].join('\n');
 
-  const allFiles = [];
-  for (const [key, value] of formData.entries()) {
-    if (key.startsWith('files') && value && typeof value === 'object' && value.size > 0) {
-      allFiles.push(value);
-    }
-  }
-
-  if (allFiles.length > 0) {
+  if (uploadedImages.length > 0) {
     issueBody += '\n\n---\n\n### 📷 附件图片\n';
-    for (let i = 0; i < allFiles.length; i++) {
-      const file = allFiles[i];
-      try {
-        const buffer = await file.arrayBuffer();
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-        const dataUrl = `data:${file.type || 'image/png'};base64,${base64}`;
-        issueBody += `\n![图片${i + 1}](${dataUrl})\n`;
-      } catch (e) {
-        issueBody += `\n[图片${i + 1}: 读取失败]\n`;
-      }
-    }
+    uploadedImages.forEach((img, i) => {
+      issueBody += `\n![图片${i + 1} - ${img.name}](${img.url})\n`;
+    });
   }
 
   issueBody += [
@@ -70,7 +108,6 @@ export async function onRequestPost(context) {
   ].join('\n');
 
   try {
-    const githubRepo = env.GITHUB_REPO || 'skyboyhjj/spinor-taiji-model';
     const feedbackLabel = env.FEEDBACK_LABEL || 'feedback';
     const labels = [feedbackLabel, `source:${source}`, `type:${type}`];
 
