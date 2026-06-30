@@ -108,10 +108,21 @@ export async function onRequestPost(context) {
     contact ? `- **联系方式**: ${contact}` : '',
   ].join('\n');
 
+  if (allFiles.length > 0) {
+    issueBody += `\n\n📎 **附件**: ${allFiles.length} 张图片`;
+  }
+
   if (uploadedImages.length > 0) {
     issueBody += '\n\n---\n\n### 📷 附件图片\n';
     uploadedImages.forEach((img, i) => {
       issueBody += `\n![图片${i + 1} - ${img.name}](${img.url})\n`;
+    });
+  }
+
+  if (imageErrors.length > 0) {
+    issueBody += '\n\n⚠️ **部分图片上传失败**:\n';
+    imageErrors.forEach(err => {
+      issueBody += `- ${err.file}: ${err.error.substring(0, 200)}\n`;
     });
   }
 
