@@ -1808,12 +1808,21 @@ fbSubmit?.addEventListener('click', async function(e) {
             throw new Error(data.error || 'API返回错误');
         }
     } catch (e) {
-        const useFallback = confirm('当前反馈服务暂时不可用，是否跳转到GitHub提交反馈？');
-        if (useFallback) {
-            const type = document.getElementById('fbType').value;
-            const content = document.getElementById('fbContent').value.trim();
-            const contact = document.getElementById('fbContact').value.trim();
-            const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
+        const type = document.getElementById('fbType').value;
+        const content = document.getElementById('fbContent').value.trim();
+        const contact = document.getElementById('fbContact').value.trim();
+        const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
+        
+        const feedbackText = `【${typeLabel[type] || type}】
+${content}
+${contact ? `联系方式：${contact}` : ''}`;
+        
+        const choice = confirm('反馈服务暂时不可用。
+
+点击"确定"尝试跳转GitHub提交
+点击"取消"查看其他反馈方式');
+        
+        if (choice) {
             const title = encodeURIComponent(`[反馈] ${typeLabel[type] || type} - 词汇表`);
             const body = encodeURIComponent(`## 反馈详情
 
@@ -1826,7 +1835,39 @@ ${contact ? `- **联系方式**: ${contact}` : ''}
 
 ---
 *带图片的反馈请直接在GitHub页面上传截图*`);
-            window.open(`https://github.com/skyboyhjj/spinor-taiji-model/issues/new?title=${title}&body=${body}`, '_blank');
+            const githubUrl = `https://github.com/skyboyhjj/spinor-taiji-model/issues/new?title=${title}&body=${body}`;
+            const newWindow = window.open(githubUrl, '_blank');
+            
+            setTimeout(() => {
+                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                    alert('GitHub可能无法访问，请尝试以下方式：
+
+1️⃣ 微信公众号：TS爱心联盟
+2️⃣ 复制反馈内容后通过其他渠道发送
+
+您的反馈内容已保存，可截图或复制保存。');
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(feedbackText).then(() => {
+                            alert('反馈内容已复制到剪贴板！');
+                        }).catch(() => {});
+                    }
+                }
+            }, 3000);
+        } else {
+            alert('其他反馈方式：
+
+📧 微信公众号：TS爱心联盟
+📧 复制内容后通过邮件/微信发送
+
+您的反馈内容：
+' + feedbackText + '
+
+（建议截图保存此内容）');
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(feedbackText).then(() => {
+                    console.log('反馈内容已复制到剪贴板');
+                }).catch(() => {});
+            }
         }
     } finally {
         fbSubmit.disabled = false;
