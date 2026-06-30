@@ -174,6 +174,26 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: r
 .feedback-success.show { display: block; }
 .feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
 .feedback-success p { color: #555; margin: 4px 0; }
+.file-upload-area {
+    border: 2px dashed #ddd; border-radius: 8px; padding: 24px 16px; text-align: center; cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.file-upload-area:hover { border-color: #f39c12; background-color: #fffaf0; }
+.file-upload-area.dragover { border-color: #f39c12; background-color: #fff8e6; }
+.file-upload-icon { font-size: 32px; margin-bottom: 8px; }
+.file-upload-text { font-size: 15px; font-weight: 500; color: #555; margin-bottom: 4px; }
+.file-upload-hint { font-size: 12px; color: #999; }
+.file-preview-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.file-preview-item {
+    position: relative; width: 80px; height: 80px; border-radius: 6px; overflow: hidden;
+    border: 2px solid #eee; background: #fafafa;
+}
+.file-preview-item img { width: 100%; height: 100%; object-fit: cover; }
+.file-preview-remove {
+    position: absolute; top: -4px; right: -4px; width: 20px; height: 20px;
+    background: #e74c3c; color: #fff; border-radius: 50%; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
 footer { background: #2c3e50; color: white; padding: 30px; text-align: center; margin-top: 50px; }
 .footer-text { font-size: 14px; opacity: 0.8; }
 .no-results { text-align: center; padding: 40px; color: #999; font-size: 16px; }
@@ -404,6 +424,10 @@ const feedbackClose = document.getElementById('feedbackClose');
 const feedbackForm = document.getElementById('feedbackForm');
 const feedbackSuccess = document.getElementById('feedbackSuccess');
 const fbSubmit = document.getElementById('fbSubmit');
+const fileUploadArea = document.getElementById('fileUploadArea');
+const fbFile = document.getElementById('fbFile');
+const filePreviewContainer = document.getElementById('filePreviewContainer');
+const uploadedFiles = [];
 
 function openFeedback() {
     feedbackOverlay.classList.add('active');
@@ -416,6 +440,10 @@ function closeFeedback() {
     feedbackForm.style.display = '';
     feedbackSuccess.classList.remove('show');
     document.getElementById('fbContent').value = '';
+    document.getElementById('fbContact').value = '';
+    document.getElementById('fbType').value = 'suggestion';
+    uploadedFiles.length = 0;
+    filePreviewContainer.innerHTML = '';
 }
 
 feedbackFloat?.addEventListener('click', openFeedback);
@@ -427,6 +455,70 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && feedbackOverlay?.classList.contains('active')) closeFeedback();
 });
 
+// 文件上传处理
+fileUploadArea?.addEventListener('click', function() {
+    fbFile.click();
+});
+
+fileUploadArea?.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('dragover');
+});
+
+fileUploadArea?.addEventListener('dragleave', function() {
+    this.classList.remove('dragover');
+});
+
+fileUploadArea?.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+});
+
+fbFile?.addEventListener('change', function(e) {
+    handleFiles(e.target.files);
+});
+
+function handleFiles(files) {
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (uploadedFiles.length >= 3) {
+            alert('最多只能上传3张图片');
+            break;
+        }
+        if (!file.type.startsWith('image/')) {
+            alert('请上传图片文件');
+            continue;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('单张图片不能超过5MB');
+            continue;
+        }
+        uploadedFiles.push(file);
+        showFilePreview(file, uploadedFiles.length - 1);
+    }
+}
+
+function showFilePreview(file, index) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'file-preview-item';
+        previewItem.innerHTML = `
+            <img src="${e.target.result}" alt="图片预览">
+            <div class="file-preview-remove" onclick="removeFile(${index})">×</div>
+        `;
+        filePreviewContainer.appendChild(previewItem);
+    };
+    reader.readAsDataURL(file);
+}
+
+window.removeFile = function(index) {
+    uploadedFiles.splice(index, 1);
+    filePreviewContainer.innerHTML = '';
+    uploadedFiles.forEach((file, i) => showFilePreview(file, i));
+};
+
 fbSubmit?.addEventListener('click', async function(e) {
     e.preventDefault();
     const content = document.getElementById('fbContent').value.trim();
@@ -437,15 +529,18 @@ fbSubmit?.addEventListener('click', async function(e) {
     fbSubmit.disabled = true;
     fbSubmit.textContent = '提交中…';
     try {
+        const formData = new FormData();
+        formData.append('type', document.getElementById('fbType').value);
+        formData.append('source', 'glossary');
+        formData.append('content', content);
+        formData.append('contact', document.getElementById('fbContact').value.trim());
+        uploadedFiles.forEach((file, i) => {
+            formData.append(`files[${i}]`, file);
+        });
+        
         const resp = await fetch('/api/feedback', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                type: document.getElementById('fbType').value,
-                source: 'glossary',
-                content: content,
-                contact: document.getElementById('fbContact').value.trim()
-            })
+            body: formData
         });
         const data = await resp.json();
         if (data.success) {
@@ -684,6 +779,16 @@ def generate_html_zh(vocab_data):
             <div class="feedback-form-group">
                 <label for="fbContact">联系方式（选填）</label>
                 <input type="text" id="fbContact" placeholder="邮箱或微信，便于后续沟通">
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbFile">图片附件（选填，最多3张）</label>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <input type="file" id="fbFile" multiple accept="image/*" style="display:none">
+                    <div class="file-upload-icon">📷</div>
+                    <div class="file-upload-text">点击或拖拽上传图片</div>
+                    <div class="file-upload-hint">支持 JPG、PNG、GIF，单张不超过 5MB</div>
+                </div>
+                <div class="file-preview-container" id="filePreviewContainer"></div>
             </div>
             <button class="feedback-submit" id="fbSubmit">提交反馈</button>
         </div>
