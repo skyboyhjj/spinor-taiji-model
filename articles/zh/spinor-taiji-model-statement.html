@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="2.1.1">
-    <title>旋量-太极模型声明 V2.1.1</title>
+    <meta name="version" content="2.2">
+    <title>旋量-太极模型声明 V2.2</title>
     <link rel="stylesheet" href="../../assets/feedback.css">
     <style>
         :root {
@@ -204,19 +204,125 @@
         .feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
         .feedback-success p { color: #555; margin: 4px 0; }
         @media print { .feedback-float, .feedback-overlay { display: none !important; } }
+
+        .tree-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 32px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f4f8 100%);
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .tree-root, .tree-trunk, .tree-leaves {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree-root {
+            font-weight: 700;
+            color: #27AE60;
+            margin-bottom: 8px;
+        }
+
+        .tree-trunk {
+            font-weight: 700;
+            color: #3498DB;
+            margin-bottom: 8px;
+        }
+
+        .tree-trunk::before {
+            content: "│";
+            font-size: 2em;
+            line-height: 1;
+            color: #ddd;
+        }
+
+        .tree-leaves {
+            font-weight: 700;
+            color: #F39C12;
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tree-leaves::before {
+            content: "├─";
+            font-size: 1.5em;
+            color: #ddd;
+        }
+
+        .tree-leaf {
+            padding: 8px 16px;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .innovation-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .innovation-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--accent);
+            position: relative;
+        }
+
+        .innovation-card:nth-child(1) { border-top-color: #27AE60; }
+        .innovation-card:nth-child(2) { border-top-color: #3498DB; }
+        .innovation-card:nth-child(3) { border-top-color: #F39C12; }
+
+        .innovation-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: rgba(0,0,0,0.06);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .innovation-title {
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .innovation-desc {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .innovation-cards { grid-template-columns: 1fr; }
+            .tree-leaves { flex-direction: column; gap: 12px; }
+            .tree-leaves::before { content: ""; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>旋量-太极模型 <span class="version-badge">V2.1.1</span></h1>
+        <h1>旋量-太极模型 <span class="version-badge">V2.2</span></h1>
         <blockquote>
-            <p><strong>版本</strong>：V2.1.1<br>
-            <strong>发布日期</strong>：2026年6月29日<br>
-            <strong>前一版本</strong>：V2.1（体用哲学版 · 弱者道之用纳入版）<br>
+            <p><strong>版本</strong>：V2.2<br>
+            <strong>发布日期</strong>：2026年7月1日<br>
+            <strong>前一版本</strong>：V2.1.1（频谱一元论恢复版）<br>
             <strong>本次升级核心</strong>：<br>
-            1. 恢复"频谱一元论"为模型核心主张之首。<br>
-            2. 恢复 V1.2 中"太极"条目，补充"万物皆振动"桥接句。<br>
-            3. 恢复"邀请"章节（月亮手指）。</p>
+            1. 新增"体-相-用架构的来龙去脉"章节，阐述三层架构的哲学渊源（佛家源头、道家发展、儒家完善）。<br>
+            2. 明确声明旋量-太极模型的三重创新：体（旋量场/觉知域）、相（动态运作法则）、用（具体身心操作）。<br>
+            3. 引入"根-干-叶"知识谱系隐喻，阐明"根在佛家，干在道家，叶在现代科学与身心实践"的核心思想。</p>
         </blockquote>
 
         <h2>第一章：模型总纲</h2>
@@ -229,7 +335,61 @@
 
         <p><strong>本模型明确声明</strong>：它不宣称物理与哲学在概念史上同源，不宣称传统经典包含现代科学，也不宣称其创见延伸为已确立的科学知识。</p>
 
-        <h3>1.2 三层标签系统</h3>
+        <h3>1.2 体-相-用架构的来龙去脉</h3>
+
+        <p><strong>"体-相-用"是中华哲学的核心架构，源自大乘佛教，发展于道家，完善于儒家。</strong>本模型借用这一古老框架，将现代物理学的旋量概念与中华太极哲学进行创造性整合，形成独特的三重创新。</p>
+
+        <h4>1.2.1 体-相-用的哲学渊源</h4>
+
+        <ul>
+            <li><strong>佛家源头：体即空性</strong> —— 大乘佛教中，"体"指诸法实相（空性、真如），"相"指诸法显现（缘起、差别），"用"指诸法作用（随缘、利他）。体是不生不灭的本体，相是因缘和合的显现，用是体相不二的功用。</li>
+            <li><strong>道家发展：体用不二</strong> —— 道家以"道"为体，以"德"为用，以"自然"为相。《道德经》云"道生之，德畜之"，体为用之根源，用为体之显发，离体无用，离用无以显体。</li>
+            <li><strong>儒家完善：体用一源</strong> —— 儒家以"理"为体，以"气"为用，以"礼"为相。程颐提出"体用一源，显微无间"，强调本体与现象的统一性。</li>
+        </ul>
+
+        <h4>1.2.2 旋量-太极模型的三重创新</h4>
+
+        <div class="innovation-cards">
+            <div class="innovation-card">
+                <div class="innovation-number">01</div>
+                <div class="innovation-title">创新一：体 —— 旋量场/觉知域</div>
+                <div class="innovation-desc">将现代物理学的旋量场概念引入，类比为觉知域——那能觉知一切却本身不参与任何旋转的背景。体是一切平方与开方操作发生的终极舞台。</div>
+            </div>
+            <div class="innovation-card">
+                <div class="innovation-number">02</div>
+                <div class="innovation-title">创新二：相 —— 动态运作法则</div>
+                <div class="innovation-desc">将道家的"反者道之动"与"弱者道之用"，通过旋量的720°复原特性，具象化为可操作的平方/开方法则。相是体与用之间的中道。</div>
+            </div>
+            <div class="innovation-card">
+                <div class="innovation-number">03</div>
+                <div class="innovation-title">创新三：用 —— 具体身心操作</div>
+                <div class="innovation-desc">将抽象的哲学概念转化为可实践的身心操作（呼吸、觉察、放下），让古老智慧在当代生活中落地生根。</div>
+            </div>
+        </div>
+
+        <h4>1.2.3 根-干-叶：模型的知识谱系</h4>
+
+        <p><strong>本模型的知识谱系可比喻为一棵大树：</strong></p>
+
+        <div class="tree-diagram">
+            <div class="tree-root">🌱 根 —— 佛家（空性与觉知）</div>
+            <div class="tree-trunk">🌳 干 —— 道家（太极与法则）</div>
+            <div class="tree-leaves">
+                <div class="tree-leaf">🌿 现代物理学</div>
+                <div class="tree-leaf">🌿 身心实践</div>
+                <div class="tree-leaf">🌿 经典读解</div>
+            </div>
+        </div>
+
+        <ul>
+            <li><strong>根（佛家）</strong>：提供空性智慧，揭示觉知的本质——一切体验发生的背景。没有根，树不能立。</li>
+            <li><strong>干（道家）</strong>：提供太极法则，揭示宇宙运行的根本规律——反者道之动，弱者道之用。没有干，枝叶无所依附。</li>
+            <li><strong>叶（现代科学与身心实践）</strong>：提供验证方法与可操作性，让古老智慧在当代生活中开花结果。没有叶，树不能光合作用、不能生长。</li>
+        </ul>
+
+        <p><strong>三者缺一不可：</strong>根为体，干为相，叶为用。根深则干壮，干壮则叶茂。本模型的使命，正是让这棵智慧之树在现代语境中焕发新的生机。</p>
+
+        <h3>1.3 三层标签系统</h3>
 
         <p>本模型所有陈述，严格遵循以下标签：</p>
 
@@ -509,7 +669,8 @@
             <li><strong>V1.1</strong>：引入三层标签系统（🔵🟢🟠），严格区分陈述类型。</li>
             <li><strong>V2.0</strong>：引入"体-相-用"三层架构，模型升华为完整的生命哲学体系。</li>
             <li><strong>V2.1</strong>（前版）：正式纳入"弱者道之用"为相的第二法则，并展开其旋量-太极操作；为"体"增加遮诠。</li>
-            <li><strong>V2.1.1</strong>（当前版本）：恢复"频谱一元论"为模型核心主张之首；恢复 V1.2 中"太极"独立条目；恢复"邀请"章节。</li>
+            <li><strong>V2.1.1</strong>：恢复"频谱一元论"为模型核心主张之首；恢复 V1.2 中"太极"独立条目；恢复"邀请"章节。</li>
+            <li><strong>V2.2</strong>（当前版本）：新增"体-相-用架构的来龙去脉"章节，阐述哲学渊源；明确声明三重创新（体/相/用）；引入"根-干-叶"知识谱系隐喻，阐明"根在佛家，干在道家，叶在现代科学与身心实践"。</li>
         </ul>
 
         <p>我们欢迎来自物理学、哲学、中医学、道学、佛学、心理学、神经科学等领域的研究者与实践者，对模型提出批评、补充与共建。</p>
