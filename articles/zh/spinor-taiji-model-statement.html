@@ -603,13 +603,11 @@
     <script>
     const backToTopBtn = document.getElementById("backToTop");
     const backToHomeBtn = document.getElementById("backToHome");
-    const feedbackFloat = document.getElementById("feedbackFloat");
 
     window.addEventListener("scroll", function() {
         const isVisible = window.scrollY > 300;
         backToTopBtn.classList.toggle("show", isVisible);
         backToHomeBtn.classList.toggle("show", isVisible);
-        feedbackFloat?.classList.toggle("show", isVisible);
     });
     backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     backToHomeBtn.addEventListener("click", () => window.location.href = "/");

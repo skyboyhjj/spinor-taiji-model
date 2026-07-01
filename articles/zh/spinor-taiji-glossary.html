@@ -1476,17 +1476,15 @@ window.addEventListener('scroll', function() {
     // 显示返回按钮
     const backToTop = document.querySelector('.back-to-top');
     const backToHome = document.querySelector('.back-to-home');
-    const feedbackFloat = document.querySelector('.feedback-float');
     
-    function updateFloatButtons() {
+    function updateBackButtons() {
         const isVisible = window.scrollY > 300;
         backToTop?.classList.toggle('show', isVisible);
         backToHome?.classList.toggle('show', isVisible);
-        feedbackFloat?.classList.toggle('show', isVisible);
     }
     
-    updateFloatButtons();
-    window.addEventListener('scroll', updateFloatButtons);
+    updateBackButtons();
+    window.addEventListener('scroll', updateBackButtons);
 });
 
 // 返回顶部

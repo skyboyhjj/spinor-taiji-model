@@ -23,10 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const content = fbContent.value.trim();
         const chineseCount = (content.match(/[\u4e00-\u9fa5]/g) || []).length;
         const totalCount = content.length;
+        const hasChinese = chineseCount > 0;
         
-        fbCount.textContent = totalCount + ' / 2000 字（至少5个汉字）';
+        const isValid = hasChinese ? chineseCount >= 5 : totalCount >= 10;
         
-        if (chineseCount >= 5) {
+        fbCount.textContent = hasChinese 
+            ? totalCount + ' / 2000 字（至少5个汉字）'
+            : totalCount + ' / 2000 chars (at least 10 characters)';
+        
+        if (isValid) {
             fbContent.classList.remove('error');
             fbError.classList.remove('show');
             fbCount.classList.remove('error');
@@ -245,5 +250,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (fbSubmit) {
         fbSubmit.addEventListener('click', submitFeedback);
+    }
+
+    function updateFloatButtons() {
+        const isVisible = window.scrollY > 300;
+        feedbackFloat?.classList.toggle('show', isVisible);
+    }
+
+    if (feedbackFloat) {
+        updateFloatButtons();
+        window.addEventListener('scroll', updateFloatButtons);
     }
 });
