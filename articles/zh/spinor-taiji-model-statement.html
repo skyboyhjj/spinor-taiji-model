@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="version" content="2.1.1">
     <title>旋量-太极模型声明 V2.1.1</title>
+    <link rel="stylesheet" href="../assets/feedback.css">
     <style>
         :root {
             --bg: #fefefe;
@@ -81,17 +82,6 @@
         }
         .back-to-top.show { opacity: 1; visibility: visible; }
         .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5); }
-        .feedback-float {
-            position: fixed; bottom: 90px; right: 30px;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            color: white; border: none; border-radius: 24px;
-            cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1100; font-size: 15px;
-            padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-            display: flex; align-items: center; gap: 6px;
-        }
-        .feedback-float.show { opacity: 1; visibility: visible; }
-        .feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
         @media (max-width: 768px) {
             .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
             body { font-size: 15px; padding: 20px 14px 40px; }
@@ -564,7 +554,7 @@
     <div class="nav-buttons">
         <button class="back-to-home" id="backToHome" title="返回首页">🏠</button>
         <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
-        <button class="feedback-float" id="feedbackFloat" title="反馈建议">📝 反馈建议</button>
+        <button class="feedback-float" id="feedbackFloat" title="反馈建议" data-source="statement">📝 反馈建议</button>
     </div>
 
     <div class="feedback-overlay" id="feedbackOverlay">
@@ -614,200 +604,16 @@
     const backToTopBtn = document.getElementById("backToTop");
     const backToHomeBtn = document.getElementById("backToHome");
     const feedbackFloat = document.getElementById("feedbackFloat");
-    const feedbackOverlay = document.getElementById("feedbackOverlay");
-    const feedbackClose = document.getElementById("feedbackClose");
-    const feedbackForm = document.getElementById("feedbackForm");
-    const feedbackSuccess = document.getElementById("feedbackSuccess");
-    const fbSubmit = document.getElementById("fbSubmit");
-    const fbContent = document.getElementById("fbContent");
-    const fbCount = document.getElementById("fbCount");
-    const fbError = document.getElementById("fbError");
-    const fileUploadArea = document.getElementById("fileUploadArea");
-    const fbFile = document.getElementById("fbFile");
-    const filePreviewContainer = document.getElementById("filePreviewContainer");
-    const uploadedFiles = [];
-    let isContentValid = false;
 
     window.addEventListener("scroll", function() {
         const isVisible = window.scrollY > 300;
         backToTopBtn.classList.toggle("show", isVisible);
         backToHomeBtn.classList.toggle("show", isVisible);
-        feedbackFloat.classList.toggle("show", isVisible);
+        feedbackFloat?.classList.toggle("show", isVisible);
     });
     backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     backToHomeBtn.addEventListener("click", () => window.location.href = "/");
-
-    function validateContent() {
-        const content = fbContent.value.trim();
-        const chineseCount = (content.match(/[\u4e00-\u9fa5]/g) || []).length;
-        const totalCount = content.length;
-        
-        fbCount.textContent = totalCount + ' / 2000 字（至少5个汉字）';
-        
-        if (chineseCount >= 5) {
-            fbContent.classList.remove('error');
-            fbError.classList.remove('show');
-            fbCount.classList.remove('error');
-            fbCount.classList.add('success');
-            isContentValid = true;
-        } else {
-            fbContent.classList.add('error');
-            fbError.classList.add('show');
-            fbCount.classList.remove('success');
-            fbCount.classList.add('error');
-            isContentValid = false;
-        }
-    }
-
-    fbContent?.addEventListener('input', validateContent);
-    fbContent?.addEventListener('blur', validateContent);
-
-    function openFeedback() {
-        feedbackOverlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-    function closeFeedback() {
-        feedbackOverlay.classList.remove("active");
-        document.body.style.overflow = "";
-        feedbackForm.style.display = "";
-        feedbackSuccess.classList.remove("show");
-        document.getElementById("fbContent").value = "";
-        document.getElementById("fbContact").value = "";
-        document.getElementById("fbType").value = "suggestion";
-        fbContent.classList.remove("error");
-        fbError.classList.remove("show");
-        fbCount.classList.remove("error", "success");
-        fbCount.textContent = "0 / 2000 字（至少5个汉字）";
-        isContentValid = false;
-        uploadedFiles.length = 0;
-        filePreviewContainer.innerHTML = "";
-    }
-    feedbackFloat.addEventListener("click", openFeedback);
-    feedbackClose.addEventListener("click", closeFeedback);
-    feedbackOverlay.addEventListener("click", function(e) {
-        if (e.target === feedbackOverlay) closeFeedback();
-    });
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape" && feedbackOverlay.classList.contains("active")) closeFeedback();
-    });
-
-    fileUploadArea?.addEventListener("click", function() {
-        fbFile.click();
-    });
-    fileUploadArea?.addEventListener("dragover", function(e) {
-        e.preventDefault();
-        this.classList.add("dragover");
-    });
-    fileUploadArea?.addEventListener("dragleave", function() {
-        this.classList.remove("dragover");
-    });
-    fileUploadArea?.addEventListener("drop", function(e) {
-        e.preventDefault();
-        this.classList.remove("dragover");
-        handleFiles(e.dataTransfer.files);
-    });
-    fbFile?.addEventListener("change", function(e) {
-        handleFiles(e.target.files);
-    });
-
-    function handleFiles(files) {
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (uploadedFiles.length >= 3) {
-                alert("最多只能上传3张图片");
-                break;
-            }
-            if (!file.type.startsWith("image/")) {
-                alert("请上传图片文件");
-                continue;
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                alert("单张图片不能超过5MB");
-                continue;
-            }
-            uploadedFiles.push(file);
-            showFilePreview(file, uploadedFiles.length - 1);
-        }
-    }
-
-    function showFilePreview(file, index) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const previewItem = document.createElement("div");
-            previewItem.className = "file-preview-item";
-            previewItem.innerHTML = '<img src="' + e.target.result + '" alt="图片预览"><div class="file-preview-remove" onclick="removeFile(' + index + ')">×</div>';
-            filePreviewContainer.appendChild(previewItem);
-        };
-        reader.readAsDataURL(file);
-    }
-
-    window.removeFile = function(index) {
-        uploadedFiles.splice(index, 1);
-        filePreviewContainer.innerHTML = "";
-        uploadedFiles.forEach((file, i) => showFilePreview(file, i));
-    };
-
-    fbSubmit.addEventListener("click", async function() {
-        validateContent();
-        if (!isContentValid) {
-            return;
-        }
-        fbSubmit.disabled = true;
-        fbSubmit.textContent = "提交中…";
-        try {
-            const fileDataList = [];
-            for (const file of uploadedFiles) {
-                const reader = new FileReader();
-                const dataUrl = await new Promise((resolve, reject) => {
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                const base64 = dataUrl.split(",")[1];
-                const mime = dataUrl.split(",")[0].split(":")[1].split(";")[0];
-                fileDataList.push({
-                    name: file.name,
-                    type: file.type || mime,
-                    size: file.size,
-                    base64: base64
-                });
-            }
-            
-            const content = document.getElementById("fbContent").value.trim();
-            const payload = {
-                type: document.getElementById("fbType").value,
-                source: "statement",
-                content: content,
-                contact: document.getElementById("fbContact").value.trim(),
-                files: fileDataList
-            };
-            
-            const resp = await fetch("/api/feedback", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-            const data = await resp.json();
-            if (data.success) {
-                feedbackForm.style.display = "none";
-                feedbackSuccess.classList.add("show");
-                if (data.imagesUploaded !== undefined) {
-                    const successMsgEl = feedbackSuccess.querySelector("p");
-                    if (successMsgEl) {
-                        successMsgEl.textContent = "🎉 感谢你的反馈！\\n图片上传: " + data.imagesUploaded + "/" + uploadedFiles.length;
-                        successMsgEl.style.whiteSpace = "pre-line";
-                    }
-                }
-            } else {
-                throw new Error(data.error || "API返回错误");
-            }
-        } catch (e) {
-            alert("反馈服务暂时不可用，请稍后再试。\\n\\n您可以通过以下方式联系我们：\\n📧 微信公众号：TS爱心联盟");
-        } finally {
-            fbSubmit.disabled = false;
-            fbSubmit.textContent = "提交反馈";
-        }
-    });
     </script>
+    <script src="../assets/feedback.js"></script>
 </body>
 </html>

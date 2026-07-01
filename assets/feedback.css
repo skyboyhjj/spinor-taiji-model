@@ -1,0 +1,117 @@
+.feedback-float {
+    position: fixed; bottom: 90px; right: 30px;
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white; border: none; border-radius: 24px;
+    cursor: pointer; opacity: 0; visibility: hidden;
+    transition: all 0.3s; z-index: 1100; font-size: 15px;
+    padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+    display: flex; align-items: center; gap: 6px;
+}
+.feedback-float.show { opacity: 1; visibility: visible; }
+.feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
+
+.feedback-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45); z-index: 3000;
+    align-items: center; justify-content: center;
+}
+.feedback-overlay.active { display: flex; }
+
+.feedback-modal {
+    background: #fff; border-radius: 16px; padding: 32px;
+    max-width: 440px; width: 90%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    position: relative; max-height: 90vh; overflow-y: auto;
+    z-index: 3001;
+}
+
+.feedback-modal-close {
+    position: absolute; top: 14px; right: 18px;
+    background: none; border: none; font-size: 22px;
+    cursor: pointer; color: #999; line-height: 1;
+}
+.feedback-modal-close:hover { color: #333; }
+
+.feedback-modal h3 { font-size: 1.2em; margin: 0 0 6px; color: #2c3e50; }
+.feedback-modal-sub { font-size: 0.85em; color: #888; margin: 0 0 20px; }
+
+.feedback-form-group { margin-bottom: 16px; }
+.feedback-form-group label {
+    display: block; font-size: 0.9em; font-weight: 600;
+    color: #555; margin-bottom: 6px;
+}
+.feedback-form-group select,
+.feedback-form-group textarea,
+.feedback-form-group input {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid #ddd; border-radius: 8px;
+    font-size: 0.95em; font-family: inherit;
+    outline: none; transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+.feedback-form-group select:focus,
+.feedback-form-group textarea:focus,
+.feedback-form-group input:focus { border-color: #f39c12; }
+.feedback-form-group textarea { min-height: 120px; resize: vertical; }
+.feedback-form-group textarea.error { border-color: #e74c3c; }
+
+.feedback-form-group .feedback-error {
+    display: none; color: #e74c3c; font-size: 0.8em; margin-top: 4px;
+}
+.feedback-form-group .feedback-error.show { display: block; }
+
+.feedback-form-group .feedback-count {
+    color: #999; font-size: 0.8em; margin-top: 4px; text-align: right;
+}
+.feedback-form-group .feedback-count.error { color: #e74c3c; }
+.feedback-form-group .feedback-count.success { color: #27ae60; }
+
+.feedback-submit {
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: #fff; border: none; border-radius: 24px;
+    font-size: 1em; font-weight: 600;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.feedback-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(243, 156, 18, 0.4); }
+.feedback-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.feedback-success { display: none; text-align: center; padding: 20px 0; }
+.feedback-success.show { display: block; }
+.feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
+.feedback-success p { color: #555; margin: 4px 0; }
+
+.file-upload-area {
+    border: 2px dashed #ddd; border-radius: 8px;
+    padding: 24px 16px; text-align: center;
+    cursor: pointer; transition: all 0.2s;
+}
+.file-upload-area:hover, .file-upload-area.dragover {
+    border-color: #f39c12; background: #fff8f0;
+}
+.file-upload-area span { color: #888; font-size: 0.9em; }
+
+.file-preview-container {
+    display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+}
+.file-preview-item {
+    position: relative; width: 100px; height: 100px;
+    border-radius: 8px; overflow: hidden;
+}
+.file-preview-item img { width: 100%; height: 100%; object-fit: cover; }
+.file-preview-remove {
+    position: absolute; top: 4px; right: 4px;
+    width: 20px; height: 20px;
+    background: rgba(0,0,0,0.6); color: white;
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
+}
+
+@media print {
+    .feedback-float, .feedback-overlay { display: none !important; }
+}

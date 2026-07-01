@@ -30,6 +30,17 @@ def main():
     shutil.copytree(docs_src, dist_docs)
     print("复制 docs 目录")
 
+    # 复制 assets 目录（共享资源文件）
+    assets_src = os.path.join(project_root, "assets")
+    dist_assets = os.path.join(dist_dir, "assets")
+    if os.path.exists(assets_src):
+        if os.path.exists(dist_assets):
+            shutil.rmtree(dist_assets)
+        shutil.copytree(assets_src, dist_assets)
+        print("复制 assets 目录（共享资源文件）")
+    else:
+        print("警告：未找到 assets 目录")
+
     # 复制 functions 目录（Cloudflare Pages Functions）
     functions_src = os.path.join(project_root, "functions")
     dist_functions = os.path.join(dist_dir, "functions")

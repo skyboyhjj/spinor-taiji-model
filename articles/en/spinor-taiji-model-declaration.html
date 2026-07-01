@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="version" content="2.1.1">
 <title>Spinor-Taiji Model Declaration V2.1.1</title>
+<link rel="stylesheet" href="../assets/feedback.css">
 <style>
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 680px; margin: 0 auto; padding: 20px; background: #fff; }
 h1 { font-size: 24px; font-weight: bold; text-align: center; color: #1a1a1a; margin-bottom: 10px; padding-bottom: 15px; border-bottom: 2px solid #0066cc; }
@@ -73,17 +74,6 @@ a { color: #0066cc; text-decoration: none; }
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5);
 }
-.feedback-float {
-    position: fixed; bottom: 90px; right: 30px;
-    background: linear-gradient(135deg, #f39c12, #e67e22);
-    color: white; border: none; border-radius: 24px;
-    cursor: pointer; opacity: 0; visibility: hidden;
-    transition: all 0.3s; z-index: 1100; font-size: 15px;
-    padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-    display: flex; align-items: center; gap: 6px;
-}
-.feedback-float.show { opacity: 1; visibility: visible; }
-.feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
 @media (max-width: 768px) {
     body { font-size: 15px; padding: 20px 14px 40px; }
     h1 { font-size: 1.6em; }
@@ -131,50 +121,8 @@ a { color: #0066cc; text-decoration: none; }
 }
 @media print {
     body { font-size: 12pt; line-height: 1.6; padding: 0; color: #000; }
+    .feedback-float, .feedback-overlay { display: none !important; }
 }
-.feedback-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-    z-index: 3000; align-items: center; justify-content: center;
-}
-.feedback-overlay.active { display: flex; }
-.feedback-modal {
-    background: #fff; border-radius: 16px; padding: 32px; max-width: 440px;
-    width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-    position: relative; max-height: 90vh; overflow-y: auto;
-    z-index: 3001;
-}
-.feedback-modal-close {
-    position: absolute; top: 14px; right: 18px; background: none;
-    border: none; font-size: 22px; cursor: pointer; color: #999; line-height: 1;
-}
-.feedback-modal-close:hover { color: #333; }
-.feedback-modal h3 { font-size: 1.2em; margin: 0 0 6px; color: #2c3e50; }
-.feedback-modal-sub { font-size: 0.85em; color: #888; margin: 0 0 20px; }
-.feedback-form-group { margin-bottom: 16px; }
-.feedback-form-group label { display: block; font-size: 0.9em; font-weight: 600; color: #555; margin-bottom: 6px; }
-.feedback-form-group select,
-.feedback-form-group textarea,
-.feedback-form-group input {
-    width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px;
-    font-size: 0.95em; font-family: inherit; outline: none; transition: border-color 0.2s;
-    box-sizing: border-box;
-}
-.feedback-form-group select:focus,
-.feedback-form-group textarea:focus,
-.feedback-form-group input:focus { border-color: #f39c12; }
-.feedback-form-group textarea { min-height: 120px; resize: vertical; }
-.feedback-submit {
-    width: 100%; padding: 12px; background: linear-gradient(135deg, #f39c12, #e67e22);
-    color: #fff; border: none; border-radius: 24px; font-size: 1em; font-weight: 600;
-    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-}
-.feedback-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(243, 156, 18, 0.4); }
-.feedback-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-.feedback-success { display: none; text-align: center; padding: 20px 0; }
-.feedback-success.show { display: block; }
-.feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
-.feedback-success p { color: #555; margin: 4px 0; }
-@media print { .feedback-float, .feedback-overlay { display: none !important; } }
 hr { border: none; border-top: 1px solid #ddd; margin: 40px 0; }
 </style>
 </head>
@@ -526,7 +474,7 @@ hr { border: none; border-top: 1px solid #ddd; margin: 40px 0; }
 <div class="nav-buttons">
     <button class="back-to-home" id="backToHome" title="Back to Home">🏠</button>
     <button class="back-to-top" id="backToTop" title="Back to Top">↑</button>
-    <button class="feedback-float" id="feedbackFloat" title="Feedback">📬 Feedback</button>
+    <button class="feedback-float" id="feedbackFloat" title="Feedback" data-source="statement">📬 Feedback</button>
 </div>
 <div class="feedback-overlay" id="feedbackOverlay">
     <div class="feedback-modal">
@@ -546,10 +494,20 @@ hr { border: none; border-top: 1px solid #ddd; margin: 40px 0; }
             <div class="feedback-form-group">
                 <label for="fbContent">Details <span style="color:#e74c3c">*</span></label>
                 <textarea id="fbContent" placeholder="Describe your feedback..." required></textarea>
+                <div class="feedback-count" id="fbCount">0 / 2000 characters</div>
+                <div class="feedback-error" id="fbError">✗ Feedback must be at least 5 characters</div>
             </div>
             <div class="feedback-form-group">
                 <label for="fbContact">Contact (optional)</label>
                 <input type="text" id="fbContact" placeholder="Email or WeChat for follow-up">
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbFile">Attachments (optional, max 3 images)</label>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <input type="file" id="fbFile" multiple accept="image/*" style="display:none;">
+                    <span>📷 Click or drag to upload images</span>
+                </div>
+                <div class="file-preview-container" id="filePreviewContainer"></div>
             </div>
             <button class="feedback-submit" id="fbSubmit">Submit Feedback</button>
         </div>
@@ -573,63 +531,6 @@ window.addEventListener("scroll", function() {
 backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 backToHomeBtn.addEventListener("click", () => window.location.href = "/");
 
-const overlay = document.getElementById("feedbackOverlay");
-const closeBtn = document.getElementById("feedbackClose");
-const formEl = document.getElementById("feedbackForm");
-const successEl = document.getElementById("feedbackSuccess");
-const submitBtn = document.getElementById("fbSubmit");
-
-window.openFeedback = function() {
-    overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-};
-function closeFeedback() {
-    overlay.classList.remove("active");
-    document.body.style.overflow = "";
-    formEl.style.display = "";
-    successEl.classList.remove("show");
-    document.getElementById("fbContent").value = "";
-}
-feedbackFloat.addEventListener("click", openFeedback);
-closeBtn.addEventListener("click", closeFeedback);
-overlay.addEventListener("click", function(e) {
-    if (e.target === overlay) closeFeedback();
-});
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && overlay.classList.contains("active")) closeFeedback();
-});
-
-submitBtn.addEventListener("click", async function() {
-    const content = document.getElementById("fbContent").value.trim();
-    if (content.length < 5) {
-        alert("Feedback must be at least 5 characters.");
-        return;
-    }
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Submitting...";
-    try {
-        const resp = await fetch("/api/feedback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                type: document.getElementById("fbType").value,
-                source: "statement",
-                content: content,
-                contact: document.getElementById("fbContact").value.trim()
-            })
-        });
-        const data = await resp.json();
-        if (data.success) {
-            formEl.style.display = "none";
-            successEl.classList.add("show");
-        } else {
-            alert("Submission failed: " + (data.error || "Please try again later."));
-        }
-    } catch (e) {
-        alert("Network error. Please try again later or contact us via WeChat: TS爱心联盟.");
-    }
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Feedback";
-});
+<script src="../assets/feedback.js"></script>
 </script>
 </body></html>
