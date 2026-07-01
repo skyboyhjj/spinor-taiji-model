@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function openFeedback() {
+    window.openFeedback = function() {
         if (!feedbackOverlay) return;
         feedbackOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-    }
+    };
 
     function closeFeedback() {
         if (!feedbackOverlay || !feedbackForm || !feedbackSuccess) return;

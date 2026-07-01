@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="version" content="2.1.1">
     <title>旋量-太极模型声明 V2.1.1</title>
-    <link rel="stylesheet" href="../assets/feedback.css">
+    <link rel="stylesheet" href="../../assets/feedback.css">
     <style>
         :root {
             --bg: #fefefe;
@@ -82,6 +82,17 @@
         }
         .back-to-top.show { opacity: 1; visibility: visible; }
         .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5); }
+        .feedback-float {
+            position: fixed; bottom: 90px; right: 30px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white; border: none; border-radius: 24px;
+            cursor: pointer; opacity: 0; visibility: hidden;
+            transition: all 0.3s; z-index: 1100; font-size: 15px;
+            padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .feedback-float.show { opacity: 1; visibility: visible; }
+        .feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
         @media (max-width: 768px) {
             .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
             body { font-size: 15px; padding: 20px 14px 40px; }
