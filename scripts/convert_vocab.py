@@ -769,6 +769,7 @@ def generate_html_zh(vocab_data):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>旋量-太极词汇表 V{VERSION}</title>
+<link rel="stylesheet" href="../../assets/feedback.css">
 {get_css_styles()}
 </head>
 <body>
@@ -862,6 +863,7 @@ def generate_html_zh(vocab_data):
 </footer>
 
 {get_javascript()}
+<script src="../../assets/feedback.js"></script>
 </body>
 </html>'''
     
