@@ -1602,7 +1602,7 @@ function updateCharCount() {
     const chineseCount = countChineseChars(content);
     const isMinOk = chineseCount >= MIN_CHARS;
     
-    fbCharCount.textContent = `${totalLen} / ${MAX_CHARS} 字（汉字 ${chineseCount}/${MIN_CHARS} 个）`;
+    fbCharCount.textContent = `${totalLen} / ${MAX_CHARS} 字（至少${MIN_CHARS}个汉字）`;
     
     if (totalLen > MAX_CHARS * 0.9) {
         fbCharCount.classList.add('warning');
