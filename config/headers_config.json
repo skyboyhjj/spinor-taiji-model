@@ -1,81 +1,10 @@
 {
-    "description": "Cloudflare Pages 缓存策略配置",
-    "version": "1.0",
     "headers": [
         {
-            "path": "/",
-            "headers": {
-                "Cache-Control": "public, max-age=600, stale-while-revalidate=300"
-            }
-        },
-        {
-            "path": "/index.html",
-            "headers": {
-                "Cache-Control": "public, max-age=600, stale-while-revalidate=300"
-            }
-        },
-        {
-            "path": "/articles/*.html",
-            "headers": {
-                "Cache-Control": "public, max-age=86400, stale-while-revalidate=43200",
-                "Content-Type": "text/html; charset=utf-8"
-            }
-        },
-        {
-            "path": "/docs/**/*.html",
-            "headers": {
-                "Cache-Control": "public, max-age=86400, stale-while-revalidate=43200",
-                "Content-Type": "text/html; charset=utf-8"
-            }
-        },
-        {
-            "path": "/*.css",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "/*.js",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "/*.png",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "/*.jpg",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "/*.jpeg",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "/*.gif",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "/*.svg",
-            "headers": {
-                "Cache-Control": "public, max-age=31536000, immutable"
-            }
-        },
-        {
-            "path": "*",
+            "path": "/*",
             "headers": {
                 "X-Content-Type-Options": "nosniff",
                 "X-Frame-Options": "DENY",
-                "X-XSS-Protection": "1; mode=block",
                 "Referrer-Policy": "strict-origin-when-cross-origin"
             }
         }
