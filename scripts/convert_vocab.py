@@ -614,16 +614,7 @@ fbSubmit?.addEventListener('click', async function(e) {
             throw new Error(data.error || 'API返回错误');
         }
     } catch (e) {
-        const useFallback = confirm('当前反馈服务暂时不可用，是否跳转到GitHub提交反馈？');
-        if (useFallback) {
-            const type = document.getElementById('fbType').value;
-            const content = document.getElementById('fbContent').value.trim();
-            const contact = document.getElementById('fbContact').value.trim();
-            const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
-            const title = encodeURIComponent(`[反馈] ${typeLabel[type] || type} - 词汇表`);
-            const body = encodeURIComponent(`## 反馈详情\\n\\n- **类型**: ${typeLabel[type] || type}\\n- **来源**: 词汇表\\n\\n${content}\\n\\n${contact ? `- **联系方式**: ${contact}` : ''}\\n\\n---\\n*带图片的反馈请直接在GitHub页面上传截图*`);
-            window.open(`https://github.com/skyboyhjj/spinor-taiji-model/issues/new?title=${title}&body=${body}`, '_blank');
-        }
+        alert('反馈服务暂时不可用，请稍后再试。\\n\\n您可以通过以下方式联系我们：\\n📧 微信公众号：TS爱心联盟');
     } finally {
         fbSubmit.disabled = false;
         fbSubmit.textContent = '提交反馈';
