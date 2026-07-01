@@ -391,16 +391,16 @@ window.addEventListener('scroll', function() {
     // 显示返回按钮
     const backToTop = document.querySelector('.back-to-top');
     const backToHome = document.querySelector('.back-to-home');
-    const feedbackFloat = document.querySelector('.feedback-float');
+    const feedbackBtn = document.querySelector('.feedback-float');
     
     if (window.scrollY > 300) {
         backToTop?.classList.add('show');
         backToHome?.classList.add('show');
-        feedbackFloat?.classList.add('show');
+        feedbackBtn?.classList.add('show');
     } else {
         backToTop?.classList.remove('show');
         backToHome?.classList.remove('show');
-        feedbackFloat?.classList.remove('show');
+        feedbackBtn?.classList.remove('show');
     }
 });
 
