@@ -167,11 +167,12 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: r
 .feedback-form-group select, .feedback-form-group textarea, .feedback-form-group input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; font-family: inherit; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
 .feedback-form-group select:focus, .feedback-form-group textarea:focus, .feedback-form-group input:focus { border-color: #f39c12; }
 .feedback-form-group textarea { min-height: 120px; resize: vertical; }
-.feedback-char-count { font-size: 0.8em; color: #999; text-align: right; margin-top: 4px; }
-.feedback-char-count.warning { color: #e74c3c; }
-.feedback-error-hint { font-size: 0.85em; color: #e74c3c; margin-top: 6px; min-height: 1.2em; }
-.feedback-input-error { border-color: #e74c3c !important; }
-.file-error-msg { color: #e74c3c; font-size: 0.85em; margin-top: 8px; min-height: 1.2em; }
+.feedback-form-group textarea.error { border-color: #e74c3c; }
+.feedback-form-group .feedback-error { display: none; color: #e74c3c; font-size: 0.8em; margin-top: 4px; }
+.feedback-form-group .feedback-error.show { display: block; }
+.feedback-form-group .feedback-count { color: #999; font-size: 0.8em; margin-top: 4px; text-align: right; }
+.feedback-form-group .feedback-count.error { color: #e74c3c; }
+.feedback-form-group .feedback-count.success { color: #27ae60; }
 .feedback-submit { width: 100%; padding: 12px; background: linear-gradient(135deg, #f39c12, #e67e22); color: #fff; border: none; border-radius: 24px; font-size: 1em; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
 .feedback-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(243, 156, 18, 0.4); }
 .feedback-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
@@ -179,13 +180,6 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: r
 .feedback-success.show { display: block; }
 .feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
 .feedback-success p { color: #555; margin: 4px 0; }
-.feedback-success-detail { font-size: 0.85em; color: #888; margin-top: 12px; }
-.feedback-success-close {
-    margin-top: 20px; padding: 10px 32px; background: #f0f0f0; color: #555;
-    border: none; border-radius: 20px; font-size: 0.9em; cursor: pointer;
-    transition: background 0.2s;
-}
-.feedback-success-close:hover { background: #e0e0e0; }
 .file-upload-area {
     border: 2px dashed #ddd; border-radius: 8px; padding: 24px 16px; text-align: center; cursor: pointer;
     transition: border-color 0.2s, background-color 0.2s;
@@ -391,16 +385,16 @@ window.addEventListener('scroll', function() {
     // 显示返回按钮
     const backToTop = document.querySelector('.back-to-top');
     const backToHome = document.querySelector('.back-to-home');
-    const feedbackBtn = document.querySelector('.feedback-float');
+    const feedbackFloat = document.querySelector('.feedback-float');
     
     if (window.scrollY > 300) {
         backToTop?.classList.add('show');
         backToHome?.classList.add('show');
-        feedbackBtn?.classList.add('show');
+        feedbackFloat?.classList.add('show');
     } else {
         backToTop?.classList.remove('show');
         backToHome?.classList.remove('show');
-        feedbackBtn?.classList.remove('show');
+        feedbackFloat?.classList.remove('show');
     }
 });
 
@@ -439,62 +433,40 @@ const fbSubmit = document.getElementById('fbSubmit');
 const fileUploadArea = document.getElementById('fileUploadArea');
 const fbFile = document.getElementById('fbFile');
 const filePreviewContainer = document.getElementById('filePreviewContainer');
-const uploadedFiles = [];
-
 const fbContent = document.getElementById('fbContent');
-const fbCharCount = document.getElementById('fbCharCount');
-const fbContentError = document.getElementById('fbContentError');
-const fileErrorMsg = document.getElementById('fileErrorMsg');
+const fbCount = document.getElementById('fbCount');
+const fbError = document.getElementById('fbError');
+const uploadedFiles = [];
+let isContentValid = false;
 
-const MIN_CHARS = 5;
-const MAX_CHARS = 2000;
-
-function countChineseChars(str) {
-    const chineseRegex = /[\u4E00-\u9FFF]/g;
-    const matches = str.match(chineseRegex);
-    return matches ? matches.length : 0;
-}
-
-function updateCharCount() {
-    const content = fbContent.value;
-    const totalLen = content.length;
-    const chineseCount = countChineseChars(content);
-    const isMinOk = chineseCount >= MIN_CHARS;
+function validateContent() {
+    const content = fbContent.value.trim();
+    const chineseCount = (content.match(/[\u4e00-\u9fa5]/g) || []).length;
+    const totalCount = content.length;
     
-    fbCharCount.textContent = `${totalLen} / ${MAX_CHARS} 字（至少${MIN_CHARS}个汉字）`;
+    fbCount.textContent = totalCount + ' / 2000 字（至少5个汉字）';
     
-    if (totalLen > MAX_CHARS * 0.9) {
-        fbCharCount.classList.add('warning');
+    if (chineseCount >= 5) {
+        fbContent.classList.remove('error');
+        fbError.classList.remove('show');
+        fbCount.classList.remove('error');
+        fbCount.classList.add('success');
+        isContentValid = true;
     } else {
-        fbCharCount.classList.remove('warning');
+        fbContent.classList.add('error');
+        fbError.classList.add('show');
+        fbCount.classList.remove('success');
+        fbCount.classList.add('error');
+        isContentValid = false;
     }
-    
-    if (!isMinOk && content.length > 0) {
-        fbContentError.textContent = `还需 ${MIN_CHARS - chineseCount} 个汉字`;
-        fbContent.classList.add('feedback-input-error');
-    } else {
-        fbContentError.textContent = '';
-        fbContent.classList.remove('feedback-input-error');
-    }
-    
-    return isMinOk;
 }
 
-fbContent?.addEventListener('input', updateCharCount);
-
-function showFileError(msg) {
-    fileErrorMsg.textContent = msg;
-    setTimeout(() => {
-        if (fileErrorMsg.textContent === msg) {
-            fileErrorMsg.textContent = '';
-        }
-    }, 4000);
-}
+fbContent?.addEventListener('input', validateContent);
+fbContent?.addEventListener('blur', validateContent);
 
 function openFeedback() {
     feedbackOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    updateCharCount();
 }
 
 function closeFeedback() {
@@ -505,12 +477,13 @@ function closeFeedback() {
     document.getElementById('fbContent').value = '';
     document.getElementById('fbContact').value = '';
     document.getElementById('fbType').value = 'suggestion';
+    fbContent.classList.remove('error');
+    fbError.classList.remove('show');
+    fbCount.classList.remove('error', 'success');
+    fbCount.textContent = '0 / 2000 字（至少5个汉字）';
+    isContentValid = false;
     uploadedFiles.length = 0;
     filePreviewContainer.innerHTML = '';
-    fbContentError.textContent = '';
-    fbContent.classList.remove('feedback-input-error');
-    fileErrorMsg.textContent = '';
-    updateCharCount();
 }
 
 feedbackFloat?.addEventListener('click', openFeedback);
@@ -547,28 +520,22 @@ fbFile?.addEventListener('change', function(e) {
 });
 
 function handleFiles(files) {
-    let added = 0;
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (uploadedFiles.length >= 3) {
-            showFileError('最多只能上传3张图片');
+            alert('最多只能上传3张图片');
             break;
         }
         if (!file.type.startsWith('image/')) {
-            showFileError('请上传图片文件（JPG/PNG/GIF）');
+            alert('请上传图片文件');
             continue;
         }
         if (file.size > 5 * 1024 * 1024) {
-            const sizeMB = (file.size / 1024 / 1024).toFixed(1);
-            showFileError(`图片过大（${sizeMB}MB），单张不能超过5MB`);
+            alert('单张图片不能超过5MB');
             continue;
         }
         uploadedFiles.push(file);
         showFilePreview(file, uploadedFiles.length - 1);
-        added++;
-    }
-    if (added > 0) {
-        fileErrorMsg.textContent = '';
     }
 }
 
@@ -594,23 +561,15 @@ window.removeFile = function(index) {
 
 fbSubmit?.addEventListener('click', async function(e) {
     e.preventDefault();
-    const content = document.getElementById('fbContent').value.trim();
-    const chineseCount = countChineseChars(content);
-    if (chineseCount < MIN_CHARS) {
-        fbContentError.textContent = `反馈内容至少需要${MIN_CHARS}个汉字（当前 ${chineseCount} 个）`;
-        fbContent.classList.add('feedback-input-error');
-        fbContent.focus();
+    validateContent();
+    if (!isContentValid) {
         return;
     }
     fbSubmit.disabled = true;
     fbSubmit.textContent = '提交中…';
     try {
         const fileDataList = [];
-        if (uploadedFiles.length > 0) {
-            fbSubmit.textContent = `处理图片 0/${uploadedFiles.length}…`;
-        }
-        for (let i = 0; i < uploadedFiles.length; i++) {
-            const file = uploadedFiles[i];
+        for (const file of uploadedFiles) {
             const reader = new FileReader();
             const dataUrl = await new Promise((resolve, reject) => {
                 reader.onload = () => resolve(reader.result);
@@ -625,10 +584,6 @@ fbSubmit?.addEventListener('click', async function(e) {
                 size: file.size,
                 base64: base64
             });
-            fbSubmit.textContent = `处理图片 ${i + 1}/${uploadedFiles.length}…`;
-        }
-        if (uploadedFiles.length > 0) {
-            fbSubmit.textContent = '正在提交…';
         }
         
         const payload = {
@@ -648,57 +603,26 @@ fbSubmit?.addEventListener('click', async function(e) {
         if (data.success) {
             feedbackForm.style.display = 'none';
             feedbackSuccess.classList.add('show');
-            const detailEl = document.getElementById('feedbackSuccessDetail');
-            if (detailEl) {
-                let detail = '';
-                if (data.imagesUploaded !== undefined && uploadedFiles.length > 0) {
-                    detail = `图片上传: ${data.imagesUploaded}/${uploadedFiles.length}`;
-                    if (data.imageErrors && data.imageErrors.length > 0) {
-                        detail += `（${data.imageErrors.length}张失败）`;
-                    }
+            if (data.imagesUploaded !== undefined) {
+                const successMsgEl = feedbackSuccess.querySelector('p');
+                if (successMsgEl) {
+                    successMsgEl.textContent = `🎉 感谢你的反馈！\\n图片上传: ${data.imagesUploaded}/${uploadedFiles.length}`;
+                    successMsgEl.style.whiteSpace = 'pre-line';
                 }
-                if (data.url) {
-                    if (detail) detail += ' · ';
-                    detail += `<a href="${data.url}" target="_blank" style="color:#f39c12;text-decoration:none">查看 Issue</a>`;
-                }
-                detailEl.innerHTML = detail;
             }
         } else {
             throw new Error(data.error || 'API返回错误');
         }
     } catch (e) {
-        const type = document.getElementById('fbType').value;
-        const content = document.getElementById('fbContent').value.trim();
-        const contact = document.getElementById('fbContact').value.trim();
-        const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
-        
-        const feedbackText = `【${typeLabel[type] || type}】\n${content}\n${contact ? `联系方式：${contact}` : ''}`;
-        
-        const choice = confirm('反馈服务暂时不可用。\n\n点击"确定"尝试跳转GitHub提交\n点击"取消"查看其他反馈方式');
-        
-        if (choice) {
+        const useFallback = confirm('当前反馈服务暂时不可用，是否跳转到GitHub提交反馈？');
+        if (useFallback) {
+            const type = document.getElementById('fbType').value;
+            const content = document.getElementById('fbContent').value.trim();
+            const contact = document.getElementById('fbContact').value.trim();
+            const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
             const title = encodeURIComponent(`[反馈] ${typeLabel[type] || type} - 词汇表`);
-            const body = encodeURIComponent(`## 反馈详情\n\n- **类型**: ${typeLabel[type] || type}\n- **来源**: 词汇表\n\n${content}\n\n${contact ? `- **联系方式**: ${contact}` : ''}\n\n---\n*带图片的反馈请直接在GitHub页面上传截图*`);
-            const githubUrl = `https://github.com/skyboyhjj/spinor-taiji-model/issues/new?title=${title}&body=${body}`;
-            const newWindow = window.open(githubUrl, '_blank');
-            
-            setTimeout(() => {
-                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                    alert('GitHub可能无法访问，请尝试以下方式：\n\n1️⃣ 微信公众号：TS爱心联盟\n2️⃣ 复制反馈内容后通过其他渠道发送\n\n您的反馈内容已保存，可截图或复制保存。');
-                    if (navigator.clipboard) {
-                        navigator.clipboard.writeText(feedbackText).then(() => {
-                            alert('反馈内容已复制到剪贴板！');
-                        }).catch(() => {});
-                    }
-                }
-            }, 3000);
-        } else {
-            alert('其他反馈方式：\n\n📧 微信公众号：TS爱心联盟\n📧 复制内容后通过邮件/微信发送\n\n您的反馈内容：\n' + feedbackText + '\n\n（建议截图保存此内容）');
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(feedbackText).then(() => {
-                    console.log('反馈内容已复制到剪贴板');
-                }).catch(() => {});
-            }
+            const body = encodeURIComponent(`## 反馈详情\\n\\n- **类型**: ${typeLabel[type] || type}\\n- **来源**: 词汇表\\n\\n${content}\\n\\n${contact ? `- **联系方式**: ${contact}` : ''}\\n\\n---\\n*带图片的反馈请直接在GitHub页面上传截图*`);
+            window.open(`https://github.com/skyboyhjj/spinor-taiji-model/issues/new?title=${title}&body=${body}`, '_blank');
         }
     } finally {
         fbSubmit.disabled = false;
@@ -914,9 +838,9 @@ def generate_html_zh(vocab_data):
             </div>
             <div class="feedback-form-group">
                 <label for="fbContent">具体内容 <span style="color:#e74c3c">*</span></label>
-                <textarea id="fbContent" placeholder="请描述你的反馈内容…" maxlength="2000"></textarea>
-                <div class="feedback-char-count" id="fbCharCount">0 / 2000 字（至少5个汉字）</div>
-                <div class="feedback-error-hint" id="fbContentError"></div>
+                <textarea id="fbContent" placeholder="请描述你的反馈内容…" required></textarea>
+                <div class="feedback-count" id="fbCount">0 / 2000 字（至少5个汉字）</div>
+                <div class="feedback-error" id="fbError">✗ 反馈内容至少需要5个汉字</div>
             </div>
             <div class="feedback-form-group">
                 <label for="fbContact">联系方式（选填）</label>
@@ -931,7 +855,6 @@ def generate_html_zh(vocab_data):
                     <div class="file-upload-hint">支持 JPG、PNG、GIF，单张不超过 5MB</div>
                 </div>
                 <div class="file-preview-container" id="filePreviewContainer"></div>
-                <div class="file-error-msg" id="fileErrorMsg"></div>
             </div>
             <button class="feedback-submit" id="fbSubmit">提交反馈</button>
         </div>
@@ -939,8 +862,6 @@ def generate_html_zh(vocab_data):
             <div class="feedback-success-icon">🎉</div>
             <p><strong>感谢你的反馈！</strong></p>
             <p style="font-size:0.85em">我们会尽快处理，如有需要会通过你留下的联系方式回复。</p>
-            <p class="feedback-success-detail" id="feedbackSuccessDetail"></p>
-            <button class="feedback-success-close" onclick="closeFeedback()">关闭</button>
         </div>
     </div>
 </div>
