@@ -179,21 +179,28 @@ def main():
     else:
         logger.info(f"dist目录已存在")
     
-    # 复制目录（增量构建）
+    # 复制目录（assets目录强制完整复制，其他目录增量构建）
     logger.info("")
-    logger.info("【阶段3】文件复制（增量模式）")
+    logger.info("【阶段3】文件复制")
     
     directories_to_copy = [
-        ('articles', paths['articles_src'], os.path.join(paths['dist_dir'], 'articles')),
-        ('docs', paths['docs_src'], os.path.join(paths['dist_dir'], 'docs')),
-        ('assets', paths['assets_src'], os.path.join(paths['dist_dir'], 'assets')),
-        ('functions', paths['functions_src'], os.path.join(paths['dist_dir'], 'functions'))
+        ('articles', paths['articles_src'], os.path.join(paths['dist_dir'], 'articles'), True),
+        ('docs', paths['docs_src'], os.path.join(paths['dist_dir'], 'docs'), True),
+        ('assets', paths['assets_src'], os.path.join(paths['dist_dir'], 'assets'), False),
+        ('functions', paths['functions_src'], os.path.join(paths['dist_dir'], 'functions'), True)
     ]
     
-    for name, src, dst in directories_to_copy:
+    for name, src, dst, incremental in directories_to_copy:
         logger.info(f"复制 {name} 目录...")
         start = time.time()
-        success = copy_directory_with_check(src, dst, logger)
+        if incremental:
+            success = copy_directory_with_check(src, dst, logger)
+        else:
+            if os.path.exists(dst):
+                shutil.rmtree(dst)
+            shutil.copytree(src, dst)
+            success = True
+            logger.info(f"强制完整复制: {name}")
         elapsed = round(time.time() - start, 2)
         if success:
             logger.success(f"{name} 目录复制完成 ({elapsed}s)")
