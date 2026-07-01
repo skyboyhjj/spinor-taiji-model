@@ -1,72 +1,229 @@
-﻿import os
+import os
 import shutil
 import json
+import time
+import hashlib
+from pathlib import Path
 
-def load_config(config_path):
-    """从配置文件加载别名映射"""
-    with open(config_path, "r", encoding="utf-8") as f:
-        config = json.load(f)
-    return config
+class BuildLogger:
+    def __init__(self):
+        self.start_time = time.time()
+        self.entries = []
+    
+    def log(self, message, level='INFO'):
+        timestamp = time.strftime('%H:%M:%S')
+        self.entries.append((timestamp, level, message))
+        prefix = {
+            'INFO': '[INFO]',
+            'WARN': '[WARN]',
+            'ERROR': '[ERROR]',
+            'SUCCESS': '[SUCCESS]'
+        }.get(level, '[INFO]')
+        print(f"{timestamp} {prefix} {message}")
+    
+    def info(self, message):
+        self.log(message, 'INFO')
+    
+    def warn(self, message):
+        self.log(message, 'WARN')
+    
+    def error(self, message):
+        self.log(message, 'ERROR')
+    
+    def success(self, message):
+        self.log(message, 'SUCCESS')
+    
+    def elapsed(self):
+        return round(time.time() - self.start_time, 2)
+
+def validate_json_file(filepath):
+    """验证JSON文件格式是否正确"""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return True, data
+    except json.JSONDecodeError as e:
+        return False, f"JSON格式错误: {e}"
+    except FileNotFoundError:
+        return False, "文件不存在"
+    except Exception as e:
+        return False, f"未知错误: {str(e)}"
+
+def compute_file_hash(filepath):
+    """计算文件SHA256哈希值"""
+    sha256_hash = hashlib.sha256()
+    with open(filepath, 'rb') as f:
+        for chunk in iter(lambda: f.read(8192), b''):
+            sha256_hash.update(chunk)
+    return sha256_hash.hexdigest()
+
+def copy_if_modified(src, dst):
+    """仅当源文件修改时才复制"""
+    if not os.path.exists(src):
+        return False, "源文件不存在"
+    
+    if os.path.exists(dst):
+        src_hash = compute_file_hash(src)
+        dst_hash = compute_file_hash(dst)
+        if src_hash == dst_hash:
+            return False, "文件未修改，跳过"
+    
+    try:
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        shutil.copy2(src, dst)
+        return True, "文件已复制"
+    except Exception as e:
+        return False, f"复制失败: {str(e)}"
+
+def copy_directory_with_check(src, dst, logger):
+    """复制目录，跳过未修改的文件，删除已不存在的文件"""
+    if not os.path.exists(src):
+        logger.warn(f"源目录不存在: {src}")
+        return False
+    
+    os.makedirs(dst, exist_ok=True)
+    
+    copied_count = 0
+    skipped_count = 0
+    deleted_count = 0
+    error_count = 0
+    
+    src_files = set()
+    for root, dirs, files in os.walk(src):
+        rel_path = os.path.relpath(root, src)
+        dst_root = os.path.join(dst, rel_path)
+        os.makedirs(dst_root, exist_ok=True)
+        
+        for file in files:
+            src_file = os.path.join(root, file)
+            dst_file = os.path.join(dst_root, file)
+            src_files.add(dst_file.replace('\\', '/'))
+            
+            success, msg = copy_if_modified(src_file, dst_file)
+            if success:
+                copied_count += 1
+            elif "跳过" in msg:
+                skipped_count += 1
+            else:
+                logger.error(f"复制失败 {src_file}: {msg}")
+                error_count += 1
+    
+    for root, dirs, files in os.walk(dst):
+        for file in files:
+            dst_file = os.path.join(root, file)
+            dst_file_normalized = dst_file.replace('\\', '/')
+            
+            if dst_file_normalized not in src_files:
+                try:
+                    os.remove(dst_file)
+                    deleted_count += 1
+                    logger.info(f"删除已不存在的文件: {dst_file}")
+                except Exception as e:
+                    logger.error(f"删除文件失败 {dst_file}: {str(e)}")
+                    error_count += 1
+    
+    logger.info(f"复制完成: {copied_count} 复制, {skipped_count} 跳过, {deleted_count} 删除, {error_count} 错误")
+    return error_count == 0
 
 def main():
+    logger = BuildLogger()
+    logger.info("=" * 60)
+    logger.info("旋量-太极模型 构建系统 v2.0")
+    logger.info("=" * 60)
+    
     project_root = os.getcwd()
-    articles_src = os.path.join(project_root, "articles")
-    docs_src = os.path.join(project_root, "docs")
-    dist_dir = os.path.join(project_root, "dist")
-    dist_articles = os.path.join(dist_dir, "articles")
-    dist_docs = os.path.join(dist_dir, "docs")
-    config_path = os.path.join(project_root, "config", "article_aliases.json")
-
-    if not os.path.exists(dist_dir):
-        os.makedirs(dist_dir)
-
-    if os.path.exists(dist_articles):
-        shutil.rmtree(dist_articles)
-    shutil.copytree(articles_src, dist_articles)
-    print("复制 articles 目录 (包含 en/zh 子目录)")
-
-    if os.path.exists(dist_docs):
-        shutil.rmtree(dist_docs)
-    shutil.copytree(docs_src, dist_docs)
-    print("复制 docs 目录")
-
-    # 复制 assets 目录（共享资源文件）
-    assets_src = os.path.join(project_root, "assets")
-    dist_assets = os.path.join(dist_dir, "assets")
-    if os.path.exists(assets_src):
-        if os.path.exists(dist_assets):
-            shutil.rmtree(dist_assets)
-        shutil.copytree(assets_src, dist_assets)
-        print("复制 assets 目录（共享资源文件）")
+    logger.info(f"项目根目录: {project_root}")
+    
+    # 定义路径
+    paths = {
+        'articles_src': os.path.join(project_root, "articles"),
+        'docs_src': os.path.join(project_root, "docs"),
+        'assets_src': os.path.join(project_root, "assets"),
+        'functions_src': os.path.join(project_root, "functions"),
+        'dist_dir': os.path.join(project_root, "dist"),
+        'config_aliases': os.path.join(project_root, "config", "article_aliases.json"),
+        'config_headers': os.path.join(project_root, "config", "headers_config.json")
+    }
+    
+    # 验证配置文件
+    logger.info("")
+    logger.info("【阶段1】配置文件验证")
+    
+    valid, data = validate_json_file(paths['config_aliases'])
+    if not valid:
+        logger.error(f"配置文件验证失败: {paths['config_aliases']}")
+        logger.error(f"错误信息: {data}")
+        return 1
+    
+    config = data
+    logger.success(f"配置文件验证通过: article_aliases.json")
+    logger.info(f"配置版本: {config.get('version', '1.0')}")
+    
+    if os.path.exists(paths['config_headers']):
+        valid, data = validate_json_file(paths['config_headers'])
+        if not valid:
+            logger.error(f"配置文件验证失败: {paths['config_headers']}")
+            logger.error(f"错误信息: {data}")
+            return 1
+        logger.success(f"配置文件验证通过: headers_config.json")
     else:
-        print("警告：未找到 assets 目录")
-
-    # 复制 functions 目录（Cloudflare Pages Functions）
-    functions_src = os.path.join(project_root, "functions")
-    dist_functions = os.path.join(dist_dir, "functions")
-    if os.path.exists(functions_src):
-        if os.path.exists(dist_functions):
-            shutil.rmtree(dist_functions)
-        shutil.copytree(functions_src, dist_functions)
-        print("复制 functions 目录（Cloudflare Pages Functions）")
+        logger.warn("headers_config.json 不存在，将跳过")
+    
+    # 创建dist目录
+    logger.info("")
+    logger.info("【阶段2】目录准备")
+    
+    if not os.path.exists(paths['dist_dir']):
+        os.makedirs(paths['dist_dir'])
+        logger.info(f"创建dist目录: {paths['dist_dir']}")
     else:
-        print("警告：未找到 functions 目录")
-
-    # 从配置文件加载别名映射
-    config = load_config(config_path)
-    alias_map = config["aliases"]
-    print(f"加载配置文件: {config_path}")
-    print(f"配置版本: {config.get('version', '1.0')}")
-
-    # 将中文主文件内容复制到英文别名文件（在zh目录内）
-    dist_zh = os.path.join(dist_articles, "zh")
-    for chinese_file, alias_file in alias_map.items():
-        chinese_path = os.path.join(dist_zh, chinese_file)
-        alias_path = os.path.join(dist_zh, alias_file)
-        if os.path.exists(chinese_path):
-            shutil.copy2(chinese_path, alias_path)
-            print(f"复制中文别名: {chinese_file} -> zh/{alias_file}")
-
+        logger.info(f"dist目录已存在")
+    
+    # 复制目录（增量构建）
+    logger.info("")
+    logger.info("【阶段3】文件复制（增量模式）")
+    
+    directories_to_copy = [
+        ('articles', paths['articles_src'], os.path.join(paths['dist_dir'], 'articles')),
+        ('docs', paths['docs_src'], os.path.join(paths['dist_dir'], 'docs')),
+        ('assets', paths['assets_src'], os.path.join(paths['dist_dir'], 'assets')),
+        ('functions', paths['functions_src'], os.path.join(paths['dist_dir'], 'functions'))
+    ]
+    
+    for name, src, dst in directories_to_copy:
+        logger.info(f"复制 {name} 目录...")
+        start = time.time()
+        success = copy_directory_with_check(src, dst, logger)
+        elapsed = round(time.time() - start, 2)
+        if success:
+            logger.success(f"{name} 目录复制完成 ({elapsed}s)")
+        else:
+            logger.error(f"{name} 目录复制失败")
+    
+    # 处理别名
+    logger.info("")
+    logger.info("【阶段4】别名处理")
+    
+    alias_map = config.get("aliases", {})
+    dist_zh = os.path.join(paths['dist_dir'], 'articles', 'zh')
+    
+    if alias_map:
+        for chinese_file, alias_file in alias_map.items():
+            chinese_path = os.path.join(dist_zh, chinese_file)
+            alias_path = os.path.join(dist_zh, alias_file)
+            
+            if os.path.exists(chinese_path):
+                shutil.copy2(chinese_path, alias_path)
+                logger.info(f"创建别名: {chinese_file} -> {alias_file}")
+            else:
+                logger.warn(f"源文件不存在，跳过别名: {chinese_file}")
+    else:
+        logger.info("无别名配置")
+    
+    # 生成首页
+    logger.info("")
+    logger.info("【阶段5】首页生成")
+    
     index_html = """<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -254,11 +411,19 @@ def main():
     </div>
 </body>
 </html>"""
-    with open(os.path.join(dist_dir, "index.html"), "w", encoding="utf-8") as f:
-        f.write(index_html)
-    print("创建首页（支持语言切换）")
-
-    # 从配置文件生成 _redirects 文件
+    
+    try:
+        with open(os.path.join(paths['dist_dir'], 'index.html'), 'w', encoding='utf-8') as f:
+            f.write(index_html)
+        logger.success("首页生成完成")
+    except Exception as e:
+        logger.error(f"首页生成失败: {str(e)}")
+        return 1
+    
+    # 生成 _redirects 文件
+    logger.info("")
+    logger.info("【阶段6】配置文件生成")
+    
     redirect_rules = config.get("redirect_rules", {}).get("rules", [])
     redirects_lines = ["# Cloudflare Pages 重定向规则", "# 中文主文件 -> 英文别名（用于SEO优化）", ""]
     for rule in redirect_rules:
@@ -268,34 +433,69 @@ def main():
     redirects_lines.append("/docs/ / 301")
     redirects_content = "\n".join(redirects_lines)
     
-    with open(os.path.join(dist_dir, "_redirects"), "w", encoding="utf-8") as f:
-        f.write(redirects_content)
-    print(f"创建 _redirects 文件 (共 {len(redirect_rules)} 条规则)")
-
+    try:
+        with open(os.path.join(paths['dist_dir'], '_redirects'), 'w', encoding='utf-8') as f:
+            f.write(redirects_content)
+        logger.success(f"_redirects 文件生成完成 ({len(redirect_rules)} 条规则)")
+    except Exception as e:
+        logger.error(f"_redirects 文件生成失败: {str(e)}")
+        return 1
+    
     # 生成 _headers 文件
-    headers_config_path = os.path.join(project_root, "config", "headers_config.json")
-    if os.path.exists(headers_config_path):
-        headers_config = load_config(headers_config_path)
-        headers_lines = []
-        for header_rule in headers_config["headers"]:
-            headers_lines.append(f"{header_rule['path']}")
-            for name, value in header_rule["headers"].items():
-                headers_lines.append(f"  {name}: {value}")
-            headers_lines.append("")
-        headers_content = "\n".join(headers_lines)
-        
-        with open(os.path.join(dist_dir, "_headers"), "w", encoding="utf-8") as f:
-            f.write(headers_content)
-        print(f"创建 _headers 文件 (共 {len(headers_config['headers'])} 条规则)")
+    if os.path.exists(paths['config_headers']):
+        try:
+            headers_config = json.load(open(paths['config_headers'], 'r', encoding='utf-8'))
+            headers_lines = []
+            for header_rule in headers_config["headers"]:
+                headers_lines.append(f"{header_rule['path']}")
+                for name, value in header_rule["headers"].items():
+                    headers_lines.append(f"  {name}: {value}")
+                headers_lines.append("")
+            headers_content = "\n".join(headers_lines)
+            
+            with open(os.path.join(paths['dist_dir'], '_headers'), 'w', encoding='utf-8') as f:
+                f.write(headers_content)
+            logger.success(f"_headers 文件生成完成 ({len(headers_config['headers'])} 条规则)")
+        except Exception as e:
+            logger.error(f"_headers 文件生成失败: {str(e)}")
+            return 1
     else:
-        print(f"警告：未找到 headers 配置文件: {headers_config_path}")
-
+        logger.warn("headers_config.json 不存在，跳过 _headers 生成")
+    
+    # 生成构建报告
+    logger.info("")
+    logger.info("=" * 60)
+    logger.info("【构建报告】")
+    logger.info("=" * 60)
+    
+    # 统计文件数量
     article_count = 0
-    for root, dirs, files in os.walk(dist_articles):
+    total_files = 0
+    
+    for root, dirs, files in os.walk(paths['dist_dir']):
         for f in files:
-            if f.endswith(".html"):
+            total_files += 1
+            if f.endswith('.html') and 'articles' in root:
                 article_count += 1
-    print(f"构建完成！articles文件数: {article_count}")
+    
+    logger.info(f"总文件数: {total_files}")
+    logger.info(f"文章文件数: {article_count}")
+    logger.info(f"构建耗时: {logger.elapsed()} 秒")
+    
+    # 检查输出目录结构
+    dist_contents = os.listdir(paths['dist_dir'])
+    logger.info(f"输出目录内容: {dist_contents}")
+    
+    logger.success("")
+    logger.success("构建完成！")
+    logger.success("=" * 60)
+    
+    return 0
 
 if __name__ == "__main__":
-    main()
+    try:
+        exit_code = main()
+        exit(exit_code)
+    except Exception as e:
+        print(f"[FATAL] 构建过程发生未预期错误: {str(e)}")
+        exit(1)
