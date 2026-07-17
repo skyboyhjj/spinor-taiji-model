@@ -44,9 +44,9 @@ def check_python_syntax():
     for py_file in python_files:
         try:
             py_compile.compile(py_file, doraise=True)
-            print(f"  ✓ {os.path.relpath(py_file, PROJECT_ROOT)}")
+            print(f"  [OK] {os.path.relpath(py_file, PROJECT_ROOT)}")
         except py_compile.PyCompileError as e:
-            errors.append(f"  ✗ {os.path.relpath(py_file, PROJECT_ROOT)}: {e}")
+            errors.append(f"  [FAIL] {os.path.relpath(py_file, PROJECT_ROOT)}: {e}")
     
     if errors:
         print_status("\n".join(errors), "ERROR")
@@ -70,23 +70,23 @@ def check_build():
     )
     
     if result.returncode == 0:
-        print("  ✓ 构建成功")
+        print("  [OK] 构建成功")
         
         dist_dir = os.path.join(PROJECT_ROOT, 'dist')
         required_dirs = ['articles', 'assets', 'docs', 'functions']
         for d in required_dirs:
             if os.path.exists(os.path.join(dist_dir, d)):
-                print(f"  ✓ dist/{d}/ 目录存在")
+                print(f"  [OK] dist/{d}/ 目录存在")
             else:
-                print_status(f"  ✗ dist/{d}/ 目录不存在", "ERROR")
+                print_status(f"  [FAIL] dist/{d}/ 目录不存在", "ERROR")
                 return False
         
         assets_files = ['feedback.css', 'feedback.js']
         for f in assets_files:
             if os.path.exists(os.path.join(dist_dir, 'assets', f)):
-                print(f"  ✓ dist/assets/{f} 存在")
+                print(f"  [OK] dist/assets/{f} 存在")
             else:
-                print_status(f"  ✗ dist/assets/{f} 不存在", "ERROR")
+                print_status(f"  [FAIL] dist/assets/{f} 不存在", "ERROR")
                 return False
         
         print_status("构建验证通过", "SUCCESS")
@@ -138,10 +138,10 @@ def check_commit_message():
             print_status(f"有效类型: {', '.join(sorted(VALID_TYPES))}", "WARNING")
             return False
         
-        print(f"  ✓ 类型: {commit_type}")
+        print(f"  [OK] 类型: {commit_type}")
         if scope:
-            print(f"  ✓ 范围: {scope}")
-        print(f"  ✓ 描述: {description}")
+            print(f"  [OK] 范围: {scope}")
+        print(f"  [OK] 描述: {description}")
         print_status("提交信息格式检查通过", "SUCCESS")
         return True
     else:
