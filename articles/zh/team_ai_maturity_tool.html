@@ -147,6 +147,7 @@ canvas.radar{display:block;margin:16px auto;width:100%;max-width:320px}
 .btn:hover{background:var(--bg-btn-hover)}
 .btn.primary{background:linear-gradient(135deg,var(--accent-1),var(--accent-2));border:none;font-weight:600}
 .btn.primary:hover{opacity:0.9}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 .btn.danger{color:var(--accent-danger);border-color:var(--border-danger)}
 .btn.danger:hover{background:var(--bg-danger-hover)}
 
@@ -364,7 +365,10 @@ const AXIS_MAP = {
   yuanwei:[7,10,12,14]   // 缘位：验证+反馈+上下文+规范
 };
 const AXIS_LABELS = {yuwei:'宇位Ψᵧ（资源）',shiwei:'时位Ψₓ（节律）',zhiwei:'识位Z（觉知）',yuanwei:'缘位Ψₗ（反馈）'};
-const AXIS_MAX = {yuwei:21, shiwei:12, zhiwei:14, yuanwei:19}; // 总分上限
+const AXIS_MAX = {yuwei:21, shiwei:12, zhiwei:13, yuanwei:18}; // 逐题满分求和
+
+// ========== 每题满分（根据选项数确定） ==========
+const QUESTION_MAX = {1:4,2:4,3:5,4:4,5:4,6:4,7:5,8:4,9:4,10:4,11:5,12:4,13:4,14:5,15:4};
 
 // ========== 渲染选项按钮 ==========
 function renderOptions(){
@@ -405,7 +409,7 @@ function getAnswers(){
   const answers = {};
   document.querySelectorAll('.q').forEach(q=>{
     const val = q.dataset.answer;
-    if(val) answers[parseInt(q.dataset.q)] = parseInt(val);
+    if(val !== undefined && val !== '') answers[parseInt(q.dataset.q)] = parseInt(val);
   });
   return answers;
 }
@@ -414,15 +418,21 @@ function getAnswers(){
 function autoCalc(){
   const answers = getAnswers();
   if(Object.keys(answers).length < 15) return;
-  // 静默计算，不弹窗，不显示浮动提示
-  // 用户主动点击"生成诊断报告"时才展示结果
+  // 全部答完 → 按钮脉冲提示，引导点击生成报告
+  const actionBtn = document.querySelector('.btn.primary');
+  if(actionBtn){
+    actionBtn.style.animation = 'none';
+    actionBtn.offsetHeight; // 强制回流，重置动画
+    actionBtn.style.animation = 'pulse 1.5s ease-in-out 3';
+    actionBtn.textContent = '📊 全部完成，点击生成报告';
+  }
 }
 
 // ========== 完整计算 ==========
 function calculate(){
   const answers = getAnswers();
-  const totalAnswered = Object.keys(answers).length;
-  if(totalAnswered < 15){
+  const allClicked = Object.keys(answers).length;
+  if(allClicked < 15){
     alert('请先完成全部 15 道题（可选择"N/A"表示不确定）');
     return;
   }
@@ -440,9 +450,12 @@ function calculate(){
     return;
   }
   
-  // 总分（按比例折算到64分满分）
+  // 总分（按比例折算到64分满分，用实际题目满分而非固定常数）
   const rawTotal = Object.values(validAnswers).reduce((a,b)=>a+b,0);
-  const maxPossible = validCount * 4.2; // 近似每题最大分
+  let maxPossible = 0;
+  for(const q of Object.keys(validAnswers)){
+    maxPossible += QUESTION_MAX[parseInt(q)] || 4;
+  }
   const total = Math.round(rawTotal / maxPossible * 64);
   
   // 阶段判定
@@ -467,14 +480,13 @@ function calculate(){
     axisAvgs[axis] = count > 0 ? sum / count : 0;
   }
   
-  // 折算到1-5分制
+  // 折算到1-5分制（分母用该轴实际题目满分均值，而非硬编码常数）
   const to5 = (avg, maxPer) => avg > 0 ? Math.min(5, Math.round((1 + (avg - 1) * (4 / (maxPer/3)))*10)/10) : 0;
-  const scaled = {
-    yuwei: to5(axisAvgs.yuwei, 4.2),
-    shiwei: to5(axisAvgs.shiwei, 4.0),
-    zhiwei: to5(axisAvgs.zhiwei, 4.7),
-    yuanwei: to5(axisAvgs.yuanwei, 4.8)
-  };
+  const scaled = {};
+  for(const [axis, qNums] of Object.entries(AXIS_MAP)){
+    const axisMaxAvg = AXIS_MAX[axis] / qNums.length;
+    scaled[axis] = to5(axisAvgs[axis], axisMaxAvg);
+  }
   
   // 乘法乘积
   const product = Math.round(scaled.yuwei * scaled.shiwei * scaled.zhiwei * scaled.yuanwei);
@@ -487,9 +499,12 @@ function calculate(){
     if(scaled[a] > maxVal){maxAxis=a;maxVal=scaled[a];}
   }
   
-  // 乘积诊断
+  // 乘积诊断（阶段感知）
   let prodDiag;
-  if(product > 200) prodDiag = '四轴均衡，可以冲刺下一阶段';
+  if(product > 200){
+    if(stage >= 4) prodDiag = '四轴齐备，已进入自转轨道——保持节律，分享方法论给其他团队';
+    else prodDiag = '四轴均衡，可以冲刺下一阶段';
+  }
   else if(product >= 100) prodDiag = '有一个弱轴拖后腿：' + AXIS_LABELS[minAxis];
   else if(product >= 50) prodDiag = '两个弱轴需集中突破：从' + AXIS_LABELS[minAxis] + '开始';
   else prodDiag = '多轴严重不足：本季只攻' + AXIS_LABELS[minAxis];
@@ -509,12 +524,20 @@ function calculate(){
     zhiwei:'你们的觉知清晰度很高——团队清楚自己在做什么、下一步该做什么，这是最难得的"元能力"。',
     yuanwei:'你们的反馈闭环很健康——验证、规范、上下文都已成型，这是可持续进化的保障。'
   };
+
+  // 阶段4专属建议（已进入自转轨道，重点是分享与深化）
+  const stage4Advices = {
+    yuwei:'你们的资源基础已经打得很扎实。本周可以试试：写一份"AI落地经验复盘"（半页纸），分享给公司内其他团队——不是分享技术，而是分享你们从试点到自转的关键决策点。',
+    shiwei:'你们的节律已经成熟。本周可以试试：把你们的AI工作流文档化，输出一份"团队AI日课"模板，让新加入的成员也能快速对齐节奏。',
+    zhiwei:'你们的觉知能力很强。本周可以试试：组织一次"AI决策复盘会"——回顾过去一个月AI自动做出的决策，哪些是对的、哪些需要调整边界。',
+    yuanwei:'你们的反馈闭环很完整。本周可以试试：把CLAUDE.md升级为"AI协作宪章"，加入一条"什么情况下AI可以自主决策无需人类审批"。'
+  };
   
   // 保存历史
   saveHistory({date:new Date().toISOString().slice(0,10), total, stage, axisScores, scaled, product, minAxis, naCount});
   
   // 渲染报告
-  renderReport(total, stage, stageName, stageDesc, axisScores, axisAvgs, axisCounts, scaled, product, prodDiag, minAxis, maxAxis, advices, strengthNotes, naCount, validCount);
+  renderReport(total, stage, stageName, stageDesc, axisScores, axisAvgs, axisCounts, scaled, product, prodDiag, minAxis, maxAxis, advices, stage4Advices, strengthNotes, naCount, validCount);
   
   // 画雷达图
   setTimeout(()=>{
@@ -528,7 +551,7 @@ function calculate(){
 }
 
 // ========== 渲染报告 ==========
-function renderReport(total, stage, stageName, stageDesc, axisScores, axisAvgs, axisCounts, scaled, product, prodDiag, minAxis, maxAxis, advices, strengthNotes, naCount, validCount){
+function renderReport(total, stage, stageName, stageDesc, axisScores, axisAvgs, axisCounts, scaled, product, prodDiag, minAxis, maxAxis, advices, stage4Advices, strengthNotes, naCount, validCount){
   const stageClass = 'stage-'+stage;
   let html = `
     <div class="stat-item"><span class="stat-label">总分</span><span class="stat-value">${total} / 64</span></div>
@@ -555,14 +578,15 @@ function renderReport(total, stage, stageName, stageDesc, axisScores, axisAvgs, 
     </div>
   `;
   
+  const curAdvices = (stage >= 4) ? stage4Advices : advices;
   html += `
     <hr style="border-color:var(--hr-color);margin:16px 0">
     <div class="stat-item"><span class="stat-label">乘法乘积</span><span class="stat-value ${product>100?'good':product>50?'warn':'bad'}">${product}</span></div>
     <div style="font-size:11px;color:var(--text-report-faint);margin:4px 0 12px">${scaled.yuwei}×${scaled.shiwei}×${scaled.zhiwei}×${scaled.yuanwei}</div>
     <div style="font-size:11px;color:var(--text-report-h4);margin-bottom:12px">${prodDiag}</div>
     <div class="advice-box">
-      <strong>💡 本周可以试试（${AXIS_LABELS[minAxis]}最低）：</strong><br>
-      ${advices[minAxis]}
+      <strong>💡 ${stage >= 4 ? '本周可以深化' : '本周可以试试'}（${AXIS_LABELS[minAxis]}最低）：</strong><br>
+      ${curAdvices[minAxis]}
     </div>
   `;
   
