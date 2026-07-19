@@ -560,16 +560,32 @@ canvas.addEventListener('wheel',function(e){
   zoomLevel=newZoom;
 },{passive:false});
 
-// Touch
+// Touch - 区分点击与拖拽
+var touchMoved=false, touchStartNode=null, touchStartX=0, touchStartY=0;
+var TAP_THRESHOLD=8; // 移动超过8px视为拖拽
+
 canvas.addEventListener('touchstart',function(e){
   if(e.touches.length===1){
     var t=e.touches[0];
+    touchMoved=false;
+    touchStartX=t.clientX; touchStartY=t.clientY;
     var n=hitTest(t.clientX,t.clientY);
-    if(n){dragging=n;n.fixed=true;e.preventDefault();}
-    else{panning=true;panSX=t.clientX;panSY=t.clientY;}
+    touchStartNode=n;
+    if(n){
+      dragging=n; n.fixed=true;
+      dragOX=n.x; dragOY=n.y;
+    }else{
+      panning=true; panSX=t.clientX; panSY=t.clientY;
+    }
   }
 },{passive:false});
+
 canvas.addEventListener('touchmove',function(e){
+  if(e.touches.length===1){
+    var dx=e.touches[0].clientX-touchStartX;
+    var dy=e.touches[0].clientY-touchStartY;
+    if(Math.abs(dx)>TAP_THRESHOLD||Math.abs(dy)>TAP_THRESHOLD) touchMoved=true;
+  }
   if(dragging&&e.touches.length===1){
     var p=fromScreen(e.touches[0].clientX,e.touches[0].clientY);
     dragging.x=p.x;dragging.y=p.y;
@@ -581,9 +597,19 @@ canvas.addEventListener('touchmove',function(e){
     panSX=e.touches[0].clientX;panSY=e.touches[0].clientY;
   }
 },{passive:false});
-canvas.addEventListener('touchend',function(){
-  if(dragging){dragging.fixed=false;dragging=null;}
+
+canvas.addEventListener('touchend',function(e){
+  if(dragging){
+    dragging.fixed=false;
+    // 如果没有移动，视为点击→打开详情
+    if(!touchMoved&&touchStartNode){
+      selectedNode=touchStartNode;
+      showDetail(touchStartNode);
+    }
+    dragging=null;
+  }
   panning=false;
+  touchStartNode=null;
 });
 
 // ===== 详情面板 =====
