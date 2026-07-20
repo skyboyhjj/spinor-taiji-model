@@ -6,6 +6,7 @@
     <meta name="version" content="2.2">
     <title>旋量-太极模型声明 V2.2</title>
     <link rel="stylesheet" href="/assets/feedback.css">
+    <link rel="stylesheet" href="/assets/floating-buttons.css">
     <style>
         :root {
             --bg: #fefefe;
@@ -64,45 +65,6 @@
         .tag-label.green { color: var(--green); }
         .tag-label.orange { color: var(--orange); }
         hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
-        .back-to-home {
-            position: fixed; bottom: 30px; right: 90px; width: 50px; height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;
-            border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1100; font-size: 16px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-        .back-to-home.show { opacity: 1; visibility: visible; }
-        .back-to-home:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
-        .back-to-top {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            background: linear-gradient(135deg, #0066cc, #00cc99); color: white;
-            border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1100; font-size: 16px;
-            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
-        }
-        .back-to-top.show { opacity: 1; visibility: visible; }
-        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5); }
-        .feedback-float {
-            position: fixed; bottom: 90px; right: 30px;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            color: white; border: none; border-radius: 24px;
-            cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.3s; z-index: 1100; font-size: 15px;
-            padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-            display: flex; align-items: center; gap: 6px;
-        }
-        .feedback-float.show { opacity: 1; visibility: visible; }
-        .feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
-        @media (max-width: 768px) {
-            .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
-            body { font-size: 15px; padding: 20px 14px 40px; }
-            h1 { font-size: 1.6em; }
-            h2 { font-size: 1.3em; margin: 36px 0 16px; }
-            table { font-size: 0.82em; }
-            thead th, tbody td { padding: 8px 10px; }
-            .back-to-home { right: 65px; width: 45px; height: 45px; font-size: 14px; }
-            .back-to-top { right: 15px; width: 45px; height: 45px; font-size: 14px; }
-        }
         @media (max-width: 480px) {
             body { font-size: 14px; padding: 16px 10px 32px; }
             h1 { font-size: 1.4em; }
@@ -721,8 +683,8 @@
     </div>
 
     <div class="nav-buttons">
-        <button class="back-to-home" id="backToHome" title="返回首页">🏠</button>
-        <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
+        <button class="back-to-home" id="backToHomeBtn" title="返回首页" data-home-url="https://spinortaiji.com" aria-label="返回首页">🏠</button>
+        <button class="back-to-top" id="backToTopBtn" title="返回顶部" aria-label="返回顶部">↑</button>
         <button class="feedback-float" id="feedbackFloat" title="反馈建议" data-source="statement">📝 反馈建议</button>
     </div>
 
@@ -769,18 +731,7 @@
         </div>
     </div>
 
-    <script>
-    const backToTopBtn = document.getElementById("backToTop");
-    const backToHomeBtn = document.getElementById("backToHome");
-
-    window.addEventListener("scroll", function() {
-        const isVisible = window.scrollY > 300;
-        backToTopBtn.classList.toggle("show", isVisible);
-        backToHomeBtn.classList.toggle("show", isVisible);
-    });
-    backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-    backToHomeBtn.addEventListener("click", () => window.location.href = "/");
-    </script>
     <script src="/assets/feedback.js"></script>
+    <script src="/assets/floating-buttons.js"></script>
 </body>
 </html>

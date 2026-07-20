@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>团队AI成熟度自评工具 · 四轴诊断</title>
 <link rel="stylesheet" href="/assets/feedback.css">
+<link rel="stylesheet" href="/assets/floating-buttons.css">
 <style>
 /* ===== 主题变量定义 ===== */
 :root,[data-theme="dark"]{
@@ -164,21 +165,6 @@ canvas.radar{display:block;margin:16px auto;width:100%;max-width:320px}
   .container{padding:16px 12px 80px}
   .opt-btn{flex:1 1 calc(50% - 4px);text-align:center}
 }
-
-/* 返回顶部 */
-.back-to-top{position:fixed;bottom:30px;right:30px;width:50px;height:50px;background:linear-gradient(135deg,#0066cc,#00cc99);color:#fff;border:none;border-radius:50%;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s;z-index:1100;font-size:18px;display:flex;align-items:center;justify-content:center}
-.back-to-top.show{opacity:1;visibility:visible}
-.back-to-top:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,102,204,0.4)}
-
-/* 返回首页 */
-.back-to-home{position:fixed;bottom:30px;right:90px;width:50px;height:50px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:50%;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s;z-index:1100;font-size:16px;display:flex;align-items:center;justify-content:center}
-.back-to-home.show{opacity:1;visibility:visible}
-.back-to-home:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
-
-/* 反馈浮动按钮 */
-.feedback-float{position:fixed;bottom:90px;right:30px;background:linear-gradient(135deg,#f39c12,#e67e22);color:#fff;border:none;border-radius:24px;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s;z-index:1100;font-size:15px;padding:12px 18px;box-shadow:0 4px 15px rgba(243,156,18,0.4);display:flex;align-items:center;gap:6px}
-.feedback-float.show{opacity:1;visibility:visible}
-.feedback-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(243,156,18,0.5)}
 
 /* 反馈弹窗覆盖（主题适配） */
 .feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:3000;align-items:center;justify-content:center}

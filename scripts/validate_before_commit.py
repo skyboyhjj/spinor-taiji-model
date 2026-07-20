@@ -9,6 +9,7 @@ import sys
 import subprocess
 import py_compile
 import shutil
+import re
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,7 +82,7 @@ def check_build():
                 print_status(f"  [FAIL] dist/{d}/ 目录不存在", "ERROR")
                 return False
         
-        assets_files = ['feedback.css', 'feedback.js']
+        assets_files = ['feedback.css', 'feedback.js', 'floating-buttons.css', 'floating-buttons.js']
         for f in assets_files:
             if os.path.exists(os.path.join(dist_dir, 'assets', f)):
                 print(f"  [OK] dist/assets/{f} 存在")
@@ -148,6 +149,102 @@ def check_commit_message():
         print_status("跳过提交信息检查（非git commit场景）", "WARNING")
         return True
 
+def check_css_braces():
+    print_status("\n步骤4: CSS @media 括号匹配检查", "INFO")
+    
+    changed_files = []
+    result = subprocess.run(
+        ['git', 'diff', '--cached', '--name-only', '--diff-filter=ACMR'],
+        capture_output=True, text=True, cwd=PROJECT_ROOT
+    )
+    if result.returncode == 0 and result.stdout.strip():
+        changed_files = result.stdout.strip().split('\n')
+    else:
+        result2 = subprocess.run(
+            ['git', 'diff', '--name-only', '--diff-filter=ACMR'],
+            capture_output=True, text=True, cwd=PROJECT_ROOT
+        )
+        if result2.returncode == 0 and result2.stdout.strip():
+            changed_files = result2.stdout.strip().split('\n')
+    
+    target_files = [
+        f for f in changed_files
+        if f.endswith('.html') or f.endswith('.css')
+    ]
+    
+    if not target_files:
+        print_status("无变更的 HTML/CSS 文件，跳过 CSS 检查", "WARNING")
+        return True
+    
+    check_dirs = {
+        os.path.join(PROJECT_ROOT, 'articles'),
+        os.path.join(PROJECT_ROOT, 'docs'),
+        os.path.join(PROJECT_ROOT, 'wechat'),
+        os.path.join(PROJECT_ROOT, 'assets'),
+    }
+    
+    all_files = []
+    for d in check_dirs:
+        if os.path.exists(d):
+            for root, dirs, files in os.walk(d):
+                for f in files:
+                    if f.endswith(('.html', '.css')):
+                        all_files.append(os.path.join(root, f))
+    
+    errors = []
+    checked = 0
+    
+    for file_path in all_files:
+        try:
+            with open(file_path, 'r', encoding='utf-8', errors='replace') as f:
+                content = f.read()
+            
+            if file_path.endswith('.html'):
+                style_blocks = re.findall(r'<style[^>]*>(.*?)</style>', content, re.DOTALL | re.IGNORECASE)
+                css_content = '\n'.join(style_blocks)
+            else:
+                css_content = content
+            
+            media_blocks = list(re.finditer(r'@media[^{]*\{', css_content))
+            
+            for i, match in enumerate(media_blocks):
+                start_pos = match.end()
+                depth = 1
+                pos = start_pos
+                while pos < len(css_content) and depth > 0:
+                    ch = css_content[pos]
+                    if ch == '{':
+                        depth += 1
+                    elif ch == '}':
+                        depth -= 1
+                    pos += 1
+                
+                if depth > 0:
+                    next_media_pos = css_content.find('@media', start_pos)
+                    line_num = content[:match.start()].count('\n') + 1
+                    errors.append(
+                        f"  [FAIL] {os.path.relpath(file_path, PROJECT_ROOT)}:"
+                        f" 行{line_num} @media 块缺少闭合 '}}'"
+                    )
+                    if next_media_pos > 0 and next_media_pos < start_pos + 500:
+                        errors.append(f"         (下一个 @media 位于约 {css_content[:next_media_pos].count(chr(10)) + 1} 行)")
+            
+            checked += 1
+        except Exception as e:
+            errors.append(f"  [FAIL] {os.path.relpath(file_path, PROJECT_ROOT)}: 读取异常 - {e}")
+    
+    if checked > 0:
+        print(f"  [OK] 已检查 {checked} 个 CSS/HTML 文件")
+    
+    if errors:
+        print_status(f"发现 {len(errors)} 个 CSS @media 括号匹配问题:", "ERROR")
+        for err in errors:
+            print(err)
+        return False
+    
+    print_status("CSS @media 括号匹配检查通过", "SUCCESS")
+    return True
+
 def run_all_checks():
     print("=" * 60)
     print("代码提交前验证")
@@ -156,6 +253,7 @@ def run_all_checks():
     checks = [
         ("Python语法检查", check_python_syntax),
         ("构建验证", check_build),
+        ("CSS @media 括号匹配", check_css_braces),
         ("提交信息格式检查", check_commit_message),
     ]
     

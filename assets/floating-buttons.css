@@ -1,0 +1,55 @@
+/* ===== 浮动按钮系统 =====
+  统一管理：返回顶部、返回首页、反馈建议
+  使用方式：页面引入此 CSS + floating-buttons.js，在 HTML 中放置按钮元素即可
+  配置属性：data-source（反馈来源）、data-home-url（首页链接，默认 "/"）、data-show-threshold（显示阈值，默认 300）
+*/
+
+/* 返回顶部 */
+.back-to-top {
+  position: fixed; bottom: 30px; right: 30px;
+  width: 50px; height: 50px;
+  background: linear-gradient(135deg, #0066cc, #00cc99);
+  color: #fff; border: none; border-radius: 50%;
+  cursor: pointer; opacity: 0; visibility: hidden;
+  transition: all 0.3s; z-index: 1100; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.back-to-top.show { opacity: 1; visibility: visible; }
+.back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4); }
+
+/* 返回首页 */
+.back-to-home {
+  position: fixed; bottom: 30px; right: 90px;
+  width: 50px; height: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff; border: none; border-radius: 50%;
+  cursor: pointer; opacity: 0; visibility: hidden;
+  transition: all 0.3s; z-index: 1100; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.back-to-home.show { opacity: 1; visibility: visible; }
+.back-to-home:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
+
+/* 反馈浮动按钮 */
+.feedback-float {
+  position: fixed; bottom: 90px; right: 30px;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: #fff; border: none; border-radius: 24px;
+  cursor: pointer; opacity: 0; visibility: hidden;
+  transition: all 0.3s; z-index: 1100; font-size: 15px;
+  padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+  display: flex; align-items: center; gap: 6px;
+}
+.feedback-float.show { opacity: 1; visibility: visible; }
+.feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .back-to-top { right: 15px; width: 45px; height: 45px; font-size: 14px; }
+  .back-to-home { right: 65px; width: 45px; height: 45px; font-size: 14px; }
+  .feedback-float { right: 15px; bottom: 95px; padding: 10px 14px; font-size: 14px; }
+}
+
+@media print {
+  .back-to-top, .back-to-home, .feedback-float { display: none !important; }
+}

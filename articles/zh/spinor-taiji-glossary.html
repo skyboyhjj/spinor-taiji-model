@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>旋量-太极词汇表 V2.1.2</title>
 <link rel="stylesheet" href="/assets/feedback.css">
+<link rel="stylesheet" href="/assets/floating-buttons.css">
 <style>
 :root { --primary-color: #0066cc; --secondary-color: #00cc99; --accent-color: #ff6600; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,15 +47,6 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: r
 .version-item { background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px; }
 .version-label { font-size: 12px; color: #999; margin-bottom: 5px; }
 .version-value { font-size: 14px; font-weight: bold; color: #333; }
-.back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1100; font-size: 18px; }
-.back-to-top.show { opacity: 1; visibility: visible; }
-.back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,102,204,0.4); }
-.back-to-home { position: fixed; bottom: 30px; right: 90px; width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1100; font-size: 16px; }
-.back-to-home.show { opacity: 1; visibility: visible; }
-.back-to-home:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
-.feedback-float { position: fixed; bottom: 90px; right: 30px; background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border: none; border-radius: 24px; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1100; font-size: 15px; padding: 12px 18px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4); display: flex; align-items: center; gap: 6px; }
-.feedback-float.show { opacity: 1; visibility: visible; }
-.feedback-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5); }
 .feedback-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 3000; align-items: center; justify-content: center; }
 .feedback-overlay.active { display: flex; }
 .feedback-modal { background: #fff; border-radius: 16px; padding: 32px; max-width: 440px; width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; z-index: 3001; }
@@ -123,9 +115,6 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
     .term-card { padding: 16px; }
     .term-tag { font-size: 12px; padding: 4px 10px; }
     .term-definition { font-size: 14px; }
-    .back-to-home { right: 65px; width: 45px; height: 45px; font-size: 14px; }
-    .back-to-top { right: 15px; width: 45px; height: 45px; font-size: 14px; }
-    .feedback-float { right: 15px; bottom: 85px; padding: 10px 14px; font-size: 14px; }
     .version-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
@@ -1318,8 +1307,8 @@ footer { background: #2c3e50; color: white; padding: 30px; text-align: center; m
 </div>
 </div>
 
-<button class="back-to-top" title="返回顶部">↑</button>
-<button class="back-to-home" title="返回首页" onclick="window.location.href='spinor-taiji-model-statement.html'">🏠</button>
+<button class="back-to-top" id="backToTopBtn" title="返回顶部" aria-label="返回顶部">↑</button>
+<button class="back-to-home" id="backToHomeBtn" title="返回首页" data-home-url="https://spinortaiji.com" aria-label="返回首页">🏠</button>
 <button class="feedback-float" id="feedbackFloat" title="反馈建议" data-source="glossary">📝 反馈建议</button>
 
 <div class="feedback-overlay" id="feedbackOverlay">
@@ -1521,28 +1510,7 @@ window.addEventListener('scroll', function() {
         }
     });
     
-    // 显示返回按钮
-    const backToTop = document.querySelector('.back-to-top');
-    const backToHome = document.querySelector('.back-to-home');
-    const feedbackFloat = document.querySelector('.feedback-float');
-    
-    if (window.scrollY > 300) {
-        backToTop?.classList.add('show');
-        backToHome?.classList.add('show');
-        feedbackFloat?.classList.add('show');
-    } else {
-        backToTop?.classList.remove('show');
-        backToHome?.classList.remove('show');
-        feedbackFloat?.classList.remove('show');
-    }
-});
-
-// 返回顶部
-document.querySelector('.back-to-top')?.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// 相关词条点击跳转
+    // 相关词条点击跳转
 document.querySelectorAll('.related-link').forEach(link => {
     link.addEventListener('click', function() {
         const termName = this.textContent;
@@ -1564,5 +1532,6 @@ document.querySelectorAll('.related-link').forEach(link => {
 
 </script>
 <script src="/assets/feedback.js"></script>
+<script src="/assets/floating-buttons.js"></script>
 </body>
 </html>
