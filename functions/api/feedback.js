@@ -47,7 +47,7 @@ export async function onRequestPost(context) {
   const MAX_FILES = 3;
   const MAX_FILE_SIZE_BASE64 = 7 * 1024 * 1024;
   const ALLOWED_TYPES = ['suggestion', 'correction', 'question', 'appreciation'];
-  const ALLOWED_SOURCES = ['statement', 'glossary', 'other'];
+  const ALLOWED_SOURCES = ['statement', 'glossary', 'other', 'maturity_tool'];
 
   if (!content || content.length < 1) {
     return new Response(JSON.stringify({ error: '反馈内容不能为空' }), {
@@ -102,7 +102,7 @@ export async function onRequestPost(context) {
   }
 
   const typeLabel = { correction: '纠错', suggestion: '建议', question: '疑问', appreciation: '赞赏' };
-  const sourceLabel = { statement: '声明', glossary: '词汇表', other: '其他' };
+  const sourceLabel = { statement: '声明', glossary: '词汇表', other: '其他', maturity_tool: '成熟度自评' };
 
   const issueTitle = `[反馈] ${typeLabel[type] || type} - ${sourceLabel[source] || source}`;
 
