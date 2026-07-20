@@ -12,42 +12,46 @@
 
 .feedback-overlay {
     display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.45); z-index: 3000;
+    background: rgba(0,0,0,0.55); z-index: 3000;
     align-items: center; justify-content: center;
 }
 .feedback-overlay.active { display: flex; }
 
 .feedback-modal {
-    background: #fff; border-radius: 16px; padding: 32px;
+    background: var(--bg-section, #fff);
+    border: 1px solid var(--border-option, transparent);
+    border-radius: 16px; padding: 32px;
     max-width: 440px; width: 90%;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 0 80px rgba(0,0,0,0.05);
     position: relative; max-height: 90vh; overflow-y: auto;
-    z-index: 3001;
+    z-index: 3001; color: var(--text, #333);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
 
 .feedback-modal-close {
     position: absolute; top: 14px; right: 18px;
     background: none; border: none; font-size: 22px;
-    cursor: pointer; color: #999; line-height: 1;
+    cursor: pointer; color: var(--text-muted, #999); line-height: 1;
 }
-.feedback-modal-close:hover { color: #333; }
+.feedback-modal-close:hover { color: var(--text, #333); }
 
-.feedback-modal h3 { font-size: 1.2em; margin: 0 0 6px; color: #2c3e50; }
-.feedback-modal-sub { font-size: 0.85em; color: #888; margin: 0 0 20px; }
+.feedback-modal h3 { font-size: 1.2em; margin: 0 0 6px; color: var(--text, #2c3e50); }
+.feedback-modal-sub { font-size: 0.85em; color: var(--text-muted, #888); margin: 0 0 20px; }
 
 .feedback-form-group { margin-bottom: 16px; }
 .feedback-form-group label {
     display: block; font-size: 0.9em; font-weight: 600;
-    color: #555; margin-bottom: 6px;
+    color: var(--text-dim, #555); margin-bottom: 6px;
 }
 .feedback-form-group select,
 .feedback-form-group textarea,
 .feedback-form-group input {
     width: 100%; padding: 10px 14px;
-    border: 1px solid #ddd; border-radius: 8px;
+    border: 1px solid var(--border-option, #ddd); border-radius: 8px;
     font-size: 0.95em; font-family: inherit;
     outline: none; transition: border-color 0.2s;
     box-sizing: border-box;
+    background: var(--bg-btn, #fff); color: var(--text, #333);
 }
 .feedback-form-group select:focus,
 .feedback-form-group textarea:focus,
@@ -61,7 +65,7 @@
 .feedback-form-group .feedback-error.show { display: block; }
 
 .feedback-form-group .feedback-count {
-    color: #999; font-size: 0.8em; margin-top: 4px; text-align: right;
+    color: var(--text-muted, #999); font-size: 0.8em; margin-top: 4px; text-align: right;
 }
 .feedback-form-group .feedback-count.error { color: #e74c3c; }
 .feedback-form-group .feedback-count.success { color: #27ae60; }
@@ -79,17 +83,17 @@
 .feedback-success { display: none; text-align: center; padding: 20px 0; }
 .feedback-success.show { display: block; }
 .feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
-.feedback-success p { color: #555; margin: 4px 0; }
+.feedback-success p { color: var(--text-dim, #555); margin: 4px 0; }
 
 .file-upload-area {
-    border: 2px dashed #ddd; border-radius: 8px;
+    border: 2px dashed var(--border-option, #ddd); border-radius: 8px;
     padding: 24px 16px; text-align: center;
     cursor: pointer; transition: all 0.2s;
 }
 .file-upload-area:hover, .file-upload-area.dragover {
-    border-color: #f39c12; background: #fff8f0;
+    border-color: #f39c12; background: var(--bg-option-hover, #fff8f0);
 }
-.file-upload-area span { color: #888; font-size: 0.9em; }
+.file-upload-area span { color: var(--text-muted, #888); font-size: 0.9em; }
 
 .file-preview-container {
     display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
