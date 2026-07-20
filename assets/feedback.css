@@ -18,7 +18,7 @@
 .feedback-overlay.active { display: flex; }
 
 .feedback-modal {
-    background: var(--bg-section, #fff);
+    background: var(--bg-modal, var(--bg-section, #fff));
     border: 1px solid var(--border-option, transparent);
     border-radius: 16px; padding: 32px;
     max-width: 440px; width: 90%;
