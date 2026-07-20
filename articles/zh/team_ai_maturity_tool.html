@@ -181,11 +181,21 @@ canvas.radar{display:block;margin:16px auto;width:100%;max-width:320px}
 /* 反馈弹窗覆盖（主题适配） */
 .feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:3000;align-items:center;justify-content:center}
 .feedback-overlay.active{display:flex}
-.feedback-modal{background:var(--bg-section);border:1px solid var(--border-option);border-radius:16px;padding:32px;max-width:440px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;z-index:3001;color:var(--text)}
+.feedback-modal{background:var(--bg-section);border:1px solid var(--border-option);border-radius:16px;padding:32px;max-width:440px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 80px rgba(0,0,0,0.15);position:relative;max-height:90vh;overflow-y:auto;z-index:3001;color:var(--text);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .feedback-modal-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-muted);line-height:1}
 .feedback-modal-close:hover{color:var(--text)}
 .feedback-modal h3{font-size:1.2em;margin:0 0 6px;color:var(--text)}
 .feedback-modal-sub{font-size:0.85em;color:var(--text-muted);margin:0 0 20px}
+
+/* 表单控件主题适配 */
+.feedback-form-group label{color:var(--text-dim)}
+.feedback-form-group select,.feedback-form-group textarea,.feedback-form-group input{background:var(--bg-btn);border-color:var(--border-option);color:var(--text)}
+.feedback-form-group select:focus,.feedback-form-group textarea:focus,.feedback-form-group input:focus{border-color:#f39c12}
+.feedback-form-group .feedback-count{color:var(--text-muted)}
+.feedback-success p{color:var(--text-dim)}
+.file-upload-area{border-color:var(--border-option)}
+.file-upload-area span{color:var(--text-muted)}
+.file-upload-area:hover,.file-upload-area.dragover{border-color:#f39c12;background:var(--bg-option-hover)}
 
 @media(max-width:768px){
   .back-to-top{right:15px;width:45px;height:45px;font-size:14px}
