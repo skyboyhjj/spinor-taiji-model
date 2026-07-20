@@ -210,9 +210,10 @@ export async function onRequestPost(context) {
 
     if (!githubResponse.ok) {
       const errorText = await githubResponse.text();
+      console.error('GitHub API error:', githubResponse.status, errorText.substring(0, 200));
       return new Response(JSON.stringify({ 
-        error: '提交失败（GitHub API 错误）', 
-        detail: errorText,
+        error: '提交失败，请稍后重试',
+        code: 'GITHUB_API_ERROR',
         imagesUploaded: uploadedImages.length,
         imageErrors: imageErrors
       }), {
@@ -233,9 +234,10 @@ export async function onRequestPost(context) {
     });
 
   } catch (e) {
+    console.error('Feedback submission error:', e.message);
     return new Response(JSON.stringify({ 
-      error: '提交失败，请稍后重试', 
-      detail: e.message,
+      error: '提交失败，请稍后重试',
+      code: 'INTERNAL_ERROR',
       imagesUploaded: uploadedImages.length,
       imageErrors: imageErrors
     }), {

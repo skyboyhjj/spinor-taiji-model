@@ -126,6 +126,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    async function fetchWithRetry(url, options, retries, timeoutMs) {
+        retries = (retries !== undefined) ? retries : 2;
+        timeoutMs = (timeoutMs !== undefined) ? timeoutMs : 15000;
+        for (var attempt = 0; attempt <= retries; attempt++) {
+            var controller = new AbortController();
+            var timer = setTimeout(function() { controller.abort(); }, timeoutMs);
+            try {
+                var resp = await fetch(url, Object.assign({}, options, { signal: controller.signal }));
+                clearTimeout(timer);
+                return resp;
+            } catch (e) {
+                clearTimeout(timer);
+                if (attempt === retries) throw e;
+                // 递增延迟：1s, 2s，等待网络恢复
+                await new Promise(function(r) { setTimeout(r, 1000 * (attempt + 1)); });
+            }
+        }
+    }
+
     function submitFeedback() {
         if (!fbSubmit) return;
         
@@ -139,16 +158,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         (async function() {
             try {
-                const fileDataList = [];
-                for (const file of uploadedFiles) {
-                    const reader = new FileReader();
-                    const dataUrl = await new Promise((resolve, reject) => {
-                        reader.onload = () => resolve(reader.result);
+                var fileDataList = [];
+                for (var i = 0; i < uploadedFiles.length; i++) {
+                    var file = uploadedFiles[i];
+                    var reader = new FileReader();
+                    var dataUrl = await new Promise(function(resolve, reject) {
+                        reader.onload = function() { resolve(reader.result); };
                         reader.onerror = reject;
                         reader.readAsDataURL(file);
                     });
-                    const base64 = dataUrl.split(',')[1];
-                    const mime = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+                    var base64 = dataUrl.split(',')[1];
+                    var mime = dataUrl.split(',')[0].split(':')[1].split(';')[0];
                     fileDataList.push({
                         name: file.name,
                         type: file.type || mime,
@@ -157,8 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
                 
-                const content = document.getElementById('fbContent') ? document.getElementById('fbContent').value.trim() : '';
-                const payload = {
+                var content = document.getElementById('fbContent') ? document.getElementById('fbContent').value.trim() : '';
+                var payload = {
                     type: document.getElementById('fbType') ? document.getElementById('fbType').value : 'suggestion',
                     source: feedbackSource,
                     content: content,
@@ -166,19 +186,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     files: fileDataList
                 };
                 
-                const resp = await fetch('/api/feedback', {
+                var resp = await fetchWithRetry('/api/feedback', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                const data = await resp.json();
+                var data = await resp.json();
                 
                 if (data.success) {
                     if (feedbackForm) feedbackForm.style.display = 'none';
                     if (feedbackSuccess) feedbackSuccess.classList.add('show');
                     
                     if (data.imagesUploaded !== undefined && feedbackSuccess) {
-                        const successMsgEl = feedbackSuccess.querySelector('p');
+                        var successMsgEl = feedbackSuccess.querySelector('p');
                         if (successMsgEl) {
                             successMsgEl.textContent = '🎉 感谢你的反馈！\\n图片上传: ' + data.imagesUploaded + '/' + uploadedFiles.length;
                             successMsgEl.style.whiteSpace = 'pre-line';
@@ -188,7 +208,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error(data.error || 'API返回错误');
                 }
             } catch (e) {
-                alert('反馈服务暂时不可用，请稍后再试。\\n\\n您可以通过以下方式联系我们：\\n📧 微信公众号：TS爱心联盟');
+                var errMsg = e.message || '';
+                if (e.name === 'AbortError') {
+                    alert('请求超时，网络可能不稳定，请稍后重试。\n\n您也可以通过以下方式联系我们：\n📧 微信公众号：TS爱心联盟');
+                } else if (errMsg === 'Failed to fetch' || e.name === 'TypeError') {
+                    alert('网络连接失败，请检查网络后重试。\n\n如果问题持续出现，您也可以通过以下方式联系我们：\n📧 微信公众号：TS爱心联盟');
+                } else {
+                    alert('反馈服务暂时不可用，请稍后再试。\n\n您也可以通过以下方式联系我们：\n📧 微信公众号：TS爱心联盟');
+                }
             } finally {
                 if (fbSubmit) {
                     fbSubmit.disabled = false;
