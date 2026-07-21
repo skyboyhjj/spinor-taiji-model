@@ -302,7 +302,7 @@ canvas.radar{display:block;margin:16px auto;width:100%;max-width:320px}
 
 <!-- 结果侧边面板 -->
 <div class="result-panel" id="result">
-  <button class="close-btn" onclick="document.getElementById('result').classList.remove('open')">✕</button>
+  <button class="close-btn" onclick="closeResult()">✕</button>
   <h3>📊 诊断报告</h3>
   <div id="report-content"></div>
 </div>
@@ -606,6 +606,9 @@ function calculate(){
   
   // 打开面板
   document.getElementById('result').classList.add('open');
+  
+  document.getElementById('feedbackFloat')?.classList.remove('show');
+  document.getElementById('backToHomeBtn')?.classList.remove('show');
 }
 
 // ========== 渲染报告 ==========
@@ -766,11 +769,19 @@ function saveHistory(entry){
   if(h.length>12) h.shift(); // 最多保留12条（3年季度数据）
   localStorage.setItem('ai_maturity_history', JSON.stringify(h));
 }
+function closeResult(){
+  document.getElementById('result').classList.remove('open');
+  
+  if(window.scrollY > 300){
+    document.getElementById('feedbackFloat')?.classList.add('show');
+    document.getElementById('backToHomeBtn')?.classList.add('show');
+  }
+}
 function resetAll(){
   if(confirm('确定清除所有答题和历史记录？')){
     localStorage.removeItem('ai_maturity_history');
     document.querySelectorAll('.q').forEach(q=>{q.dataset.answer='';q.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'))});
-    document.getElementById('result').classList.remove('open');
+    closeResult();
   }
 }
 function toggleHistory(){

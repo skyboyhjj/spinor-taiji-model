@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!feedbackOverlay) return;
         feedbackOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+        
+        document.getElementById('backToTopBtn')?.classList.remove('show');
+        document.getElementById('backToHomeBtn')?.classList.remove('show');
+        document.getElementById('feedbackFloat')?.classList.remove('show');
     };
 
     function closeFeedback() {
@@ -59,6 +63,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
         feedbackForm.style.display = '';
         feedbackSuccess.classList.remove('show');
+        
+        if(window.scrollY > 300){
+            document.getElementById('backToTopBtn')?.classList.add('show');
+            document.getElementById('backToHomeBtn')?.classList.add('show');
+            document.getElementById('feedbackFloat')?.classList.add('show');
+        }
         
         if (fbContent) {
             fbContent.value = '';
