@@ -278,14 +278,4 @@ document.addEventListener('DOMContentLoaded', function() {
     if (fbSubmit) {
         fbSubmit.addEventListener('click', submitFeedback);
     }
-
-    function updateFloatButtons() {
-        const isVisible = window.scrollY > 300;
-        feedbackFloat?.classList.toggle('show', isVisible);
-    }
-
-    if (feedbackFloat) {
-        updateFloatButtons();
-        window.addEventListener('scroll', updateFloatButtons);
-    }
 });

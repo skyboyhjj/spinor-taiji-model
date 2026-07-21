@@ -311,7 +311,7 @@ canvas.radar{display:block;margin:16px auto;width:100%;max-width:320px}
 <button class="back-to-top" id="backToTopBtn" title="返回顶部" aria-label="返回顶部">↑</button>
 
 <!-- 返回首页 -->
-<button class="back-to-home" id="backToHomeBtn" onclick="window.location.href='https://spinortaiji.com'" title="返回首页" aria-label="返回首页">🏠</button>
+<button class="back-to-home" id="backToHomeBtn" title="返回首页" data-home-url="https://spinortaiji.com" aria-label="返回首页">🏠</button>
 
 <!-- 反馈建议浮动按钮 -->
 <button class="feedback-float" id="feedbackFloat" title="反馈建议" data-source="maturity_tool">📝 反馈建议</button>
@@ -387,30 +387,7 @@ canvas.radar{display:block;margin:16px auto;width:100%;max-width:320px}
   });
 })();
 
-// ========== 返回顶部按钮 ==========
-(function(){
-  const btn = document.getElementById('backToTopBtn');
-  const backHomeBtn = document.getElementById('backToHomeBtn');
-  const feedbackFloat = document.getElementById('feedbackFloat');
-  let ticking = false;
-  window.addEventListener('scroll', ()=>{
-    if(!ticking){
-      requestAnimationFrame(()=>{
-        const show = window.scrollY > 300;
-        if(btn) btn.classList.toggle('show', show);
-        if(backHomeBtn) backHomeBtn.classList.toggle('show', show);
-        if(feedbackFloat) feedbackFloat.classList.toggle('show', show);
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, {passive:true});
-})();
 
-// 返回顶部点击事件
-document.getElementById('backToTopBtn')?.addEventListener('click', function() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
 
 // ========== 题库数据 ==========
 const QUESTIONS = {
@@ -829,6 +806,7 @@ if(lastHistory.length){
   console.log(`📊 已有 ${lastHistory.length} 条历史记录。最新：${lastHistory[lastHistory.length-1].date}，${lastHistory[lastHistory.length-1].total}分，阶段${lastHistory[lastHistory.length-1].stage}`);
 }
 </script>
+<script src="/assets/floating-buttons.js"></script>
 <script src="/assets/feedback.js"></script>
 </body>
 </html>
