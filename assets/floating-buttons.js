@@ -35,7 +35,9 @@
         requestAnimationFrame(function() {
           var resultPanel = document.getElementById('result');
           var isResultOpen = resultPanel && resultPanel.classList.contains('open');
-          var show = !isResultOpen && window.scrollY > threshold;
+          var feedbackOverlay = document.getElementById('feedbackOverlay');
+          var isFeedbackOpen = feedbackOverlay && feedbackOverlay.classList.contains('active');
+          var show = !isResultOpen && !isFeedbackOpen && window.scrollY > threshold;
           if (backToTop) backToTop.classList.toggle('show', show);
           if (backToHome) backToHome.classList.toggle('show', show);
           if (feedbackFloat) feedbackFloat.classList.toggle('show', show);
