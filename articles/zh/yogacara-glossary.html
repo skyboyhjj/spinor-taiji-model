@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>唯识学词汇表 V1.0.0</title>
+<link rel="stylesheet" href="/assets/feedback.css">
+<link rel="stylesheet" href="/assets/floating-buttons.css">
+<style>
+:root { --primary-color: #8B4513; --secondary-color: #DAA520; --accent-color: #CD853F; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; background: linear-gradient(135deg, #fdf6ec 0%, #f5edd6 100%); min-height: 100vh; }
+header { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+.header-content { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 20px; font-weight: bold; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.search-box { padding: 8px 16px; border: 2px solid #e0d5c0; border-radius: 25px; font-size: 14px; width: 250px; outline: none; }
+.search-box:focus { border-color: var(--primary-color); }
+.main-container { display: flex; max-width: 1200px; margin: 0 auto; padding: 80px 20px 100px; gap: 30px; }
+.sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 100px; }
+.sidebar-title { font-size: 16px; font-weight: bold; color: var(--primary-color); margin-bottom: 15px; padding-left: 10px; border-left: 4px solid var(--primary-color); }
+.nav-list { list-style: none; background: white; border-radius: 12px; padding: 10px 0; box-shadow: 0 4px 12px rgba(139,69,19,0.1); }
+.nav-item { padding: 10px 20px; cursor: pointer; color: #666; font-size: 14px; transition: all 0.2s; }
+.nav-item:hover { background: rgba(139,69,19,0.05); }
+.nav-item.active { background: rgba(139,69,19,0.1); color: var(--primary-color); font-weight: bold; }
+.content { flex: 1; }
+.intro-section { background: linear-gradient(135deg, var(--primary-color), #A0522D); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; }
+.intro-title { font-size: 32px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+.intro-subtitle { font-size: 16px; opacity: 0.9; text-align: center; font-style: italic; }
+.section { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(139,69,19,0.1); }
+.section-title { font-size: 22px; font-weight: bold; color: var(--primary-color); margin-bottom: 25px; }
+.section-title::before { content: ""; width: 4px; height: 24px; background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); display: inline-block; margin-right: 10px; }
+.term-card { background: linear-gradient(135deg, #fefefe, #faf6ee); border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--primary-color); transition: all 0.2s; }
+.term-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(139,69,19,0.15); }
+.term-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.term-tag { background: linear-gradient(135deg, var(--primary-color), #A0522D); color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+.term-category { font-size: 12px; color: #999; background: #f0ebe0; padding: 4px 10px; border-radius: 10px; }
+.term-pinyin { font-size: 13px; color: #666; font-style: italic; margin-left: 8px; }
+.term-definition { font-size: 15px; color: #555; line-height: 1.8; }
+.term-source { font-size: 12px; color: #999; margin-top: 8px; font-style: italic; }
+.related-terms { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #ddd; }
+.related-terms strong { color: #7f8c8d; font-size: 0.9em; }
+.related-link { color: #8B4513; text-decoration: none; margin-right: 10px; cursor: pointer; transition: color 0.2s; }
+.related-link:hover { color: #DAA520; text-decoration: underline; }
+.version-module { background: linear-gradient(135deg, #fff9e6, #fff5cc); border-left: 4px solid #DAA520; border-radius: 0 12px 12px 0; padding: 25px; margin-bottom: 30px; }
+.version-title { font-size: 18px; font-weight: bold; color: #8B6914; margin-bottom: 20px; }
+.version-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.version-item { background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px; }
+.version-label { font-size: 12px; color: #999; margin-bottom: 5px; }
+.version-value { font-size: 14px; font-weight: bold; color: #333; }
+.feedback-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 3000; align-items: center; justify-content: center; }
+.feedback-overlay.active { display: flex; }
+.feedback-modal { background: #fff; border-radius: 16px; padding: 32px; max-width: 440px; width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; z-index: 3001; }
+.feedback-modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; line-height: 1; }
+.feedback-modal-close:hover { color: #333; }
+.feedback-modal h3 { font-size: 1.2em; margin: 0 0 6px; color: #2c3e50; }
+.feedback-modal-sub { font-size: 0.85em; color: #888; margin: 0 0 20px; }
+.feedback-form-group { margin-bottom: 16px; }
+.feedback-form-group label { display: block; font-size: 0.9em; font-weight: 600; color: #555; margin-bottom: 6px; }
+.feedback-form-group select, .feedback-form-group textarea, .feedback-form-group input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; font-family: inherit; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+.feedback-form-group select:focus, .feedback-form-group textarea:focus, .feedback-form-group input:focus { border-color: #f39c12; }
+.feedback-form-group textarea { min-height: 120px; resize: vertical; }
+.feedback-form-group textarea.error { border-color: #e74c3c; }
+.feedback-form-group .feedback-error { display: none; color: #e74c3c; font-size: 0.8em; margin-top: 4px; }
+.feedback-form-group .feedback-error.show { display: block; }
+.feedback-form-group .feedback-count { color: #999; font-size: 0.8em; margin-top: 4px; text-align: right; }
+.feedback-form-group .feedback-count.error { color: #e74c3c; }
+.feedback-form-group .feedback-count.success { color: #27ae60; }
+.feedback-submit { width: 100%; padding: 12px; background: linear-gradient(135deg, #f39c12, #e67e22); color: #fff; border: none; border-radius: 24px; font-size: 1em; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.feedback-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(243, 156, 18, 0.4); }
+.feedback-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.feedback-success { display: none; text-align: center; padding: 20px 0; }
+.feedback-success.show { display: block; }
+.feedback-success-icon { font-size: 3em; margin-bottom: 12px; }
+.feedback-success p { color: #555; margin: 4px 0; }
+.file-upload-area {
+    border: 2px dashed #ddd; border-radius: 8px; padding: 24px 16px; text-align: center; cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.file-upload-area:hover { border-color: #f39c12; background-color: #fffaf0; }
+.file-upload-area.dragover { border-color: #f39c12; background-color: #fff8e6; }
+.file-upload-icon { font-size: 32px; margin-bottom: 8px; }
+.file-upload-text { font-size: 15px; font-weight: 500; color: #555; margin-bottom: 4px; }
+.file-upload-hint { font-size: 12px; color: #999; }
+.file-preview-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.file-preview-item {
+    position: relative; width: 80px; height: 80px; border-radius: 6px; overflow: hidden;
+    border: 2px solid #eee; background: #fafafa;
+}
+.file-preview-item img { width: 100%; height: 100%; object-fit: cover; }
+.file-preview-remove {
+    position: absolute; top: -4px; right: -4px; width: 20px; height: 20px;
+    background: #e74c3c; color: #fff; border-radius: 50%; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+footer { background: #2c3e50; color: white; padding: 30px; text-align: center; margin-top: 50px; }
+.footer-text { font-size: 14px; opacity: 0.8; }
+.no-results { text-align: center; padding: 40px; color: #999; font-size: 16px; }
+@media (max-width: 768px) {
+    .header-content { padding: 10px 12px; flex-wrap: wrap; gap: 8px; }
+    .logo { font-size: 17px; }
+    .search-box { width: 100%; font-size: 13px; padding: 6px 12px; }
+    .main-container { flex-direction: column; padding: 96px 12px 120px; gap: 0; }
+    .sidebar { width: 100%; position: sticky; top: 92px; z-index: 998; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 8px 0; margin: 0 -12px; }
+    .sidebar-title { display: none; }
+    .nav-list { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding: 0 12px; background: transparent; box-shadow: none; border-radius: 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .nav-list::-webkit-scrollbar { display: none; }
+    .nav-item { flex-shrink: 0; padding: 6px 14px; font-size: 13px; white-space: nowrap; border-radius: 16px; background: #f0ebe0; }
+    .nav-item.active { background: var(--primary-color); color: #fff; }
+    .content { width: 100%; }
+    .intro-section { padding: 24px 20px; }
+    .intro-title { font-size: 24px; }
+    .intro-subtitle { font-size: 14px; }
+    .section { padding: 20px 16px; }
+    .section-title { font-size: 18px; }
+    .term-card { padding: 16px; }
+    .term-tag { font-size: 12px; padding: 4px 10px; }
+    .term-definition { font-size: 14px; }
+    .version-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="header-content">
+<div class="logo">唯识学词汇表</div>
+<input type="text" id="searchBox" class="search-box" placeholder="搜索词汇、定义或出处...">
+</div>
+</header>
+
+<div class="main-container">
+<div class="sidebar">
+<div class="sidebar-title">目录导航</div>
+<ul class="nav-list">
+<li class="nav-item" data-section="intro">简介</li>
+<li class="nav-item" data-section="version">版本</li>
+<li class="nav-item" data-section="cat-1">唯识框架 (4)</li>
+<li class="nav-item" data-section="cat-2">八识体系 (14)</li>
+<li class="nav-item" data-section="cat-3">种子理论 (8)</li>
+<li class="nav-item" data-section="cat-4">三性三无性 (4)</li>
+<li class="nav-item" data-section="cat-5">修行次第 (11)</li>
+<li class="nav-item" data-section="cat-6">果证·四智 (9)</li>
+<li class="nav-item" data-section="cat-7">法师讲释特色 (8)</li>
+<li class="nav-item" data-section="cat-8">旋量-太极对话 (8)</li>
+<li class="nav-item" data-section="quick-index">快速检索</li>
+</ul>
+</div>
+
+<div class="content">
+<div id="intro" class="intro-section">
+<h1 class="intro-title">唯识学词汇表</h1>
+<p class="intro-subtitle">以下定义，基于《唯识三十颂》（玄奘译）原文、传济法师讲解系列及旋量-太极模型知识库交叉整理。<br>名可名，非常名——这些定义是可操作的比喻脚手架，非最终真理。</p>
+</div>
+
+<div id="version" class="version-module">
+<div class="version-title">📋 版本管理信息</div>
+<div class="version-grid">
+<div class="version-item"><div class="version-label">版本号</div><div class="version-value">v1.0.0</div></div>
+<div class="version-item"><div class="version-label">整理日期</div><div class="version-value">2026年7月21日</div></div>
+<div class="version-item"><div class="version-label">词条总数</div><div class="version-value">66个</div></div>
+<div class="version-item"><div class="version-label">分类结构</div><div class="version-value">8个分类</div></div>
+</div>
+</div>
+
+<!-- 一、唯识框架 -->
+<div id="cat-1" class="section">
+<h2 class="section-title">一、唯识框架</h2>
+
+<div class="term-card" data-term="三能变">
+<div class="term-header">
+<span class="term-tag">三能变</span>
+<span class="term-category">唯识框架</span>
+</div>
+<p class="term-definition">《三十颂》总纲。初能变（第八阿赖耶识·异熟能变）→ 二能变（第七末那识·思量能变）→ 三能变（前六识·了别境能变）。"此能变为三，谓异熟思量，及了别境识。"</p>
+<p class="term-source">出处：第1-2颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">末那识</a><a class="related-link">前五识</a><a class="related-link">第六意识</a></div>
+</div>
+
+<div class="term-card" data-term="一切唯识">
+<div class="term-header">
+<span class="term-tag">一切唯识</span>
+<span class="term-category">唯识框架</span>
+</div>
+<p class="term-definition">唯识学根本论题。"由假说我法，有种种相转，彼依识所变"——一切我法皆是识所变现的假说。"是诸识转变，分别所分别，由此彼皆无，故一切唯识"——无客观外境。</p>
+<p class="term-source">出处：第1颂·第17颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">假说我法</a><a class="related-link">分别·所分别</a></div>
+</div>
+
+<div class="term-card" data-term="假说我法">
+<div class="term-header">
+<span class="term-tag">假说我法</span>
+<span class="term-category">唯识框架</span>
+</div>
+<p class="term-definition">佛随顺众生妄执，方便建立"我"（主宰）"法"（轨持）二相。分二种假——无体随情假（凡夫妄执安立）与有体施设假（佛为开示实相方便施设）。"由假说我法，有种种相转。"</p>
+<p class="term-source">出处：第1颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">一切唯识</a><a class="related-link">四分说</a></div>
+</div>
+
+<div class="term-card" data-term="三时教判">
+<div class="term-header">
+<span class="term-tag">三时教判</span>
+<span class="term-category">唯识框架</span>
+</div>
+<p class="term-definition">有教（阿含·说有）→ 空教（般若·说空）→ 中道教（唯识·说中道）。唯识为破"执有""执空"两边而立中道义。</p>
+<p class="term-source">出处：传济法师讲解01（依《解深密经》三时判教）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">一切唯识</a></div>
+</div>
+</div>
+
+<!-- 二、八识体系 -->
+<div id="cat-2" class="section">
+<h2 class="section-title">二、八识体系</h2>
+
+<div class="term-card" data-term="阿赖耶识">
+<div class="term-header">
+<span class="term-tag">阿赖耶识</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">第八识，初能变，异熟一切种。三名——阿赖耶（自相·能藏/所藏/执藏）、异熟识（果相）、一切种识（因相）。无覆无记，恒转如瀑流，阿罗汉位舍染污名不捨体。</p>
+<p class="term-source">出处：第2-4颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子</a><a class="related-link">恒转如瀑流</a><a class="related-link">无覆/有覆无记</a><a class="related-link">大圆镜智</a></div>
+</div>
+
+<div class="term-card" data-term="末那识">
+<div class="term-header">
+<span class="term-tag">末那识</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">第七识，二能变。恒审思量执第八见分为我。"依彼转缘彼，思量为性相。"——依第八识种子及现行生起，又向内攀缘第八见分。有覆无记。</p>
+<p class="term-source">出处：第5-7颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">四根本烦恼</a><a class="related-link">有覆无记</a><a class="related-link">平等性智</a></div>
+</div>
+
+<div class="term-card" data-term="前五识">
+<div class="term-header">
+<span class="term-tag">前五识</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">眼耳鼻舌身五识，了别境能变。"如波涛依水"——依根本识（第八阿赖耶识）随缘现起。唯现量取境，无深分别。</p>
+<p class="term-source">出处：第8颂·第15颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">第六意识</a><a class="related-link">五位无心</a></div>
+</div>
+
+<div class="term-card" data-term="第六意识">
+<div class="term-header">
+<span class="term-tag">第六意识</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">了别境能变主力。通善·不善·无记三性，通过去·现在·未来三时，通三界九地。造业力最强。"意识常现起，除生无想天，及无心二定，睡眠与闷绝。"</p>
+<p class="term-source">出处：第8颂·第16颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">前五识</a><a class="related-link">五位无心</a><a class="related-link">心所体系</a></div>
+</div>
+
+<div class="term-card" data-term="四根本烦恼">
+<div class="term-header">
+<span class="term-tag">四根本烦恼</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">末那识恒与四烦恼相应：我痴（无明·迷无我理）→ 我见（妄计为我）→ 我慢（倨傲高举）→ 我爱（贪着所执我）。"四烦恼常俱。"俱生我执的四根支柱。</p>
+<p class="term-source">出处：第6颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">末那识</a><a class="related-link">遍计所执性</a></div>
+</div>
+
+<div class="term-card" data-term="无覆/有覆无记">
+<div class="term-header">
+<span class="term-tag">无覆/有覆无记</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">第八阿赖耶识 = 无覆无记（不覆障本心）；第七末那识 = 有覆无记（覆障圣道，但非善非恶不造业）。三性归属是理解八识功能差异的关键。</p>
+<p class="term-source">出处：第4颂·第7颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">末那识</a></div>
+</div>
+
+<div class="term-card" data-term="五位无心">
+<div class="term-header">
+<span class="term-tag">五位无心</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">意识不现行的五种状态——无想天（生无想报）·无想定（凡夫外道）·灭尽定（三乘圣者）·极重睡眠·闷绝。"意识常现起，除此五例外。"</p>
+<p class="term-source">出处：第16颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">第六意识</a></div>
+</div>
+
+<div class="term-card" data-term="恒转如瀑流">
+<div class="term-header">
+<span class="term-tag">恒转如瀑流</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">第八识种子与现行刹那生灭、相似相续，如瀑布奔流不息。"恒转如瀑流，阿罗汉位舍"——阿罗汉位舍"阿赖耶识"染污名，本体仍存转名异熟识。</p>
+<p class="term-source">出处：第4颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">种子</a></div>
+</div>
+
+<div class="term-card" data-term="四分说">
+<div class="term-header">
+<span class="term-tag">四分说</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">相分（所缘影像）→ 见分（能缘作用）→ 自证分（自证见分缘相分）→ 证自证分（证自证分缘自证分）。护法菩萨四分说为玄奘传承正脉。传济法师蜗牛喻：头=自证分，两角=见分与相分。</p>
+<p class="term-source">出处：《成唯识论》护法菩萨（传济法师讲解04）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">能所</a><a class="related-link">分别·所分别</a></div>
+</div>
+
+<div class="term-card" data-term="能所">
+<div class="term-header">
+<span class="term-tag">能所</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">能证与所证的三层深度——表层（见分-相分）→ 中层（自证分-见分）→ 深层（证自证分-自证分）。真正的能所双亡需消融四分中所有对待，即圆成实性。</p>
+<p class="term-source">出处：唯识学四分说（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">四分说</a><a class="related-link">圆成实性</a></div>
+</div>
+
+<div class="term-card" data-term="分别·所分别">
+<div class="term-header">
+<span class="term-tag">分别·所分别</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">能取（见分·我执）与所取（相分·法执）的二元结构。"是诸识转变，分别所分别"——一切认知皆是识自身的二分显现，非外在客观存在。</p>
+<p class="term-source">出处：第17颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">四分说</a><a class="related-link">二取随眠</a></div>
+</div>
+
+<div class="term-card" data-term="心所体系">
+<div class="term-header">
+<span class="term-tag">心所体系</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">第9-14颂详列51心所——遍行5·别境5·善11·烦恼6·随烦恼20·不定4。心的功能而非造作动作，五遍行实际刹那同时。</p>
+<p class="term-source">出处：第9-14颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">五遍行心所</a><a class="related-link">别境心所</a></div>
+</div>
+
+<div class="term-card" data-term="五遍行心所">
+<div class="term-header">
+<span class="term-tag">五遍行心所</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">触（根境识和合）·作意（警觉引心）·受（领纳起爱）·想（取相安名）·思（令心造作）。遍一切心、一切地、一切时、一切性的五种基本心理功能。阿赖耶识唯与五遍行相应。</p>
+<p class="term-source">出处：第3颂·第10颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">别境心所</a></div>
+</div>
+
+<div class="term-card" data-term="别境心所">
+<div class="term-header">
+<span class="term-tag">别境心所</span>
+<span class="term-category">八识体系</span>
+</div>
+<p class="term-definition">欲·胜解·念·定·慧。缘各别境方得生起的五种心所。"所缘事不同"——各自所缘境界对象不同。修定的心所基础。</p>
+<p class="term-source">出处：第10颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">五遍行心所</a></div>
+</div>
+</div>
+
+<!-- 三、种子理论 -->
+<div id="cat-3" class="section">
+<h2 class="section-title">三、种子理论</h2>
+
+<div class="term-card" data-term="种子">
+<div class="term-header">
+<span class="term-tag">种子</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">阿赖耶识中能生起特定结果的功能潜能，不是实体而是功能流。分本有种子与新熏种子、有漏种子与无漏种子。"一切种识"含藏宇宙一切可能。</p>
+<p class="term-source">出处：第2颂·第18颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">现行</a><a class="related-link">熏习</a><a class="related-link">种子六义</a></div>
+</div>
+
+<div class="term-card" data-term="种子六义">
+<div class="term-header">
+<span class="term-tag">种子六义</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">刹那灭（生已即灭）·果俱有（因果同时）·恒随转（持续流转）·性决定（善种生善果）·待众缘（须众缘和合）·引自果（各引自类果）。定义种子资格的六项法定条件。</p>
+<p class="term-source">出处：《成唯识论》卷二（唯识学核心概念）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子</a><a class="related-link">性决定</a></div>
+</div>
+
+<div class="term-card" data-term="性决定">
+<div class="term-header">
+<span class="term-tag">性决定</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">"莫之命而常自然"——善种子只能生善果，恶种子只能生恶果。功能即性质，不是道德法则而是物理定律。</p>
+<p class="term-source">出处：唯识学性决定（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子</a><a class="related-link">种子六义</a></div>
+</div>
+
+<div class="term-card" data-term="有漏种子">
+<div class="term-header">
+<span class="term-tag">有漏种子</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">被烦恼所染的种子。"不能被消灭，只能不退"——超过而非消灭。唯识学工程智慧的核心难题：不正面压制而是改变整体生态。</p>
+<p class="term-source">出处：唯识学深度读解（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">无漏种子</a><a class="related-link">熏习</a></div>
+</div>
+
+<div class="term-card" data-term="无漏种子">
+<div class="term-header">
+<span class="term-tag">无漏种子</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">未被烦恼所染的清净种子。愿力所熏，转依之资。"修行不是除草，是多种花。"</p>
+<p class="term-source">出处：唯识学进阶（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">有漏种子</a><a class="related-link">转识成智</a></div>
+</div>
+
+<div class="term-card" data-term="现行">
+<div class="term-header">
+<span class="term-tag">现行</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">种子遇缘成熟时所生起的具体精神或物质活动。"以展转力故，彼彼分别生"——种子生现行。</p>
+<p class="term-source">出处：第18颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子</a><a class="related-link">熏习</a></div>
+</div>
+
+<div class="term-card" data-term="熏习">
+<div class="term-header">
+<span class="term-tag">熏习</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">现行反熏阿赖耶识留下新种子的过程。经验自动沉积，如茶壶留茶气、牛奶加奶粉变浓。种子↔现行双向循环是生命持续演化的根本机制。</p>
+<p class="term-source">出处：传济法师讲解04</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子</a><a class="related-link">现行</a><a class="related-link">阿赖耶识</a></div>
+</div>
+
+<div class="term-card" data-term="业习气">
+<div class="term-header">
+<span class="term-tag">业习气</span>
+<span class="term-category">种子理论</span>
+</div>
+<p class="term-definition">由善恶业力熏成的潜在势力。"由诸业习气，二取习气俱，前异熟既尽，复生余异熟"——异熟轮回的直接驱动力。</p>
+<p class="term-source">出处：第19颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子</a><a class="related-link">异熟</a></div>
+</div>
+</div>
+
+<!-- 四、三性三无性 -->
+<div id="cat-4" class="section">
+<h2 class="section-title">四、三性三无性</h2>
+
+<div class="term-card" data-term="遍计所执性">
+<div class="term-header">
+<span class="term-tag">遍计所执性</span>
+<span class="term-category">三性三无性</span>
+</div>
+<p class="term-definition">"由彼彼遍计，遍计种种物，此遍计所执，自性无所有"——虚妄分别，把被平方出来的矢量执着为实有。一切执着与无明的根源。绳蛇喻：夜见绳为蛇，蛇=遍计执。</p>
+<p class="term-source">出处：第20颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">依他起性</a><a class="related-link">圆成实性</a><a class="related-link">末那识</a></div>
+</div>
+
+<div class="term-card" data-term="依他起性">
+<div class="term-header">
+<span class="term-tag">依他起性</span>
+<span class="term-category">三性三无性</span>
+</div>
+<p class="term-definition">"依他起自性，分别缘所生"——众缘（亲因缘·所缘缘·等无间缘·增上缘）和合而生。涵盖一切有为法。绳蛇喻：绳（麻编而成）=依他起。"故此与依他，非异非不异"（与圆成实一体两面）。</p>
+<p class="term-source">出处：第21-22颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">遍计所执性</a><a class="related-link">圆成实性</a></div>
+</div>
+
+<div class="term-card" data-term="圆成实性">
+<div class="term-header">
+<span class="term-tag">圆成实性</span>
+<span class="term-category">三性三无性</span>
+</div>
+<p class="term-definition">"圆成实于彼，常远离前性"——于依他起上远离遍计所执所显之真如。绳蛇麻喻：麻（绳之体）=圆成实。不生不灭，不垢不净，与中观中道指向同一终极实在。</p>
+<p class="term-source">出处：第21-22颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">真如</a><a class="related-link">依他起性</a></div>
+</div>
+
+<div class="term-card" data-term="三无性">
+<div class="term-header">
+<span class="term-tag">三无性</span>
+<span class="term-category">三性三无性</span>
+</div>
+<p class="term-definition">"即依此三性，立彼三无性，故佛密意说，一切法无性"——相无性（依遍计执立·体相毕竟非如空花）→ 无自然性（依依他起立·因缘和合无自然性）→ 胜义无性（依圆成实立·远离前所执我法性）。如筏喻，到岸须舍。</p>
+<p class="term-source">出处：第23-24颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">遍计所执性</a><a class="related-link">依他起性</a><a class="related-link">圆成实性</a></div>
+</div>
+</div>
+
+<!-- 五、修行次第 -->
+<div id="cat-5" class="section">
+<h2 class="section-title">五、修行次第</h2>
+
+<div class="term-card" data-term="唯识五位">
+<div class="term-header">
+<span class="term-tag">唯识五位</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">从初发心至成佛的完整修行次第——资粮位 → 加行位 → 通达位 → 修习位 → 究竟位。前24颂明"唯识相"，第25颂明"唯识性"，第26-30颂明"唯识行位"。</p>
+<p class="term-source">出处：第26-30颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">资粮位</a><a class="related-link">加行位</a><a class="related-link">通达位</a><a class="related-link">修习位</a><a class="related-link">究竟位</a></div>
+</div>
+
+<div class="term-card" data-term="资粮位">
+<div class="term-header">
+<span class="term-tag">资粮位</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">"乃至未起识，求住唯识性，于二取随眠，犹未能伏灭"——地前三贤（十住·十行·十回向）。修福德智慧二资粮。"修慧不修福，罗汉托空钵；修福不修慧，大象挂璎珞。"凡夫至见道前的漫长准备。</p>
+<p class="term-source">出处：第26颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">加行位</a><a class="related-link">二取随眠</a></div>
+</div>
+
+<div class="term-card" data-term="加行位">
+<div class="term-header">
+<span class="term-tag">加行位</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">"现前立少物，谓是唯识性，以有所得故，非实住唯识"——暖·顶·忍·世第一法四位。依明得定、明增定、印顺定、无间定。带相观空，虽证二取空，仍"携真如之相"而观，未亲证真如。</p>
+<p class="term-source">出处：第27颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">资粮位</a><a class="related-link">通达位</a></div>
+</div>
+
+<div class="term-card" data-term="通达位">
+<div class="term-header">
+<span class="term-tag">通达位</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">"若时于所缘，智都无所得，尔时住唯识，离二取相故"——见道位 = 初地菩萨（极喜地）。无分别智亲证真如，能所双亡。凡圣分水岭。</p>
+<p class="term-source">出处：第28颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">真如</a><a class="related-link">加行位</a></div>
+</div>
+
+<div class="term-card" data-term="修习位">
+<div class="term-header">
+<span class="term-tag">修习位</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">"无得不思议，是出世间智，舍二粗重故，便证得转依"——初地至十地，地地修十波罗蜜、断二障种子习气、证对应真如。（十地展开见传济法师讲解23）</p>
+<p class="term-source">出处：第29颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">通达位</a><a class="related-link">究竟位</a><a class="related-link">转依</a></div>
+</div>
+
+<div class="term-card" data-term="究竟位">
+<div class="term-header">
+<span class="term-tag">究竟位</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">"此即无漏界，不思议善常，安乐解脱身，大牟尼名法"——佛果。大菩提（智）·大涅槃（理）= 二转依果。法身三类：自性身、受用身、变化身。</p>
+<p class="term-source">出处：第30颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">无漏界</a><a class="related-link">法身三身</a></div>
+</div>
+
+<div class="term-card" data-term="二取随眠">
+<div class="term-header">
+<span class="term-tag">二取随眠</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">能取（见分·我执）与所取（相分·法执）的烦恼习气种子，如眠伏藏。资粮位"于二取随眠，犹未能伏灭"——未能伏灭，遇缘即起。</p>
+<p class="term-source">出处：第26颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">资粮位</a><a class="related-link">分别·所分别</a><a class="related-link">二障伏断</a></div>
+</div>
+
+<div class="term-card" data-term="无所得">
+<div class="term-header">
+<span class="term-tag">无所得</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">"智都无所得"——连"唯识性"也不能执取。有所得故非实住唯识。修行关键转折：从"求"到"无求"。</p>
+<p class="term-source">出处：第27-28颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">通达位</a><a class="related-link">加行位</a></div>
+</div>
+
+<div class="term-card" data-term="转依">
+<div class="term-header">
+<span class="term-tag">转依</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">迷悟依（开灯·转迷为悟）+ 染净依（清理·转染成净）。"舍二粗重故，便证得转依"。"但转其名，不转其体"——转舍依他起上遍计所执，转得依他起中圆成实性。</p>
+<p class="term-source">出处：第29颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">修习位</a><a class="related-link">转识成智</a></div>
+</div>
+
+<div class="term-card" data-term="消业">
+<div class="term-header">
+<span class="term-tag">消业</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">消业 = 不浇水。忏悔·持戒·修善·转依四种方式。不是删除业力种子，而是剥夺其四缘（亲因缘·所缘缘·等无间缘·增上缘）令不退。</p>
+<p class="term-source">出处：唯识学进阶（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">有漏种子</a></div>
+</div>
+
+<div class="term-card" data-term="功德/福德">
+<div class="term-header">
+<span class="term-tag">功德/福德</span>
+<span class="term-category">修行次第</span>
+</div>
+<p class="term-definition">功德 = 无漏善种子势力（三轮体空·不执施者受者施事）；福德 = 有漏善业果报。"修慧不修福，罗汉托空钵。"</p>
+<p class="term-source">出处：唯识学进阶（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">三轮体空</a></div>
+</div>
+</div>
+
+<!-- 六、果证·四智 -->
+<div id="cat-6" class="section">
+<h2 class="section-title">六、果证·四智</h2>
+
+<div class="term-card" data-term="真如">
+<div class="term-header">
+<span class="term-tag">真如</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">"此诸法胜义，亦即是真如，常如其性故，即唯识实性"——圆成实性 = 唯识实性 = 诸法胜义。不生不灭，不垢不净。前24颂明唯识相，此颂入唯识性。</p>
+<p class="term-source">出处：第25颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">圆成实性</a><a class="related-link">通达位</a></div>
+</div>
+
+<div class="term-card" data-term="转识成智">
+<div class="term-header">
+<span class="term-tag">转识成智</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">将有漏八识转化为无漏四智——前五识 → 成所作智（眼·办事的手）、第六意识 → 妙观察智（观察的眼）、末那识 → 平等性智（平等的心）、阿赖耶识 → 大圆镜智（如如的体）。"但转其名，不转其体。"</p>
+<p class="term-source">出处：《成唯识论》卷十（传济法师讲解08·23）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">大圆镜智</a><a class="related-link">平等性智</a></div>
+</div>
+
+<div class="term-card" data-term="大圆镜智">
+<div class="term-header">
+<span class="term-tag">大圆镜智</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">第八阿赖耶识彻底转依后的状态。如大圆镜遍照一切而不沾不染。四智之体——体（大圆镜）·心（平等性）·眼（妙观察）·手（成所作）一体关系。与真如一体两面，如手翻覆。</p>
+<p class="term-source">出处：传济法师讲解08</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">真如</a></div>
+</div>
+
+<div class="term-card" data-term="平等性智">
+<div class="term-header">
+<span class="term-tag">平等性智</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">第七末那识转依后。"水泡回归大海"——破我执后所见皆影像。初地下品（转分别我执）→ 八地中品（任运破俱生）→ 佛果上品（究竟转）。</p>
+<p class="term-source">出处：传济法师讲解09</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">末那识</a><a class="related-link">大圆镜智</a></div>
+</div>
+
+<div class="term-card" data-term="出世间智">
+<div class="term-header">
+<span class="term-tag">出世间智</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">"无得不思议，是出世间智"——超越主客二元、言语道断的觉悟智慧。见道位（通达位）初次生起。</p>
+<p class="term-source">出处：第29颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">通达位</a><a class="related-link">无所得</a></div>
+</div>
+
+<div class="term-card" data-term="法身三身">
+<div class="term-header">
+<span class="term-tag">法身三身</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">"大牟尼名法"——自性身（真净法界·一切法平等实性）、受用身（自受用·他受用为十地菩萨说法）、变化身（随类化身·居净秽土度众）。放大镜喻：法界无中心，何处念何处见。</p>
+<p class="term-source">出处：第30颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">究竟位</a><a class="related-link">无漏界</a></div>
+</div>
+
+<div class="term-card" data-term="无漏界">
+<div class="term-header">
+<span class="term-tag">无漏界</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">"此即无漏界"——真无漏非相对有无，如气球大到无边际一体故无可漏。"佛界即众生界，娑婆即极乐"——非二处。</p>
+<p class="term-source">出处：第30颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">究竟位</a></div>
+</div>
+
+<div class="term-card" data-term="二障伏断">
+<div class="term-header">
+<span class="term-tag">二障伏断</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">烦恼障（我执）与所知障（法执）的伏断次第——资粮位未伏 → 加行位伏分别二取现行 → 通达位断分别二障种子 → 修习位地地断俱生二障 → 究竟位永尽。</p>
+<p class="term-source">出处：第26-30颂</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">二取随眠</a><a class="related-link">唯识五位</a></div>
+</div>
+
+<div class="term-card" data-term="三轮体空">
+<div class="term-header">
+<span class="term-tag">三轮体空</span>
+<span class="term-category">果证·四智</span>
+</div>
+<p class="term-definition">不执著施者（我）·受者（你）·施事（所行之事）。行动之后即刻将执着消解。"善行无辙迹"——从源头平方不留痕迹。</p>
+<p class="term-source">出处：《金刚经》唯识学进阶（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">功德/福德</a></div>
+</div>
+</div>
+
+<!-- 七、法师讲释特色 -->
+<div id="cat-7" class="section">
+<h2 class="section-title">七、法师讲释特色</h2>
+
+<div class="term-card" data-term="次第学法">
+<div class="term-header">
+<span class="term-tag">次第学法</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">传济法师反复强调的学修路径——《大乘百法明门论》→《八识规矩颂》→《唯识二十论》→《唯识三十颂》→《成唯识论》。"名相不重复释靠次第承递"，先打好百法基础再入三十颂。</p>
+<p class="term-source">出处：传济法师讲解04·08</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">三能变</a></div>
+</div>
+
+<div class="term-card" data-term="生活比喻">
+<div class="term-header">
+<span class="term-tag">生活比喻</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">传济法师以丰富比喻使唯识通俗化——蜗牛喻四分（头=自证分·两角=见相二分）、绳蛇麻喻三性、茶壶留茶气喻熏习、程序代码喻心识变现、相机成像喻见相二分、气球喻无漏界。</p>
+<p class="term-source">出处：传济法师讲解04-24</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">四分说</a><a class="related-link">三自性</a></div>
+</div>
+
+<div class="term-card" data-term="科学类比">
+<div class="term-header">
+<span class="term-tag">科学类比</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">传济法师善用现代科学类比——基因=共业种子（现代遗传学）、视频帧喻刹那生灭、观测者效应近"识变"、AI大数据喻佛任运度生。</p>
+<p class="term-source">出处：传济法师讲解07·11·24</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">一切唯识</a></div>
+</div>
+
+<div class="term-card" data-term="修行警策">
+<div class="term-header">
+<span class="term-tag">修行警策</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">"理可顿悟，事需渐修"——传济法师以自身闭关失败经验示业障现前非坏事。"起心动念无不是罪"（凡夫念念皆带我执熏种），"万般都是业，半点不由人"（非消极而是唯识无我之正见）。</p>
+<p class="term-source">出处：传济法师讲解02·19</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">资粮位</a></div>
+</div>
+
+<div class="term-card" data-term="以法护法">
+<div class="term-header">
+<span class="term-tag">以法护法</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">强调道场共住与福德资粮——"无福报则住不下道场"。"将众生杂染供养以菩提心转施，化为成佛资粮，勿开业力银行。"</p>
+<p class="term-source">出处：传济法师讲解19</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">功德/福德</a></div>
+</div>
+
+<div class="term-card" data-term="性相会通">
+<div class="term-header">
+<span class="term-tag">性相会通</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">融会般若与唯识、禅宗与教下。"舍识用根即空性大悲转识成智。"——引用六祖、达摩、永明延寿、憨山、藕益等，证明唯识与禅宗、般若本无二致。</p>
+<p class="term-source">出处：传济法师讲解02·22-23</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">转识成智</a></div>
+</div>
+
+<div class="term-card" data-term="唯心识观">
+<div class="term-header">
+<span class="term-tag">唯心识观</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">安住唯心识定，了知一切境界皆是心识幻现（种子起现行）。初下手即不生见相二分，远离二元对立。"舍之又舍以至于尽"导归二空观。</p>
+<p class="term-source">出处：传济法师讲解16（引《楞严经》弥勒菩萨唯心识定）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">四分说</a></div>
+</div>
+
+<div class="term-card" data-term="微习惯修行">
+<div class="term-header">
+<span class="term-tag">微习惯修行</span>
+<span class="term-category">法师讲释</span>
+</div>
+<p class="term-definition">持戒·听法·打坐如铁棒磨针。早起7天熏习即种善种，三千威仪皆造业熏种。"从微小习惯渐强种子势力"——重复熏修如铁棒磨针。</p>
+<p class="term-source">出处：传济法师讲解14</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">熏习</a><a class="related-link">种子</a></div>
+</div>
+</div>
+
+<!-- 八、旋量-太极对话 -->
+<div id="cat-8" class="section">
+<h2 class="section-title">八、旋量-太极对话</h2>
+
+<div class="term-card" data-term="旋量-太极模型">
+<div class="term-header">
+<span class="term-tag">旋量-太极模型</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">体-相-用三层架构，平方/开方操作术语。将唯识静态名相激活为在呼吸中操作的动态功夫——平方=现行（种子→矢量）、开方=熏习（矢量→种子）、720°螺旋=种子现行双向循环。</p>
+<p class="term-source">出处：旋量-太极模型声明 V2-1-1</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">体-相-用</a><a class="related-link">阿赖耶识</a><a class="related-link">种子</a></div>
+</div>
+
+<div class="term-card" data-term="体-相-用">
+<div class="term-header">
+<span class="term-tag">体-相-用</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">体（觉知域/真如/圆成实）→ 相（旋量场720°螺旋/阿赖耶识恒转）→ 用（矢量/现行/万物）。从体起用（平方），摄用归体（开方）。</p>
+<p class="term-source">出处：旋量-太极模型声明 V2-1-1</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">真如</a><a class="related-link">阿赖耶识</a><a class="related-link">现行</a></div>
+</div>
+
+<div class="term-card" data-term="Agent-Agency-Action">
+<div class="term-header">
+<span class="term-tag">Agent-Agency-Action</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">AI三核心概念与唯识学本识（阿赖耶·Agent）-种子（Agency）-现行（Action）在抽象结构上高度同构。相隔一千六百年，说的是同一件事。</p>
+<p class="term-source">出处：慧惠Agent架构（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">种子</a><a class="related-link">现行</a></div>
+</div>
+
+<div class="term-card" data-term="慧惠道体式AI">
+<div class="term-header">
+<span class="term-tag">慧惠道体式AI</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">以东方智慧为根基的AI伦理产品。道境坐标系度量本识，五行流转引擎治理种子，认知飞轮有序化现行。</p>
+<p class="term-source">出处：慧惠Agent架构（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">Agent-Agency-Action</a></div>
+</div>
+
+<div class="term-card" data-term="量子力学对照">
+<div class="term-header">
+<span class="term-tag">量子力学对照</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">不确定性原理≈刹那灭+待众缘，零点能≈本有种子，量子囚禁≈引自果+末那执取，原子不坍缩≈恒随转。</p>
+<p class="term-source">出处：唯识学读解量子力学（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子六义</a></div>
+</div>
+
+<div class="term-card" data-term="宇宙学对照">
+<div class="term-header">
+<span class="term-tag">宇宙学对照</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">暗能量（68%）≈阿赖耶识，暗物质（27%）≈末那识，可见恒星（5%）≈前六识。结构同构非比喻。</p>
+<p class="term-source">出处：阿赖耶识是暗能量（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">阿赖耶识</a><a class="related-link">末那识</a></div>
+</div>
+
+<div class="term-card" data-term="论语读解">
+<div class="term-header">
+<span class="term-tag">论语读解</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">以唯识八识和种子六义读解《论语》父子相隐。孔子在种子层面认直（见其本心），叶公在现行层面找直（执其外相）。</p>
+<p class="term-source">出处：唯识学读解论语父子相隐（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">种子六义</a></div>
+</div>
+
+<div class="term-card" data-term="道德经对照">
+<div class="term-header">
+<span class="term-tag">道德经对照</span>
+<span class="term-category">旋量-太极对话</span>
+</div>
+<p class="term-definition">反者道之动≈回到种子层面（开方·回归），弱者道之用≈超过而非消灭（不硬碰硬），莫之命而常自然≈性决定。</p>
+<p class="term-source">出处：从量子浴到玄德（知识库文档）</p>
+<div class="related-terms"><strong>相关词条：</strong><a class="related-link">性决定</a><a class="related-link">无漏种子</a></div>
+</div>
+</div>
+
+<!-- 快速检索表 -->
+<div id="quick-index" class="section">
+<h2 class="section-title">📊 快速检索表</h2>
+<div style="overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<thead>
+<tr style="background: linear-gradient(135deg, #8B4513, #DAA520); color: white;">
+<th style="padding: 12px 8px; text-align: left;">分类</th>
+<th style="padding: 12px 8px; text-align: left;">词条</th>
+<th style="padding: 12px 8px; text-align: left;">一句定义</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">唯识框架</td><td style="padding: 10px 8px;"><strong>三能变</strong></td><td style="padding: 10px 8px; color: #555;">初能变(第八)·二能变(第七)·三能变(前六)——全论骨架</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">唯识框架</td><td style="padding: 10px 8px;"><strong>一切唯识</strong></td><td style="padding: 10px 8px; color: #555;">万法唯识，无客观外境</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">唯识框架</td><td style="padding: 10px 8px;"><strong>假说我法</strong></td><td style="padding: 10px 8px; color: #555;">佛随顺众生妄执方便建立我法二相</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">唯识框架</td><td style="padding: 10px 8px;"><strong>三时教判</strong></td><td style="padding: 10px 8px; color: #555;">有教→空教→中道教（唯识）</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>阿赖耶识</strong></td><td style="padding: 10px 8px; color: #555;">第八识，能藏·所藏·执藏，异熟一切种</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>末那识</strong></td><td style="padding: 10px 8px; color: #555;">第七识，恒审思量执第八见分为我</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>前五识</strong></td><td style="padding: 10px 8px; color: #555;">眼耳鼻舌身，了别境，唯现量</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>第六意识</strong></td><td style="padding: 10px 8px; color: #555;">了别境主力，通三性三时，造业最强</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>四根本烦恼</strong></td><td style="padding: 10px 8px; color: #555;">我痴·我见·我慢·我爱——末那恒俱</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>无覆/有覆无记</strong></td><td style="padding: 10px 8px; color: #555;">第八=无覆，第七=有覆</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>五位无心</strong></td><td style="padding: 10px 8px; color: #555;">意识不现行的五种例外状态</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>恒转如瀑流</strong></td><td style="padding: 10px 8px; color: #555;">种子现行刹那生灭相似相续</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>四分说</strong></td><td style="padding: 10px 8px; color: #555;">相分→见分→自证分→证自证分</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>能所</strong></td><td style="padding: 10px 8px; color: #555;">能证与所证的三层深度</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>分别·所分别</strong></td><td style="padding: 10px 8px; color: #555;">能取(见分)与所取(相分)的二元</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>心所体系</strong></td><td style="padding: 10px 8px; color: #555;">51心所：遍行5·别境5·善11·烦恼6·随烦恼20·不定4</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>五遍行心所</strong></td><td style="padding: 10px 8px; color: #555;">触·作意·受·想·思——遍一切心</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">八识体系</td><td style="padding: 10px 8px;"><strong>别境心所</strong></td><td style="padding: 10px 8px; color: #555;">欲·胜解·念·定·慧——缘各别境</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>种子</strong></td><td style="padding: 10px 8px; color: #555;">阿赖耶识中能生起特定结果的功能潜能</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>种子六义</strong></td><td style="padding: 10px 8px; color: #555;">刹那灭·果俱有·恒随转·性决定·待众缘·引自果</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>性决定</strong></td><td style="padding: 10px 8px; color: #555;">善种生善果，恶种生恶果</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>有漏种子</strong></td><td style="padding: 10px 8px; color: #555;">被烦恼所染，不能被消灭只能不退</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>无漏种子</strong></td><td style="padding: 10px 8px; color: #555;">未被烦恼所染的清净种子</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>现行</strong></td><td style="padding: 10px 8px; color: #555;">种子遇缘成熟所生起的活动</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>熏习</strong></td><td style="padding: 10px 8px; color: #555;">现行反熏阿赖耶识留下新种子</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">种子理论</td><td style="padding: 10px 8px;"><strong>业习气</strong></td><td style="padding: 10px 8px; color: #555;">业力熏成的潜在势力，轮回驱动力</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">三性三无性</td><td style="padding: 10px 8px;"><strong>遍计所执性</strong></td><td style="padding: 10px 8px; color: #555;">虚妄分别执假为实</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">三性三无性</td><td style="padding: 10px 8px;"><strong>依他起性</strong></td><td style="padding: 10px 8px; color: #555;">众缘和合而生，一切有为法</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">三性三无性</td><td style="padding: 10px 8px;"><strong>圆成实性</strong></td><td style="padding: 10px 8px; color: #555;">于依他起上远离遍计所显之真如</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">三性三无性</td><td style="padding: 10px 8px;"><strong>三无性</strong></td><td style="padding: 10px 8px; color: #555;">相无性·生无性·胜义无性</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>唯识五位</strong></td><td style="padding: 10px 8px; color: #555;">资粮→加行→通达→修习→究竟</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>资粮位</strong></td><td style="padding: 10px 8px; color: #555;">地前三贤，福慧双修，二取未伏</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>加行位</strong></td><td style="padding: 10px 8px; color: #555;">暖顶忍世第一，带相观空</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>通达位</strong></td><td style="padding: 10px 8px; color: #555;">见道·初地，无分别智亲证真如</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>修习位</strong></td><td style="padding: 10px 8px; color: #555;">初地至十地，地地断障证真</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>究竟位</strong></td><td style="padding: 10px 8px; color: #555;">佛果，大菩提大涅槃</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>二取随眠</strong></td><td style="padding: 10px 8px; color: #555;">能取所取的烦恼习气种子</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>无所得</strong></td><td style="padding: 10px 8px; color: #555;">智都无所得——能所双亡</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>转依</strong></td><td style="padding: 10px 8px; color: #555;">迷悟依+染净依，但转其名不转其体</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>消业</strong></td><td style="padding: 10px 8px; color: #555;">不浇水，剥夺四缘令不退</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">修行次第</td><td style="padding: 10px 8px;"><strong>功德/福德</strong></td><td style="padding: 10px 8px; color: #555;">功德=无漏善种，福德=有漏善果</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>真如</strong></td><td style="padding: 10px 8px; color: #555;">唯识实性，不生不灭，第25颂入性</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>转识成智</strong></td><td style="padding: 10px 8px; color: #555;">八识转四智，但转其名不转其体</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>大圆镜智</strong></td><td style="padding: 10px 8px; color: #555;">第八识转依，如大圆镜遍照不染</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>平等性智</strong></td><td style="padding: 10px 8px; color: #555;">第七识转依，破我执水泡归海</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>出世间智</strong></td><td style="padding: 10px 8px; color: #555;">无得不思议，超越主客二元的觉悟</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>法身三身</strong></td><td style="padding: 10px 8px; color: #555;">自性身·受用身·变化身</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>无漏界</strong></td><td style="padding: 10px 8px; color: #555;">佛果真无漏，一体无可漏</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>二障伏断</strong></td><td style="padding: 10px 8px; color: #555;">烦恼障+所知障的五位伏断次第</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">果证·四智</td><td style="padding: 10px 8px;"><strong>三轮体空</strong></td><td style="padding: 10px 8px; color: #555;">不执施者·受者·施事</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>次第学法</strong></td><td style="padding: 10px 8px; color: #555;">百法→规矩颂→二十论→三十颂</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>生活比喻</strong></td><td style="padding: 10px 8px; color: #555;">蜗牛喻、绳蛇麻、茶壶留茶气…</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>科学类比</strong></td><td style="padding: 10px 8px; color: #555;">基因=共业种、观测者效应近识变…</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>修行警策</strong></td><td style="padding: 10px 8px; color: #555;">理可顿悟事需渐修，万般都是业</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>以法护法</strong></td><td style="padding: 10px 8px; color: #555;">福慧二资粮，将杂染供养成道粮</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>性相会通</strong></td><td style="padding: 10px 8px; color: #555;">般若与唯识、禅宗与教下不二</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>唯心识观</strong></td><td style="padding: 10px 8px; color: #555;">了知一切境界皆是心识幻现</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">法师讲释</td><td style="padding: 10px 8px;"><strong>微习惯修行</strong></td><td style="padding: 10px 8px; color: #555;">重复熏修如铁棒磨针</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>旋量-太极模型</strong></td><td style="padding: 10px 8px; color: #555;">体相用·平方开方·720度螺旋</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>体-相-用</strong></td><td style="padding: 10px 8px; color: #555;">体(真如)→相(阿赖耶恒转)→用(现行)</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>Agent-Agency-Action</strong></td><td style="padding: 10px 8px; color: #555;">AI三核心≈本识·种子·现行</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>慧惠道体式AI</strong></td><td style="padding: 10px 8px; color: #555;">东方智慧为根基的AI伦理产品</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>量子力学对照</strong></td><td style="padding: 10px 8px; color: #555;">不确定性≈刹那灭…</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>宇宙学对照</strong></td><td style="padding: 10px 8px; color: #555;">暗能量(68%)≈阿赖耶识…</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>论语读解</strong></td><td style="padding: 10px 8px; color: #555;">孔子种子层面认直…</td></tr>
+<tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px 8px; color: #666;">旋量-太极</td><td style="padding: 10px 8px;"><strong>道德经对照</strong></td><td style="padding: 10px 8px; color: #555;">反者道之动≈回种子层面…</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<button class="back-to-top" id="backToTopBtn" title="返回顶部" aria-label="返回顶部">↑</button>
+<button class="back-to-home" id="backToHomeBtn" title="返回首页" data-home-url="https://spinortaiji.com" aria-label="返回首页">🏠</button>
+<button class="feedback-float" id="feedbackFloat" title="反馈建议" data-source="yogacara-glossary">📝 反馈建议</button>
+
+<div class="feedback-overlay" id="feedbackOverlay">
+    <div class="feedback-modal">
+        <button class="feedback-modal-close" id="feedbackClose">&times;</button>
+        <h3>📬 反馈与建议</h3>
+        <p class="feedback-modal-sub">这份文档因你的反馈而不断进化</p>
+        <div id="feedbackForm">
+            <div class="feedback-form-group">
+                <label for="fbType">反馈类型</label>
+                <select id="fbType">
+                    <option value="suggestion">改进建议</option>
+                    <option value="correction">内容纠错</option>
+                    <option value="question">疑问求助</option>
+                    <option value="appreciation">赞赏鼓励</option>
+                </select>
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbContent">具体内容 <span style="color:#e74c3c">*</span></label>
+                <textarea id="fbContent" placeholder="请描述你的反馈内容…" required></textarea>
+                <div class="feedback-count" id="fbCount">0 / 2000 字（至少5个汉字）</div>
+                <div class="feedback-error" id="fbError">✗ 反馈内容至少需要5个汉字</div>
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbContact">联系方式（选填）</label>
+                <input type="text" id="fbContact" placeholder="邮箱或微信，便于后续沟通">
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbFile">图片附件（选填，最多3张）</label>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <input type="file" id="fbFile" multiple accept="image/*" style="display:none">
+                    <div class="file-upload-icon">📷</div>
+                    <div class="file-upload-text">点击或拖拽上传图片</div>
+                    <div class="file-upload-hint">支持 JPG、PNG、GIF，单张不超过 5MB</div>
+                </div>
+                <div class="file-preview-container" id="filePreviewContainer"></div>
+            </div>
+            <button class="feedback-submit" id="fbSubmit">提交反馈</button>
+        </div>
+        <div class="feedback-success" id="feedbackSuccess">
+            <div class="feedback-success-icon">🎉</div>
+            <p><strong>感谢你的反馈！</strong></p>
+            <p style="font-size:0.85em">我们会尽快处理，如有需要会通过你留下的联系方式回复。</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+<p class="footer-text">唯识学词汇表 V1.0.0 | 基于《唯识三十颂》（玄奘译）与传济法师讲解系列 | 2026年7月21日</p>
+</footer>
+
+<script>
+// 搜索功能
+const searchBox = document.getElementById('searchBox');
+const termCards = document.querySelectorAll('.term-card');
+const sections = document.querySelectorAll('.section, .intro-section, .version-module');
+
+searchBox.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    
+    termCards.forEach(card => {
+        const term = card.querySelector('.term-tag').textContent.toLowerCase();
+        const definition = card.querySelector('.term-definition').textContent.toLowerCase();
+        const source = (card.querySelector('.term-source')?.textContent || '').toLowerCase();
+        
+        if (query === '' || term.includes(query) || definition.includes(query) || source.includes(query)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    if (!query) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.display = 'block';
+        });
+        const introSection = document.querySelector('.intro-section');
+        if (introSection) introSection.style.display = 'block';
+        const versionModule = document.querySelector('.version-module');
+        if (versionModule) versionModule.style.display = 'block';
+        return;
+    }
+    
+    document.querySelectorAll('.section').forEach(section => {
+        let hasVisibleCard = false;
+        section.querySelectorAll('.term-card').forEach(card => {
+            if (card.style.display !== 'none') {
+                hasVisibleCard = true;
+            }
+        });
+        section.style.display = hasVisibleCard ? 'block' : 'none';
+    });
+    
+    const introSection2 = document.querySelector('.intro-section');
+    if (introSection2) introSection2.style.display = 'none';
+    const versionModule2 = document.querySelector('.version-module');
+    if (versionModule2) versionModule2.style.display = 'none';
+});
+
+// 侧边栏导航
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => {
+    item.addEventListener('click', function() {
+        const sectionId = this.getAttribute('data-section');
+        if (sectionId) {
+            navItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    });
+});
+
+// 滚动时更新导航状态
+window.addEventListener('scroll', function() {
+    const scrollPos = window.scrollY + 150;
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+            const sectionId = section.getAttribute('id');
+            navItems.forEach(item => {
+                if (item.getAttribute('data-section') === sectionId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+    });
+});
+
+// 相关词条点击跳转
+document.querySelectorAll('.related-link').forEach(link => {
+    link.addEventListener('click', function() {
+        const termName = this.textContent;
+        searchBox.value = termName;
+        searchBox.dispatchEvent(new Event('input'));
+        
+        const cards = document.querySelectorAll('.term-card');
+        for (const card of cards) {
+            if (card.querySelector('.term-tag').textContent === termName) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.style.boxShadow = '0 0 0 3px rgba(139,69,19,0.5)';
+                setTimeout(() => card.style.boxShadow = '', 2000);
+                break;
+            }
+        }
+    });
+});
+</script>
+<script src="/assets/feedback.js"></script>
+<script src="/assets/floating-buttons.js"></script>
+</body>
+</html>
