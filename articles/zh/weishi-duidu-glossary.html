@@ -64,6 +64,8 @@ footer a{color:#8fd4ff;}
  .term p{display:block;}
 }
 </style>
+<link rel="stylesheet" href="/assets/feedback.css">
+<link rel="stylesheet" href="/assets/floating-buttons.css">
 </head>
 <body>
 <header>
@@ -362,6 +364,55 @@ footer a{color:#8fd4ff;}
   </div>
 </footer>
 
+<button class="back-to-top" id="backToTopBtn" title="返回顶部" aria-label="返回顶部">↑</button>
+<button class="back-to-home" id="backToHomeBtn" title="返回首页" data-home-url="https://spinortaiji.com" aria-label="返回首页">🏠</button>
+<button class="feedback-float" id="feedbackFloat" title="反馈建议" data-source="weishi-duidu">📝 反馈建议</button>
+
+<div class="feedback-overlay" id="feedbackOverlay">
+    <div class="feedback-modal">
+        <button class="feedback-modal-close" id="feedbackClose">&times;</button>
+        <h3>📬 反馈与建议</h3>
+        <p class="feedback-modal-sub">这份文档因你的反馈而不断进化</p>
+        <div id="feedbackForm">
+            <div class="feedback-form-group">
+                <label for="fbType">反馈类型</label>
+                <select id="fbType">
+                    <option value="suggestion">改进建议</option>
+                    <option value="correction">内容纠错</option>
+                    <option value="question">疑问求助</option>
+                    <option value="appreciation">赞赏鼓励</option>
+                </select>
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbContent">具体内容 <span style="color:#e74c3c">*</span></label>
+                <textarea id="fbContent" placeholder="请描述你的反馈内容…" required></textarea>
+                <div class="feedback-count" id="fbCount">0 / 2000 字（至少5个汉字）</div>
+                <div class="feedback-error" id="fbError">✗ 反馈内容至少需要5个汉字</div>
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbContact">联系方式（选填）</label>
+                <input type="text" id="fbContact" placeholder="邮箱或微信，便于后续沟通">
+            </div>
+            <div class="feedback-form-group">
+                <label for="fbFile">图片附件（选填，最多3张）</label>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <input type="file" id="fbFile" multiple accept="image/*" style="display:none">
+                    <div class="file-upload-icon">📷</div>
+                    <div class="file-upload-text">点击或拖拽上传图片</div>
+                    <div class="file-upload-hint">支持 JPG、PNG、GIF，单张不超过 5MB</div>
+                </div>
+                <div class="file-preview-container" id="filePreviewContainer"></div>
+            </div>
+            <button class="feedback-submit" id="fbSubmit">提交反馈</button>
+        </div>
+        <div class="feedback-success" id="feedbackSuccess">
+            <div class="feedback-success-icon">🎉</div>
+            <p><strong>感谢你的反馈！</strong></p>
+            <p style="font-size:0.85em">我们会尽快处理，如有需要会通过你留下的联系方式回复。</p>
+        </div>
+    </div>
+</div>
+
 <script>
 (function(){
   var box=document.getElementById('searchBox');
@@ -406,5 +457,7 @@ footer a{color:#8fd4ff;}
   }catch(err){}
 })();
 </script>
+<script src="/assets/feedback.js"></script>
+<script src="/assets/floating-buttons.js"></script>
 </body>
 </html>
